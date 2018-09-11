@@ -126,7 +126,7 @@
 <meta name="keywords" content="技术分享">
 <meta property="og:type" content="website">
 <meta property="og:title" content="紫魔戒的博客">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
 <meta property="og:site_name" content="紫魔戒的博客">
 <meta property="og:locale" content="default">
 <meta name="twitter:card" content="summary">
@@ -160,7 +160,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/page/2/"/>
 
 
 
@@ -334,7 +334,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/25/Hadoop环境搭载/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/24/什么是隔离见证？简单介绍隔离见证-紫魔戒/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Frank yang">
@@ -353,7 +353,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/12/25/Hadoop环境搭载/" itemprop="url">Hadoop环境搭载</a></h1>
+                <a class="post-title-link" href="/2017/07/24/什么是隔离见证？简单介绍隔离见证-紫魔戒/" itemprop="url">什么是隔离见证？简单介绍隔离见证</a></h1>
         
 
         <div class="post-meta">
@@ -365,319 +365,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-25T10:27:00+08:00">
-                2017-12-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hadoop/" itemprop="url" rel="index">
-                    <span itemprop="name">Hadoop</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>官网安装教程：<a href="http://archive.cloudera.com/cdh5/cdh/5/hadoop-2.6.0-cdh5.13.0/hadoop-project-dist/hadoop-common/SingleCluster.html" target="_blank" rel="noopener">http://archive.cloudera.com/cdh5/cdh/5/hadoop-2.6.0-cdh5.13.0/hadoop-project-dist/hadoop-common/SingleCluster.html</a></p>
-<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>本教程使用 CentOS 7 64位 作为系统环境，请自行安装系统。<br>装好了 CentOS 系统之后，在安装 Hadoop 前还需要做一些必备工作。</p>
-<h3 id="创建hadoop用户"><a href="#创建hadoop用户" class="headerlink" title="创建hadoop用户"></a>创建hadoop用户</h3><p>如果你安装 CentOS 的时候不是用的 “hadoop” 用户，那么需要增加一个名为 hadoop 的用户。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">su              # 上述提到的以 root 用户登录</span><br><span class="line">useradd -m hadoop -s /bin/bash   # 创建新用户hadoop</span><br><span class="line">passwd hadoop   # 修改密码，按提示输入两次密码 </span><br><span class="line">visudo 或 vim /etc/sudoers</span><br><span class="line"># 找到 root ALL=(ALL) ALL 这行</span><br><span class="line"># 然后在这行下面增加一行内容：hadoop ALL=(ALL) ALL （当中的间隔为tab）</span><br></pre></td></tr></table></figure>
-<p><img src="http://oc3uwt4a5.bkt.clouddn.com/15141656457549.jpg" alt=""></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/12/25/Hadoop环境搭载/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/01/共识机制/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Frank yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="紫魔戒的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/01/共识机制/" itemprop="url">共识机制</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-01T16:06:00+08:00">
-                2017-11-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/BlockChain/" itemprop="url" rel="index">
-                    <span itemprop="name">BlockChain</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/BlockChain/Distributed/" itemprop="url" rel="index">
-                    <span itemprop="name">Distributed</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>　　区块链要成为一个难以攻破的、公开的、不可篡改数据记录的去中心化诚实可信系统，需要在尽可能短的时间内做到分布式数据记录的安全、明确及不可逆，提供一个最坚实且去中心化的系统。在实践中，该流程分为两个方面：</p>
-<blockquote>
-<p>一是选择一个独特的节点来产生一个区块<br>二是使分布式数据记录不可逆</p>
-</blockquote>
-<p>实现上述流程的技术核心就是：<strong>共识机制</strong>。共识机制是区块链节点就区块信息达成全网一致共识的机制，可以保证最新区块被准确添加至区块链、节点存储的区块链信息一致不分叉甚至可以抵御恶意攻击。<br>　　当前主流的共识机制包括：工作量证明、权益证明、工作量证明与权益证明混合、股份授权证明、瑞波共识协议等。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/01/共识机制/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/02/比特币交易本质--UTXO(Unspent Transaction Output)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Frank yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="紫魔戒的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/02/比特币交易本质--UTXO(Unspent Transaction Output)/" itemprop="url">比特币交易本质--UTXO(Unspent Transaction Output)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-02T21:45:00+08:00">
-                2017-10-02
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-07-24T15:35:00+08:00">
+                2017-07-24
               </time>
             
 
@@ -737,12 +426,10 @@
 
       
         
-          <p>　　UTXO 代表 Unspent Transaction Output。<br>　　Transaction 被简称为 TX，所以上面这个短语缩写为 UTXO。</p>
-<p>　　现在的银行也好、信用卡也好、证券交易系统也好，互联网第三方支付系统也好，其核心都是基于账户（account based）的设计，由关系数据库支撑。</p>
-<p>　　数据库要确保两点，第一是你要确保业务规则得到遵守，张三的余额充足。第二是确保事务性，也就是原子性、一致性、隔离性、持久性（ACID）。这种基于账户的设计，简单直观，而且在 IT 系统设计里用了几十年，应该说没有什么问题。</p>
+          <p>每一个比特币交易，都可以分为两部分。第一部分是转账记录，第二部分是用来证明这个交易合法性（主要是签名）的。第一部分可称为“交易状态”，第二部分就是所谓的见证（witness）。如果你只关心每个账户的余额，那么转账记录就已经足够了。只有部分人（主要是矿工）才有必要取得交易见证。<br>(交易信息就是谁给谁在什么时间转了多少钱。<br>见证信息就是哪个节点在什么时间验证交易信息的可靠性。)</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/10/02/比特币交易本质--UTXO(Unspent Transaction Output)/#more" rel="contents">
+            <a class="btn" href="/2017/07/24/什么是隔离见证？简单介绍隔离见证-紫魔戒/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -793,7 +480,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/11/2PC&3PC/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/25/进程死锁及解决办法-紫魔戒/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Frank yang">
@@ -812,7 +499,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/11/2PC&3PC/" itemprop="url">2PC&3PC</a></h1>
+                <a class="post-title-link" href="/2017/06/25/进程死锁及解决办法-紫魔戒/" itemprop="url">进程死锁及解决办法</a></h1>
         
 
         <div class="post-meta">
@@ -824,476 +511,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-11T14:28:00+08:00">
-                2017-09-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/BlockChain/" itemprop="url" rel="index">
-                    <span itemprop="name">BlockChain</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/BlockChain/Distributed/" itemprop="url" rel="index">
-                    <span itemprop="name">Distributed</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>　　2PC用于保证跨多个节点操作的原子性，也就是说，跨多个节点的操作要么在所有节点上全部执行成功，要么全部失败。Paxos协议用于确保多个节点对某个投票（例如哪个节点为主节点）达成一致。<br>　　在分布式系统中，每一个机器节点虽然都能够明确地知道自己在进行实物操作过程中的结果是成功或失败，但却无法直接获取到其他分布式节点的操作结果。为了保持实物处理的ACID特性，就需要引入一个称为<strong>“协调者（Coordinator）”</strong>的组件来统一调度所有分布式节点的执行逻辑，这些被调度的分布式节点则被称为<strong>“参与者（Participant）”</strong>。协调者负责调度参与者的行为，并最终决定这些参与者是否要把事务真正进行提交。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/09/11/2PC&3PC/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/11/Paxos发展、算法原理/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Frank yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="紫魔戒的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/11/Paxos发展、算法原理/" itemprop="url">Paxos发展、算法原理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-11T11:30:00+08:00">
-                2017-09-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/BlockChain/" itemprop="url" rel="index">
-                    <span itemprop="name">BlockChain</span>
-                  </a>
-                </span>
-
-                
-                
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/BlockChain/Distributed/" itemprop="url" rel="index">
-                    <span itemprop="name">Distributed</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="Paxos"><a href="#Paxos" class="headerlink" title="Paxos"></a>Paxos</h1><h2 id="发展史"><a href="#发展史" class="headerlink" title="发展史"></a>发展史</h2><p>　　<a href="http://www.lamport.org/" target="_blank" rel="noopener">Leslie Lamport</a>所提出的Paxos算法是现代分布式系统中的一项重要的基础性技术，得到广泛的应用。</p>
-<p>Paxos的整个发展过程大概可以分为三个阶段：<br>　　第一阶段：萌芽期，大致是1988-1996年。Liskov等人在<a href="https://www.podc.org/" target="_blank" rel="noopener">PODC</a>上发表了<a href="http://ov6v82oa9.bkt.clouddn.com/Viewstamped%20Replication-%20A%20New%20Primary%20Copy%20Method%20to%20Support%20Highly-Available%20Distributed%20Systems.pdf" target="_blank" rel="noopener">Viewstamped Replication: A New Primary Copy Method to Support Highly-Available Distributed Systems</a> ，提出了一个在副本出现宕机情况下仍能正常工作的主从备份算法，该算法与Paxos在本质上是一致的(<a href="http://ov6v82oa9.bkt.clouddn.com/The%20ABCD%E2%80%99s%20of%20Paxos.pdf" target="_blank" rel="noopener">The ABCD’s of Paxos</a>)。</p>
-<p>　　第二阶段：1996-2007年。涌现出一批Paxos的不同版本，这些Paxos的变种从不同侧面完善了基础Paxos算法，提升其性能。Liskov等人在1999年提出了<a href="http://ov6v82oa9.bkt.clouddn.com/Practical%20Byzantine%20Fault%20Tolerance.pdf" target="_blank" rel="noopener">PBFT（实用的拜占庭容错算法）</a>，这实际上也是Paxos的一个变种，被Lampson称为Byzantine Paxos，该算法对基础Paxos进行了改进，使其可以处理拜占庭错误。</p>
-<blockquote>
-<p>　　拜占庭将军问题（Byzantine failures），是由莱斯利·兰伯特提出的点对点通信中的基本问题。含义是在存在消息丢失的不可靠信道上试图通过消息传递的方式达到一致性是不可能的。<br>　　拜占庭位于如今的土耳其的伊斯坦布尔，是东罗马帝国的首都。由于当时拜占庭罗马帝国国土辽阔，为了防御目的，因此每个军队都分隔很远，将军与将军之间只能靠信差传消息。 在战争的时候，拜占庭军队内所有将军和副官必需达成一致的共识，决定是否有赢的机会才去攻打敌人的阵营。但是，在军队内有可能存有叛徒和敌军的间谍，左右将军们的决定又扰乱整体军队的秩序。在进行共识时，结果并不代表大多数人的意见。这时候，在已知有成员谋反的情况下，其余忠诚的将军在不受叛徒的影响下如何达成一致的协议，拜占庭问题就此形成。<br>　　拜占庭假设是对现实世界的模型化，由于硬件错误、网络拥塞或断开以及遭到恶意攻击，计算机和网络可能出现不可预料的行为。拜占庭容错协议必须处理这些失效，并且这些协议还要满足所要解决的问题要求的规范。</p>
-</blockquote>
-<p>Eli Gafni 和 Lamport 在2000年提出了<a href="">Disk Paxos</a>，这可以认为是Paxos基于磁盘的版本，以支持持久化。</p>
-<p>　　第三阶段：本阶段。Paxos开始在工业界得到了广泛应用。从2006年开始，谷歌公司有两篇影响深远的论文发表在OSDI上，一篇是“<a href="http://ov6v82oa9.bkt.clouddn.com/Bigtable-A%20Distributed%20Storage%20System%20for%20Structured%20Data.pdf" target="_blank" rel="noopener">Bigtable:A Distributed Storage System for Structured Data</a>”，另一篇“<a href="http://ov6v82oa9.bkt.clouddn.com/The%20Chubby%20lock%20service%20for%20loosely-coupled%20distributed%20systems.pdf" target="_blank" rel="noopener">The Chubby lock service for loosely-coupled distributed systems</a>”。两篇论文可以说是揭开了大数据管理的序幕，而Paxos则在大数据管理的核心技术（容错）中扮演了极为重要的角色。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/09/11/Paxos发展、算法原理/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/05/CAP定理(原则)以及BASE理论/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Frank yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="紫魔戒的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/05/CAP定理(原则)以及BASE理论/" itemprop="url">CAP定理(原则)以及BASE理论</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-05T12:02:00+08:00">
-                2017-09-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Distributed/" itemprop="url" rel="index">
-                    <span itemprop="name">Distributed</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>#CAP定理(原则)以及BASE理论</p>
-<h2 id="CAP定理-原则-概念"><a href="#CAP定理-原则-概念" class="headerlink" title="CAP定理(原则)概念"></a>CAP定理(原则)概念</h2><p>　　CAP原则又称CAP定理，指的是在一个分布式系统中， Consistency（一致性）、 Availability（可用性）、Partition tolerance（分区容错性），三者不可得兼。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/“cap定理”的图片搜索结果.png" alt="“cap定理”的图片搜索结果"></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/09/05/CAP定理(原则)以及BASE理论/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/04/Linux进程状态/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Frank yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="紫魔戒的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/04/Linux进程状态/" itemprop="url">Linux进程状态转换图</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-04T12:08:00+08:00">
-                2017-09-04
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-25T21:44:00+08:00">
+                2017-06-25
               </time>
             
 
@@ -1353,10 +572,155 @@
 
       
         
-          <h4 id="Linux进程状态"><a href="#Linux进程状态" class="headerlink" title="Linux进程状态"></a>Linux进程状态</h4><h4 id="Linux内核中的进程状态"><a href="#Linux内核中的进程状态" class="headerlink" title="Linux内核中的进程状态"></a>Linux内核中的进程状态</h4><center><img src="http://hi.csdn.net/attachment/201111/2/0_1320213851DMLL.gif" alt=""></center>
+          
+            <p>【摘要】进程死锁及解决办法一、要点提示（1） 掌握死锁的概念和产生死锁的根本原因。（2） 理解产生死锁的必要条件–以下四个条件同时具备：互斥条件、不可抢占条件、占有且申请条件、循环等待条件。（3） 记住解决死锁的一般方法，掌握死锁的预防和死锁的避免二者的基本思想。（4） 掌握死锁的预防策略中… <a href="http://www.cnblogs.com/yangjiannr/p/7391326.html" target="_blank" rel="noopener">阅读全文</a></p>
+<p><a href="http://www.frankyang.cn/2017/06/25/lock/" target="_blank" rel="noopener">http://www.frankyang.cn/2017/06/25/lock/</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/25/如何实现守护进程？/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Frank yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="紫魔戒的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/25/如何实现守护进程？/" itemprop="url">如何实现守护进程？</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-25T12:01:00+08:00">
+                2017-05-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>守护进程（Daemon）是运行在后台的一种特殊进程。它独立于控制终端并且周期性地执行某种任务或等待处理某些发生的事件。守护进程是一种很有用的进程。 </p>
+<p>1、守护进程最重要的特性是后台运行。<br>2、守护进程必须与其运行前的环境隔离开来。这些环境包括未关闭的文件描述符，控制终端，会话和进程组，工作目录以及文件创建掩模等。这些环境通常是守护进程从执行它的父进程（特别是shell）中继承下来的。<br>3、守护进程的启动方式有其特殊之处。它可以在Linux系统启动时从启动脚本/etc/rc.d中启动，可以由作业规划进程crond启动，还可以由用户终端（shell）执行。</p>
+<p>　　总之，除开这些特殊性以外，守护进程与普通进程基本上没有什么区别。因此，编写守护进程实际上是把一个普通进程按照上述的守护进程的特性改造成为守护进程。如果对进程有比较深入的认识就更容易理解和编程了。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/09/04/Linux进程状态/#more" rel="contents">
+            <a class="btn" href="/2017/05/25/如何实现守护进程？/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1407,7 +771,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/04/密码学hash函数-SHA256-512/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/10/C++ 4种强制类型转换/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Frank yang">
@@ -1426,7 +790,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/04/密码学hash函数-SHA256-512/" itemprop="url">密码学hash函数-SHA256-512</a></h1>
+                <a class="post-title-link" href="/2017/05/10/C++ 4种强制类型转换/" itemprop="url">C++ 4种强制类型转换</a></h1>
         
 
         <div class="post-meta">
@@ -1438,8 +802,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-04T11:19:00+08:00">
-                2017-09-04
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-10T07:17:00+08:00">
+                2017-05-10
               </time>
             
 
@@ -1461,8 +825,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Cryptography/" itemprop="url" rel="index">
-                    <span itemprop="name">Cryptography</span>
+                  <a href="/categories/Cpp/" itemprop="url" rel="index">
+                    <span itemprop="name">Cpp</span>
                   </a>
                 </span>
 
@@ -1499,13 +863,13 @@
 
       
         
-          <p>Hash函数又称哈希函数、散列函数、杂凑函数。它是一种<strong>单向密码体制</strong>，即从一个从明文到密文的不可逆映射，只有加密过程，没有解密过程。<br>Hash函数H将可变长度的数据块M作为输入，产生固定长度的Hash值h=H(M)。<br>在安全应用中使用的Hash函数称为密码学Hash函数。（单向性）、（抗碰撞性）</p>
+          <p>C++的四种强制类型转换为：static_cast、const_cast、reinterpret_cast和dynamic_cast</p>
 <blockquote>
-<p>弱抗碰撞性：给定一个消息M，要找到另一个消息M’，使得H(M)=H(M’)很难。<br>强抗碰撞性：要找到两个随机明文M和M’，使得H(M)=H(M’)很难。</p>
+<p>类型转换的一般形式：cast-name<type>(expression);</type></p>
 </blockquote>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/09/04/密码学hash函数-SHA256-512/#more" rel="contents">
+            <a class="btn" href="/2017/05/10/C++ 4种强制类型转换/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1556,7 +920,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/04/大数据处理-Bitmap/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/08/TCP超时重传、滑动窗口、拥塞控制、快重传和快恢复/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Frank yang">
@@ -1575,7 +939,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/04/大数据处理-Bitmap/" itemprop="url">大数据处理-Bitmap</a></h1>
+                <a class="post-title-link" href="/2017/05/08/TCP超时重传、滑动窗口、拥塞控制、快重传和快恢复/" itemprop="url">TCP超时重传、滑动窗口、拥塞控制、快重传和快恢复</a></h1>
         
 
         <div class="post-meta">
@@ -1587,8 +951,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-04T11:14:00+08:00">
-                2017-09-04
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-08T19:33:00+08:00">
+                2017-05-08
               </time>
             
 
@@ -1610,8 +974,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/BigData/" itemprop="url" rel="index">
-                    <span itemprop="name">BigData</span>
+                  <a href="/categories/Network/" itemprop="url" rel="index">
+                    <span itemprop="name">Network</span>
                   </a>
                 </span>
 
@@ -1648,11 +1012,10 @@
 
       
         
-          <p>　　MapReduce是一种编程模型，用于大规模数据集（大于1TB）的并行运算。概念”Map（映射）”和”Reduce（归约）”</p>
-<h4 id="Bit-map空间压缩和快速排序去重"><a href="#Bit-map空间压缩和快速排序去重" class="headerlink" title="Bit-map空间压缩和快速排序去重"></a>Bit-map空间压缩和快速排序去重</h4><p><strong>1. Bit-map的基本思想</strong><br>　　32位机器上，对于一个整型数，比如int a=1 在内存中占32bit位，这是为了方便计算机的运算。但是对于某些应用场景而言，这属于一种巨大的浪费，因为我们可以用对应的32bit位对应存储十进制的0-31个数，而这就是Bit-map的基本思想。Bit-map算法利用这种思想处理大量数据的排序、查询以及去重。<br>　　Bitmap在用户群做交集和并集运算的时候也有极大的便利。</p>
+          <h3 id="TCP超时重传"><a href="#TCP超时重传" class="headerlink" title="TCP超时重传"></a>TCP超时重传</h3><p>　　原理是在发送某一个数据以后就开启一个<strong>计时器</strong>，在一定时间内如果没有得到发送的数据报的ACK报文，那么就重新发送数据，直到发送成功为止。<br>　　影响超时重传机制协议效率的一个关键参数是<strong>重传超时时间</strong>（<strong>RTO</strong>，Retransmission TimeOut）。RTO的值被设置过大过小都会对协议造成不利影响。<br>　　（1）RTO设长了，重发就慢，没有效率，性能差。<br>　　（2）RTO设短了，重发的就快，会增加网络拥塞，导致更多的超时，更多的超时导致更多的重发。<br>　　连接往返时间（RTT，Round Trip Time），指发送端从发送TCP包开始到接收它的立即响应所消耗的时间。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/09/04/大数据处理-Bitmap/#more" rel="contents">
+            <a class="btn" href="/2017/05/08/TCP超时重传、滑动窗口、拥塞控制、快重传和快恢复/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1703,7 +1066,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/04/几种垃圾回收GC概述/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/19/HTTP与HTTPS异同:HTTP1.0与HTTP1.1差别/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Frank yang">
@@ -1722,7 +1085,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/04/几种垃圾回收GC概述/" itemprop="url">几种垃圾回收GC概述</a></h1>
+                <a class="post-title-link" href="/2017/04/19/HTTP与HTTPS异同:HTTP1.0与HTTP1.1差别/" itemprop="url">HTTP与HTTPS异同||HTTP1.0与HTTP1.1差别</a></h1>
         
 
         <div class="post-meta">
@@ -1734,8 +1097,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-04T10:59:00+08:00">
-                2017-09-04
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-19T15:08:00+08:00">
+                2017-04-19
               </time>
             
 
@@ -1757,8 +1120,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/GC/" itemprop="url" rel="index">
-                    <span itemprop="name">GC</span>
+                  <a href="/categories/Network/" itemprop="url" rel="index">
+                    <span itemprop="name">Network</span>
                   </a>
                 </span>
 
@@ -1795,14 +1158,241 @@
 
       
         
-          <h1 id="垃圾回收机制"><a href="#垃圾回收机制" class="headerlink" title="垃圾回收机制"></a>垃圾回收机制</h1><h2 id="引用计数回收器（Reference-Counting-Collector）"><a href="#引用计数回收器（Reference-Counting-Collector）" class="headerlink" title="引用计数回收器（Reference Counting Collector）"></a>引用计数回收器（Reference Counting Collector）</h2><p>　　原理是在每个对象内部维护一个整数值，叫做这个对象的引用计数，当对象被引用时引用计数加一，当对象不被引用时引用计数减一。当引用计数为 0 时，自动销毁对象。</p>
-<blockquote>
-<p>目前引用计数法主要用在 c++ 标准库的 std::shared_ptr 、微软的 COM 、Objective-C 和 PHP 中。</p>
-</blockquote>
-<p>　　计数器表示资源（内存中的对象）的使用次数，当计数器变成零的时候就可以将该资源销毁。在向已有的系统添加垃圾回收器时，开发人员通常会选择计数回收器，因为这种方式<strong>最容易与已有的资源管理器和代码集成在一起</strong>。</p>
+          <h2 id="HTTP状态码"><a href="#HTTP状态码" class="headerlink" title="HTTP状态码"></a>HTTP状态码</h2><table>
+<thead>
+<tr>
+<th>分类</th>
+<th>解释</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1XX</td>
+<td>信息</td>
+<td>服务器收到请求，需要请求者继续执行操作</td>
+</tr>
+<tr>
+<td>2XX</td>
+<td>成功</td>
+<td>操作被成功接收并处理</td>
+</tr>
+<tr>
+<td>3XX</td>
+<td>重定向</td>
+<td>需要进一步的操作以完成请求</td>
+</tr>
+<tr>
+<td>4XX</td>
+<td>客户端错误</td>
+<td>请求包含语法错误或无法完成请求</td>
+</tr>
+<tr>
+<td>5XX</td>
+<td>服务器错误</td>
+<td>服务器在处理请求的过程中发生了错误</td>
+</tr>
+</tbody>
+</table>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/09/04/几种垃圾回收GC概述/#more" rel="contents">
+            <a class="btn" href="/2017/04/19/HTTP与HTTPS异同:HTTP1.0与HTTP1.1差别/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/18/TCP三次握手四次挥手/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Frank yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="紫魔戒的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/04/18/TCP三次握手四次挥手/" itemprop="url">TCP三次握手四次挥手</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-18T21:25:00+08:00">
+                2017-04-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Network/" itemprop="url" rel="index">
+                    <span itemprop="name">Network</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="TCP三次握手四次挥手"><a href="#TCP三次握手四次挥手" class="headerlink" title="TCP三次握手四次挥手"></a>TCP三次握手四次挥手</h1><table>
+<thead>
+<tr>
+<th>标志位缩写</th>
+<th>全称</th>
+<th>中文</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SYN</td>
+<td>synchronous</td>
+<td>建立联机</td>
+</tr>
+<tr>
+<td>ACK</td>
+<td>acknowledgement</td>
+<td>确认</td>
+</tr>
+<tr>
+<td>PSH</td>
+<td>push</td>
+<td>传送</td>
+</tr>
+<tr>
+<td>FIN</td>
+<td>finish</td>
+<td>结束</td>
+</tr>
+<tr>
+<td>RST</td>
+<td>reset</td>
+<td>重置</td>
+</tr>
+<tr>
+<td>URG</td>
+<td>urgent</td>
+<td>紧急</td>
+</tr>
+<tr>
+<td>Seq</td>
+<td>Sequence number</td>
+<td>顺序号码</td>
+</tr>
+<tr>
+<td>ACK</td>
+<td>Acknowledge number</td>
+<td>确认号码</td>
+</tr>
+</tbody>
+</table>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/18/TCP三次握手四次挥手/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1844,7 +1434,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
   </nav>
 
 

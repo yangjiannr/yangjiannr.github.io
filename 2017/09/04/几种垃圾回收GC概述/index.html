@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="GC," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="垃圾回收机制引用计数回收器（Reference Counting Collector）　　原理是在每个对象内部维护一个整数值，叫做这个对象的引用计数，当对象被引用时引用计数加一，当对象不被引用时引用计数减一。当引用计数为 0 时，自动销毁对象。  目前引用计数法主要用在 c++ 标准库的 std::shared_ptr 、微软的 COM 、Objective-C 和 PHP 中。  　　计数器表示">
+<meta name="keywords" content="GC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="几种垃圾回收GC概述">
+<meta property="og:url" content="http://yoursite.com/2017/09/04/几种垃圾回收GC概述/index.html">
+<meta property="og:site_name" content="紫魔戒的博客">
+<meta property="og:description" content="垃圾回收机制引用计数回收器（Reference Counting Collector）　　原理是在每个对象内部维护一个整数值，叫做这个对象的引用计数，当对象被引用时引用计数加一，当对象不被引用时引用计数减一。当引用计数为 0 时，自动销毁对象。  目前引用计数法主要用在 c++ 标准库的 std::shared_ptr 、微软的 COM 、Objective-C 和 PHP 中。  　　计数器表示">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/Animation_of_the_Naive_Mark_and_Sweep_Garbage_Collector_Algorithm.gif-143.9kB.gif">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/181024382398115.jpg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/181041528488728.jpg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/181100129575916.jpg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/Animation_of_tri-color_garbage_collection.gif-94kB.gif">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/533622b0-268e-3968-acbb-07b26a1dba2a.jpg">
+<meta property="og:updated_time" content="2017-09-04T02:59:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="几种垃圾回收GC概述">
+<meta name="twitter:description" content="垃圾回收机制引用计数回收器（Reference Counting Collector）　　原理是在每个对象内部维护一个整数值，叫做这个对象的引用计数，当对象被引用时引用计数加一，当对象不被引用时引用计数减一。当引用计数为 0 时，自动销毁对象。  目前引用计数法主要用在 c++ 标准库的 std::shared_ptr 、微软的 COM 、Objective-C 和 PHP 中。  　　计数器表示">
+<meta name="twitter:image" content="http://oc3uwt4a5.bkt.clouddn.com/Animation_of_the_Naive_Mark_and_Sweep_Garbage_Collector_Algorithm.gif-143.9kB.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/09/04/几种垃圾回收GC概述/"/>
+
+
+
+
+
+  <title>几种垃圾回收GC概述 | 紫魔戒的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">紫魔戒的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">技术分享</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            Schedule
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            Sitemap
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            Commonweal 404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/04/几种垃圾回收GC概述/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Frank yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="紫魔戒的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">几种垃圾回收GC概述</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-04T10:59:00+08:00">
+                2017-09-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/GC/" itemprop="url" rel="index">
+                    <span itemprop="name">GC</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="垃圾回收机制"><a href="#垃圾回收机制" class="headerlink" title="垃圾回收机制"></a>垃圾回收机制</h1><h2 id="引用计数回收器（Reference-Counting-Collector）"><a href="#引用计数回收器（Reference-Counting-Collector）" class="headerlink" title="引用计数回收器（Reference Counting Collector）"></a>引用计数回收器（Reference Counting Collector）</h2><p>　　原理是在每个对象内部维护一个整数值，叫做这个对象的引用计数，当对象被引用时引用计数加一，当对象不被引用时引用计数减一。当引用计数为 0 时，自动销毁对象。</p>
+<blockquote>
+<p>目前引用计数法主要用在 c++ 标准库的 std::shared_ptr 、微软的 COM 、Objective-C 和 PHP 中。</p>
+</blockquote>
+<p>　　计数器表示资源（内存中的对象）的使用次数，当计数器变成零的时候就可以将该资源销毁。在向已有的系统添加垃圾回收器时，开发人员通常会选择计数回收器，因为这种方式<strong>最容易与已有的资源管理器和代码集成在一起</strong>。</p>
+<a id="more"></a>
+<p>　　不过引用计数算法存在很多问题。最大的一个问题是，它无法解决<strong>循环引用</strong>问题。</p>
+<blockquote>
+<p>循环引用是指对象 A 和对象 B 互相持有对方的引用。这样两个对象的引用计数都不是 0 ，因此永远不能被收集，造成内存泄露。除此之外，引用计数需要额外的开销。</p>
+</blockquote>
+<p>　　虽然现代CPU的运算能力很强，但内存并不快，而计数器的运算需要频繁使用内存。因为计数器需要不断被更新，所以它们不是只读的，而且不能保证线程安全。<br>　　引用计数器算法是一种<strong>摊销算法</strong>（将开销分摊给了程序），不过它是偶然性的摊销，无法保证响应时间。例如，假设程序正在处理一个很大的树结构，最后一个使用这个树的程序会触发销毁操作，根据墨菲定律，其延迟会比期望的要高。</p>
+<h2 id="标记清除回收器（Mark-Sweep-Collector）"><a href="#标记清除回收器（Mark-Sweep-Collector）" class="headerlink" title="标记清除回收器（Mark Sweep Collector）"></a>标记清除回收器（Mark Sweep Collector）</h2><p>　　标记清除回收算法解决了一些在引用计数算法中存在的问题。它解决了循环引用问题，而且开销要小得多，因为它不需要维护计数器。<br>　　这个算法分为两步，标记和清除。<br>　　　　1. <strong>标记</strong>：从程序的根节点开始， 递归地 遍历所有对象，将能遍历到的对象打上标记。<br>　　　　2. <strong>清除</strong>：讲所有未标记的的对象当作垃圾销毁。</p>
+<p><img src="http://oc3uwt4a5.bkt.clouddn.com/Animation_of_the_Naive_Mark_and_Sweep_Garbage_Collector_Algorithm.gif-143.9kB.gif" alt="Animation_of_the_Naive_Mark_and_Sweep_Garbage_Collector_Algorithm.gif-143.9kB"><br><img src="http://oc3uwt4a5.bkt.clouddn.com/181024382398115.jpg" alt="181024382398115"></p>
+<p>　　不过，它无法立即检测到垃圾。这个算法还有一个缺陷，就是人们常常说的 <strong>STW 问题（Stop The World）</strong>。因为算法在标记时必须暂停整个程序，否则其他线程的代码可能会改变对象状态，从而可能把不应该回收的对象当做垃圾收集掉。<br>　　标记清除算法有更高的一致性要求，而且难以将其集成到已有的系统中。在标记阶段，回收器要求遍历所有的存活对象，包括封装在对象里的数据。如果某个对象不支持回收器的遍历访问，那么使用这种回收器就会存在风险。</p>
+<h2 id="复制回收器（Copying-Collector）"><a href="#复制回收器（Copying-Collector）" class="headerlink" title="复制回收器（Copying Collector）"></a>复制回收器（Copying Collector）</h2><p>　　节点复制也是基于追踪的算法。其将整个堆等分为两个半区（semi-space），一个包含现有数据，另一个包含已被废弃的数据。节点复制式垃圾收集从切换（flip）两个半区的角色开始，然后收集器在老的半区，也就是 Fromspace 中遍历存活的数据结构，在第一次访问某个单元时把它复制到新半区，也就是 Tospace 中去。在 Fromspace 中所有存活单元都被访问过之后，收集器在 Tospace 中建立一个存活数据结构的副本，用户程序可以重新开始运行了。</p>
+<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ol>
+<li>所有存活的数据结构都缩并地排列在 Tospace 的底部，这样就不会存在内存碎片的问题。</li>
+<li>获取新内存可以简单地通过递增自由空间指针来实现。</li>
+</ol>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><ol>
+<li>内存得不到充分利用，总有一半的内存空间处于浪费状态。</li>
+<li>Copying算法的效率跟存活对象的数目多少有很大的关系，如果存活对象很多，那么Copying算法的效率将会大大降低。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/181041528488728.jpg" alt="181041528488728"></li>
+</ol>
+<h2 id="标记整理回收器（Mark-Compact-Collector）"><a href="#标记整理回收器（Mark-Compact-Collector）" class="headerlink" title="标记整理回收器（Mark Compact Collector）"></a>标记整理回收器（Mark Compact Collector）</h2><p>　　为了解决Copying算法的缺陷，充分利用内存空间，提出了Mark-Compact算法。该算法标记阶段和Mark-Sweep一样，但是在完成标记之后，它不是直接清理可回收对象，而是将存活对象都向一端移动，然后清理掉端边界以外的内存。<br>　　标记整理算法清理内存的方式不是通过清除，而是将对象移动到空余的内存空间。对象总是以不变的次序存留在内存里，先分配到内存的对象总处于较低的内存段，不过因为经过移动，对象间的内存间隙被消除。</p>
+<p>　　新创建的对象总是处于内存的高段。这种内存分配器被称为“bump”，类似于栈的分配，只是没有栈那样的大小限制。有些使用bump分配器的系统甚至不用调用栈来存储数据，它们直接在堆里分配调用帧，并把它们看成对象。</p>
+<p>　　从理论上看，这种回收算法的另一个优势在于，程序具有了更好的内存访问模型，这种模型对现代硬件的内存缓存更加友好。不过，相比其他算法，我们很难直观地感受到这种优势，因为引用计数和标记清除算法里所使用的内存分配器虽然很复杂，但它们很健壮，很高效。</p>
+<p>　　标记整理是一种复杂的算法，需要多次遍历所有分配到内存的对象。这种复杂性所带来的主要好处就是极低的内存开销。Oracle的Hotspot虚拟机使用了多种垃圾回收算法。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/181100129575916.jpg" alt="181100129575916"></p>
+<h2 id="三色标记法"><a href="#三色标记法" class="headerlink" title="三色标记法"></a>三色标记法</h2><p>三色标记算法是对标记阶段的改进，原理如下：<br>　　1. 起初所有对象都是白色。<br>　　2. 从根出发扫描所有可达对象，标记为灰色，放入待处理队列。<br>　　3. 从队列取出灰色对象，将其引用对象标记为灰色放入队列，自身标记为黑色。<br>　　4. 重复 3，直到灰色对象队列为空。此时白色对象即为垃圾，进行回收。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/Animation_of_tri-color_garbage_collection.gif-94kB.gif" alt="Animation_of_tri-color_garbage_collection.gif-94kB"></p>
+<p>　　这个算法可以实现 <a href="http://ov6v82oa9.bkt.clouddn.com/On-the-fly-Garbage-Collection.pdf" target="_blank" rel="noopener">“on-the-fly”</a>，也就是在程序执行的同时进行收集，并不需要暂停整个程序。<br>但是也会有一个缺陷，可能程序中的垃圾产生的速度会大于垃圾收集的速度，这样会导致程序中的垃圾越来越多无法被收集掉。</p>
+<h2 id="分代收集"><a href="#分代收集" class="headerlink" title="分代收集"></a>分代收集</h2><p>　　分代收集也是传统 Mark-Sweep 的一个改进。这个算法是基于一个经验：绝大多数对象的生命周期都很短。所以按照对象的生命周期长短来进行分代。<br>　　一般 GC 都会分三代，在 java 中称之为新生代（Young Generation）、年老代（Tenured Generation）和永久代（Permanent Generation）；在 .NET 中称之为第 0 代、第 1 代和第2代。<br>　　原理如下：<br>　　　　1. 新对象放入第 0 代<br>　　　　2. 当内存用量超过一个较小的阈值时，触发 0 代收集<br>　　　　3. 第 0 代幸存的对象（未被收集）放入第 1 代<br>　　　　4. 只有当内存用量超过一个较高的阈值时，才会触发 1 代收集<br>　　　　5. 2 代同理<br>　　因为 0 代中的对象十分少，所以每次收集时遍历都会非常快（比 1 代收集快几个数量级）。只有内存消耗过于大的时候才会触发较慢的 1 代和 2 代收集。</p>
+<blockquote>
+<p>因此，分代收集是目前比较好的垃圾回收方式。使用的语言（平台）有 jvm、.NET 。</p>
+</blockquote>
+<p>　　基于追踪的垃圾回收算法（标记-清扫、节点复制）一个主要问题是在生命周期较长的对象上浪费时间（长生命周期的对象是不需要频繁扫描的）。同时，内存分配存在这么一个事实 “most object die young”。基于这两点，分代垃圾回收算法将对象按生命周期长短存放到堆上的两个（或者更多）区域，这些区域就是分代（generation）。对于<strong>新生代的区域的垃圾回收频率要明显高于老年代区域</strong>。<br>　　分配对象的时候从新生代里面分配，如果后面发现对象的生命周期较长，则将其移到老年代，这个过程叫做 promote。随着不断 promote，最后新生代的大小在整个堆的占用比例不会特别大。收集的时候集中主要精力在新生代就会相对来说效率更高，STW 时间也会更短。<br>　　目前大部分垃圾收集器对于新生代都采取Copying算法，因为新生代中每次垃圾回收都要回收大部分对象，也就是说需要复制的操作次数较少，但是实际中并不是按照1：1的比例来划分新生代的空间的，一般来说是将新生代划分为一块较大的Eden空间和两块较小的Survivor空间，每次使用Eden空间和其中的一块Survivor空间，当进行回收时，将Eden和Survivor中还存活的对象复制到另一块Survivor空间中，然后清理掉Eden和刚才使用过的Survivor空间。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/533622b0-268e-3968-acbb-07b26a1dba2a.jpg" alt="533622b0-268e-3968-acbb-07b26a1dba2a"><br>　　而由于老年代的特点是每次回收都只回收少量对象，一般使用的是Mark-Compact算法。<br>　　注意，在堆区之外还有一个代就是永久代（Permanet Generation），它用来存储class类、常量、方法描述等。对永久代的回收主要回收两部分内容：废弃常量和无用的类。</p>
+<h4 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h4><p>性能更优。</p>
+<h4 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h4><p>实现复杂</p>
+<p><a href="http://www.frankyang.cn/2017/08/30/gc/" target="_blank" rel="noopener">http://www.frankyang.cn/2017/08/30/gc/</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/GC/" rel="tag"># GC</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/24/什么是隔离见证？简单介绍隔离见证-紫魔戒/" rel="next" title="什么是隔离见证？简单介绍隔离见证">
+                <i class="fa fa-chevron-left"></i> 什么是隔离见证？简单介绍隔离见证
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/04/大数据处理-Bitmap/" rel="prev" title="大数据处理-Bitmap">
+                大数据处理-Bitmap <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Frank yang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#垃圾回收机制"><span class="nav-number">1.</span> <span class="nav-text">垃圾回收机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#引用计数回收器（Reference-Counting-Collector）"><span class="nav-number">1.1.</span> <span class="nav-text">引用计数回收器（Reference Counting Collector）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标记清除回收器（Mark-Sweep-Collector）"><span class="nav-number">1.2.</span> <span class="nav-text">标记清除回收器（Mark Sweep Collector）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复制回收器（Copying-Collector）"><span class="nav-number">1.3.</span> <span class="nav-text">复制回收器（Copying Collector）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#优点"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缺点"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">缺点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标记整理回收器（Mark-Compact-Collector）"><span class="nav-number">1.4.</span> <span class="nav-text">标记整理回收器（Mark Compact Collector）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三色标记法"><span class="nav-number">1.5.</span> <span class="nav-text">三色标记法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分代收集"><span class="nav-number">1.6.</span> <span class="nav-text">分代收集</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#优点-1"><span class="nav-number">1.6.0.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缺点-1"><span class="nav-number">1.6.0.2.</span> <span class="nav-text">缺点</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Frank yang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

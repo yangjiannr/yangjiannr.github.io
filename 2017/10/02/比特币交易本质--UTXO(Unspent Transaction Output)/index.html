@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="BlockChain,BitCoin," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="UTXO 代表 Unspent Transaction Output。　　Transaction 被简称为 TX，所以上面这个短语缩写为 UTXO。 　　现在的银行也好、信用卡也好、证券交易系统也好，互联网第三方支付系统也好，其核心都是基于账户（account based）的设计，由关系数据库支撑。 　　数据库要确保两点，第一是你要确保业务规则得到遵守，张三的余额充足。第二是确保事务性，也就是">
+<meta name="keywords" content="BlockChain,BitCoin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="比特币交易本质--UTXO(Unspent Transaction Output)">
+<meta property="og:url" content="http://yoursite.com/2017/10/02/比特币交易本质--UTXO(Unspent Transaction Output)/index.html">
+<meta property="og:site_name" content="紫魔戒的博客">
+<meta property="og:description" content="UTXO 代表 Unspent Transaction Output。　　Transaction 被简称为 TX，所以上面这个短语缩写为 UTXO。 　　现在的银行也好、信用卡也好、证券交易系统也好，互联网第三方支付系统也好，其核心都是基于账户（account based）的设计，由关系数据库支撑。 　　数据库要确保两点，第一是你要确保业务规则得到遵守，张三的余额充足。第二是确保事务性，也就是">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/140417wvvqmz48oa4qqwaz.jpg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/140447qe7vo3vt7g22slev.jpg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/15069510428877.jpg">
+<meta property="og:updated_time" content="2017-10-02T13:45:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="比特币交易本质--UTXO(Unspent Transaction Output)">
+<meta name="twitter:description" content="UTXO 代表 Unspent Transaction Output。　　Transaction 被简称为 TX，所以上面这个短语缩写为 UTXO。 　　现在的银行也好、信用卡也好、证券交易系统也好，互联网第三方支付系统也好，其核心都是基于账户（account based）的设计，由关系数据库支撑。 　　数据库要确保两点，第一是你要确保业务规则得到遵守，张三的余额充足。第二是确保事务性，也就是">
+<meta name="twitter:image" content="http://oc3uwt4a5.bkt.clouddn.com/140417wvvqmz48oa4qqwaz.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/02/比特币交易本质--UTXO(Unspent Transaction Output)/"/>
+
+
+
+
+
+  <title>比特币交易本质--UTXO(Unspent Transaction Output) | 紫魔戒的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">紫魔戒的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">技术分享</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            Schedule
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            Sitemap
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            Commonweal 404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/02/比特币交易本质--UTXO(Unspent Transaction Output)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Frank yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="紫魔戒的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">比特币交易本质--UTXO(Unspent Transaction Output)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-02T21:45:00+08:00">
+                2017-10-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BlockChain/" itemprop="url" rel="index">
+                    <span itemprop="name">BlockChain</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>　　UTXO 代表 Unspent Transaction Output。<br>　　Transaction 被简称为 TX，所以上面这个短语缩写为 UTXO。</p>
+<p>　　现在的银行也好、信用卡也好、证券交易系统也好，互联网第三方支付系统也好，其核心都是基于账户（account based）的设计，由关系数据库支撑。</p>
+<p>　　数据库要确保两点，第一是你要确保业务规则得到遵守，张三的余额充足。第二是确保事务性，也就是原子性、一致性、隔离性、持久性（ACID）。这种基于账户的设计，简单直观，而且在 IT 系统设计里用了几十年，应该说没有什么问题。</p>
+<a id="more"></a>
+<p>　　我们假设一个这样的场景：张三挖到12.5 枚比特币。过了几天，他把其中 2.5 枚支付给李四。又过了几天，他和李四各出资 2.5 比特币凑成 5 比特币付给王五。<br>　　如果是基于账户的设计，张、李、王三人在数据库中各有一个账户，则他们三人的账户变化如下图所示：<br><img src="http://oc3uwt4a5.bkt.clouddn.com/140417wvvqmz48oa4qqwaz.jpg" alt="140417wvvqmz48oa4qqwaz"><br>　　但在比特币中，这个过程是通过 UTXO 实现的，图示如下：<br><img src="http://oc3uwt4a5.bkt.clouddn.com/140447qe7vo3vt7g22slev.jpg" alt="140447qe7vo3vt7g22slev"><br>　　比特币的区块链账本里记录的是一笔又一笔的交易。<br>　　每笔交易都有若干交易输入，也就是资金来源，也都有若干笔交易输出，也就是资金去向。一般来说，每一笔交易都要花费（spend）一笔输入，产生一笔输出，而其所产生的输出，就是“未花费过的交易输出”，也就是 UTXO。<br>　　比特币交易遵守几个规则：</p>
+<ol>
+<li>除了 coinbase 交易之外，所有的资金来源都必须来自前面某一个或者几个交易的 UTXO，就像接水管一样，一个接一个，此出彼入，此入彼出，生生不息，钱就在交易之间流动起来了。</li>
+<li>任何一笔交易的交易输入总量必须等于交易输出总量，等式两边必须配平。</li>
+</ol>
+<p>　　上图第一个交易#1001号交易是coinbase交易。比特币是矿工挖出来的。当一个矿机费尽九牛二虎之力找到一个合格的区块之后，它就获得一个特权，能够创造一个coinbase交易，在其中放入一笔新钱，并且在交易输出的收款人地址一栏，堂堂正正的写上自己的地址。这个coinbase交易随着张三挖出来的区块被各个节点接受，经过六个确认以后永远的烙印在历史中。<br>　　过了几天，张三打算付2.5个比特币给李四，张三就发起一#2001号交易，这个交易的资金来源项写着“#1001(1)”，也就是#1001号交易——张三挖出矿的那个coinbase交易——的第一项UTXO。然后在本交易的交易输出UTXO项中，把2.5个比特币的收款人地址设为李四的地址。<br>　　请注意，这一笔交易必须将前面产生那一项12.5个比特币的输出项全部消耗，而由于张三只打算付给李四2.5个比特币，为了要消耗剩下的10比特币，他只好把剩余的那10个比特币支付给自己，这样才能符合输入与输出配平的规则。<br>　　再过几天，张三和李四打算AA制合起来给王五付5枚比特币。那么张三或李四发起#3001号交易，在交易输入部分，有两个资金来源，分别是#2001(1)和#2001(2)，代表第#2001号交易的第(1)和第(2)项 UTXO。然后在这个交易的输出部分里如法炮制，给王五5比特币，把张三剩下的7.5比特币发还给自己。以后王五若要再花他这5比特币，就必须在他的交易里注明资金的来源是#3001(1)。<br>　　所以，其实并没有什么比特币，只有UTXO。当我们说张三拥有10枚比特币的时候，我实际上是说，当前区块链账本中，有若干笔交易的UTXO项收款人写的是张三的地址，而这些UTX 项的数额总和是10。因为在比特币系统里，一个人可以拥有的地址资源，可谓取之不尽用之不竭。要知道自己的一大堆地址里一共收了多少UTXO，人是算不过来的，需要由比特币钱包代为跟踪计算。</p>
+<p>　　如果采用基于账户的方案，需要一个数据库。这个数据库能够让你很方便的查到张三、李四各自的账户余额。<br>　　而 UTXO 方案当然也需要一个数据库，这个数据库记录着当前系统里每一笔“没有花出去的交易输出”，也是就比特币。当节点接收到一笔交易的时候，它需要去 UTXO 数据库里查，看看这笔交易所引用的 UTXO 是否存在，它的收款人（拥有者）是不是当前新交易的付款者。而交易结束之后，数据库要做相应的更新。<br>　　首先要明确，无论是账户数据库还是 UTXO 数据库，必须是分散的，每结点一个克隆，一定不能是中心化的。如果比特币系统有一个中心数据库，不管你有多少节点，每一笔交易都要跑去中心数据库验证一下、然后再执行“转账”的事务操作，那就完全谈不上“去中心化”，比特币就毫无价值了，不如老老实实用支付宝。<br>　　长期来看，账户数据库会无限膨胀，而UTXO 数据库体积会小很多。<br>　　比特币是个匿名体系，它的账户就是“地址”。每一个比特币用户可以拥有几乎无限多的地址，在比特币系统来看，它完全不知道两个地址背后对应的是不是同一个人。</p>
+<p>　　在版本控制方面的考虑，svn 是中心化的数据库保持一份账本，这和区块链的设计自然是相违背的，git 是去中心化的数据库，但会保存太多冗余数据，对于分布式性能肯定是要大打折扣。UTXO数据库是抛弃了历史包袱的git， 只存储了最后一个版本。简易实用。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/15069510428877.jpg" alt=""><br>　　UTXO具有天然的匿名效果，一个账户所对应的未花费交易是难以发现的。<br>　　在性能方面，由于UTXO是独立的数据记录，那么就存在极大的并行性可以提升区块链交易验证速度。</p>
+<p><a href="http://www.frankyang.cn/2017/09/30/utxo/" target="_blank" rel="noopener">http://www.frankyang.cn/2017/09/30/utxo/</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/BlockChain/" rel="tag"># BlockChain</a>
+          
+            <a href="/tags/BitCoin/" rel="tag"># BitCoin</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/11/2PC&3PC/" rel="next" title="2PC&3PC">
+                <i class="fa fa-chevron-left"></i> 2PC&3PC
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/01/共识机制/" rel="prev" title="共识机制">
+                共识机制 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Frank yang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Frank yang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

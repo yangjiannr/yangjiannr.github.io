@@ -112,7 +112,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Process,Linux," />
 
 
 
@@ -123,15 +123,18 @@
 
 
 
-<meta name="keywords" content="技术分享">
-<meta property="og:type" content="website">
-<meta property="og:title" content="标签">
-<meta property="og:url" content="http://yoursite.com/tags/index.html">
+<meta name="description" content="【摘要】进程死锁及解决办法一、要点提示（1） 掌握死锁的概念和产生死锁的根本原因。（2） 理解产生死锁的必要条件–以下四个条件同时具备：互斥条件、不可抢占条件、占有且申请条件、循环等待条件。（3） 记住解决死锁的一般方法，掌握死锁的预防和死锁的避免二者的基本思想。（4） 掌握死锁的预防策略中… 阅读全文 http://www.frankyang.cn/2017/06/25/lock/">
+<meta name="keywords" content="Process,Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="进程死锁及解决办法">
+<meta property="og:url" content="http://yoursite.com/2017/06/25/进程死锁及解决办法-紫魔戒/index.html">
 <meta property="og:site_name" content="紫魔戒的博客">
+<meta property="og:description" content="【摘要】进程死锁及解决办法一、要点提示（1） 掌握死锁的概念和产生死锁的根本原因。（2） 理解产生死锁的必要条件–以下四个条件同时具备：互斥条件、不可抢占条件、占有且申请条件、循环等待条件。（3） 记住解决死锁的一般方法，掌握死锁的预防和死锁的避免二者的基本思想。（4） 掌握死锁的预防策略中… 阅读全文 http://www.frankyang.cn/2017/06/25/lock/">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-09-11T12:54:17.853Z">
+<meta property="og:updated_time" content="2017-06-25T13:44:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="标签">
+<meta name="twitter:title" content="进程死锁及解决办法">
+<meta name="twitter:description" content="【摘要】进程死锁及解决办法一、要点提示（1） 掌握死锁的概念和产生死锁的根本原因。（2） 理解产生死锁的必要条件–以下四个条件同时具备：互斥条件、不可抢占条件、占有且申请条件、循环等待条件。（3） 记住解决死锁的一般方法，掌握死锁的预防和死锁的避免二者的基本思想。（4） 掌握死锁的预防策略中… 阅读全文 http://www.frankyang.cn/2017/06/25/lock/">
 
 
 
@@ -161,13 +164,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/06/25/进程死锁及解决办法-紫魔戒/"/>
 
 
 
 
 
-  <title>标签 | 紫魔戒的博客</title>
+  <title>进程死锁及解决办法 | 紫魔戒的博客</title>
   
 
 
@@ -322,40 +325,199 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/25/进程死锁及解决办法-紫魔戒/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Frank yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="紫魔戒的博客">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">标签</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <div class="tag-cloud">
-            <div class="tag-cloud-title">
-                23 tags in total
-            </div>
-            <div class="tag-cloud-tags">
-              <a href="/tags/BitCoin/" style="font-size: 12px; color: #ccc">BitCoin</a> <a href="/tags/Bitmap/" style="font-size: 12px; color: #ccc">Bitmap</a> <a href="/tags/BlockChain/" style="font-size: 30px; color: #111">BlockChain</a> <a href="/tags/Consensus/" style="font-size: 12px; color: #ccc">Consensus</a> <a href="/tags/Cpp/" style="font-size: 12px; color: #ccc">Cpp</a> <a href="/tags/Cryptography/" style="font-size: 12px; color: #ccc">Cryptography</a> <a href="/tags/Distributed/" style="font-size: 24px; color: #4f4f4f">Distributed</a> <a href="/tags/GC/" style="font-size: 12px; color: #ccc">GC</a> <a href="/tags/Hadoop/" style="font-size: 12px; color: #ccc">Hadoop</a> <a href="/tags/Http/" style="font-size: 12px; color: #ccc">Http</a> <a href="/tags/Https/" style="font-size: 12px; color: #ccc">Https</a> <a href="/tags/Linux/" style="font-size: 24px; color: #4f4f4f">Linux</a> <a href="/tags/Network/" style="font-size: 12px; color: #ccc">Network</a> <a href="/tags/Paxos/" style="font-size: 12px; color: #ccc">Paxos</a> <a href="/tags/Process/" style="font-size: 24px; color: #4f4f4f">Process</a> <a href="/tags/SHA/" style="font-size: 12px; color: #ccc">SHA</a> <a href="/tags/TCP-IP/" style="font-size: 18px; color: #8e8e8e">TCP/IP</a> <a href="/tags/hash/" style="font-size: 12px; color: #ccc">hash</a> <a href="/tags/大数据/" style="font-size: 12px; color: #ccc">大数据</a> <a href="/tags/隔离见证/" style="font-size: 12px; color: #ccc">隔离见证</a>
-            </div>
-          </div>
+          <h1 class="post-title" itemprop="name headline">进程死锁及解决办法</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-25T21:44:00+08:00">
+                2017-06-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p>【摘要】进程死锁及解决办法一、要点提示（1） 掌握死锁的概念和产生死锁的根本原因。（2） 理解产生死锁的必要条件–以下四个条件同时具备：互斥条件、不可抢占条件、占有且申请条件、循环等待条件。（3） 记住解决死锁的一般方法，掌握死锁的预防和死锁的避免二者的基本思想。（4） 掌握死锁的预防策略中… <a href="http://www.cnblogs.com/yangjiannr/p/7391326.html" target="_blank" rel="noopener">阅读全文</a></p>
+<p><a href="http://www.frankyang.cn/2017/06/25/lock/" target="_blank" rel="noopener">http://www.frankyang.cn/2017/06/25/lock/</a></p>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Process/" rel="tag"># Process</a>
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/25/如何实现守护进程？/" rel="next" title="如何实现守护进程？">
+                <i class="fa fa-chevron-left"></i> 如何实现守护进程？
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/24/什么是隔离见证？简单介绍隔离见证-紫魔戒/" rel="prev" title="什么是隔离见证？简单介绍隔离见证">
+                什么是隔离见证？简单介绍隔离见证 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
   </div>
 
 

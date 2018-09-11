@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hadoop," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="官网安装教程：http://archive.cloudera.com/cdh5/cdh/5/hadoop-2.6.0-cdh5.13.0/hadoop-project-dist/hadoop-common/SingleCluster.html 环境本教程使用 CentOS 7 64位 作为系统环境，请自行安装系统。装好了 CentOS 系统之后，在安装 Hadoop 前还需要做一些必备工作。 创建">
+<meta name="keywords" content="Hadoop">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop环境搭载">
+<meta property="og:url" content="http://yoursite.com/2017/12/25/Hadoop环境搭载/index.html">
+<meta property="og:site_name" content="紫魔戒的博客">
+<meta property="og:description" content="官网安装教程：http://archive.cloudera.com/cdh5/cdh/5/hadoop-2.6.0-cdh5.13.0/hadoop-project-dist/hadoop-common/SingleCluster.html 环境本教程使用 CentOS 7 64位 作为系统环境，请自行安装系统。装好了 CentOS 系统之后，在安装 Hadoop 前还需要做一些必备工作。 创建">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/15141656457549.jpg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/15141675279407.jpg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/15140317188202.jpg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/15140317495623.jpg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/15141681652941.jpg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/15140320692255.jpg">
+<meta property="og:updated_time" content="2018-08-31T14:27:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hadoop环境搭载">
+<meta name="twitter:description" content="官网安装教程：http://archive.cloudera.com/cdh5/cdh/5/hadoop-2.6.0-cdh5.13.0/hadoop-project-dist/hadoop-common/SingleCluster.html 环境本教程使用 CentOS 7 64位 作为系统环境，请自行安装系统。装好了 CentOS 系统之后，在安装 Hadoop 前还需要做一些必备工作。 创建">
+<meta name="twitter:image" content="http://oc3uwt4a5.bkt.clouddn.com/15141656457549.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/25/Hadoop环境搭载/"/>
+
+
+
+
+
+  <title>Hadoop环境搭载 | 紫魔戒的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">紫魔戒的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">技术分享</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            Schedule
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            Sitemap
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            Commonweal 404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/25/Hadoop环境搭载/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Frank yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="紫魔戒的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Hadoop环境搭载</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-25T10:27:00+08:00">
+                2017-12-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hadoop/" itemprop="url" rel="index">
+                    <span itemprop="name">Hadoop</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>官网安装教程：<a href="http://archive.cloudera.com/cdh5/cdh/5/hadoop-2.6.0-cdh5.13.0/hadoop-project-dist/hadoop-common/SingleCluster.html" target="_blank" rel="noopener">http://archive.cloudera.com/cdh5/cdh/5/hadoop-2.6.0-cdh5.13.0/hadoop-project-dist/hadoop-common/SingleCluster.html</a></p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>本教程使用 CentOS 7 64位 作为系统环境，请自行安装系统。<br>装好了 CentOS 系统之后，在安装 Hadoop 前还需要做一些必备工作。</p>
+<h3 id="创建hadoop用户"><a href="#创建hadoop用户" class="headerlink" title="创建hadoop用户"></a>创建hadoop用户</h3><p>如果你安装 CentOS 的时候不是用的 “hadoop” 用户，那么需要增加一个名为 hadoop 的用户。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">su              # 上述提到的以 root 用户登录</span><br><span class="line">useradd -m hadoop -s /bin/bash   # 创建新用户hadoop</span><br><span class="line">passwd hadoop   # 修改密码，按提示输入两次密码 </span><br><span class="line">visudo 或 vim /etc/sudoers</span><br><span class="line"># 找到 root ALL=(ALL) ALL 这行</span><br><span class="line"># 然后在这行下面增加一行内容：hadoop ALL=(ALL) ALL （当中的间隔为tab）</span><br></pre></td></tr></table></figure>
+<p><img src="http://oc3uwt4a5.bkt.clouddn.com/15141656457549.jpg" alt=""></p>
+<a id="more"></a>
+<h2 id="免密登录设置"><a href="#免密登录设置" class="headerlink" title="免密登录设置"></a>免密登录设置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install ssh</span><br><span class="line">sudo yum install openssh-clients</span><br><span class="line">sudo yum install openssh-server</span><br><span class="line"></span><br><span class="line">//免密登录</span><br><span class="line">ssh-keygen -t rsa</span><br><span class="line">//回车回车</span><br><span class="line">ll -a   //生成了 .ssh文件夹，文件夹内有id_rsa 和 id_rsa.pub 两个文件</span><br><span class="line"></span><br><span class="line">cp ~/.ssh/id_rsa.pub  ~/.ssh/authorized_keys</span><br><span class="line"></span><br><span class="line">//测试是否成功</span><br><span class="line">ssh localhost   // 无需密码则表示设置成功</span><br></pre></td></tr></table></figure>
+<h2 id="关闭防火墙"><a href="#关闭防火墙" class="headerlink" title="关闭防火墙"></a>关闭防火墙</h2><p>Centos直接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl stop firewalld.service #停止firewall</span><br><span class="line">sudo systemctl disable firewalld.service #禁止firewall开机启动</span><br><span class="line">sudo firewall-cmd --state #查看默认防火墙状态（关闭后显示notrunning，开启后显示running）</span><br></pre></td></tr></table></figure>
+<p>Centos7系统的防火墙放开50070端口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">步骤：</span><br><span class="line">1.sudo firewall-cmd --zone=public --add-port=50070/tcp --permanent </span><br><span class="line">2.重启防火墙  sudo firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+<h2 id="从本机拷贝文件至远程主机"><a href="#从本机拷贝文件至远程主机" class="headerlink" title="从本机拷贝文件至远程主机"></a>从本机拷贝文件至远程主机</h2><p>jdk-9.0.1：<br><a href="http://download.oracle.com/otn-pub/java/jdk/9.0.1+11/jdk-9.0.1_linux-x64_bin.tar.gz" target="_blank" rel="noopener">jdk-9.0.1_linux-x64_bin.tar.gz</a></p>
+<p>hadoop-2.6.0-cdh5.7.0.tar.gz<br><a href="http://archive.cloudera.com/cdh5/cdh/5/hadoop-2.6.0-cdh5.7.0.tar.gz" target="_blank" rel="noopener">hadoop-2.6.0-cdh5.7.0.tar.gz</a></p>
+<p>远程主机（用户名hadoop）：<br>　　<code>[hadoop@localhost ~]$ mkdir -p app/lib</code><br>　　<code>[hadoop@localhost ~]$ mkdir package</code></p>
+<p>本机，将需要的文件远程拷贝到远程主机中<br>　　<code>scp jdk-9.0.1_linux-x64_bin.tar.gz hadoop@hadoop:/home/hadoop/package</code><br>　　<code>scp hadoop-2.6.0-cdh5.7.0.tar.gz hadoop@hadoop:/home/hadoop/package</code></p>
+<h2 id="安装Java环境"><a href="#安装Java环境" class="headerlink" title="安装Java环境"></a>安装Java环境</h2><p>远程主机 /home/hadoop/package :<br>　　<code>tar -zxvf jdk-9.0.1_linux-x64_bin.tar.gz -C ~/app/lib</code><br>　　<code>tar -zxvf hadoop-2.6.0-cdh5.7.0.tar.gz -C ../app/lib/</code></p>
+<p>sudo vim /etc/profile 或者 vim ~/.bash_profile<br>尾部添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/home/hadoop/app/lib/jdk-9.0.1</span><br><span class="line">export PATH=$JAVA_HOME/bin:$PATH</span><br><span class="line">export CLASSPATH=&quot;.:$JAVA_HOME/lib:$CLASSPATH&quot;</span><br></pre></td></tr></table></figure>
+<p>使配置文件生效<br>　　<code>. /etc/profile 或者 source /etc/profile</code><br>　　<code>. .~/.bash_profile 或者 source .~/.bash_profile</code></p>
+<p>验证：<br>　　echo $JAVA_HOME<br>　　　　<code>/home/hadoop/app/lib/jdk-9.0.1</code></p>
+<p>　　java -version</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">java version &quot;9.0.1&quot;</span><br><span class="line">Java(TM) SE Runtime Environment (build 9.0.1+11)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 9.0.1+11, mixed mode)</span><br></pre></td></tr></table></figure>
+<h2 id="Hadoop配置文件的修改"><a href="#Hadoop配置文件的修改" class="headerlink" title="Hadoop配置文件的修改"></a>Hadoop配置文件的修改</h2><blockquote>
+<p>如果是linux系统下则可以 rm -rf <em>.cmd，删除cmd文件<br>[hadoop@localhost hadoop-2.6.0-cdh5.7.0]$  `find  .  -name  ‘</em>.cmd’  -type  f  -print  -exec  rm  -rf  {} \;`</p>
+</blockquote>
+<p>在hadoop_home/etc/hadoop路径下<br>　　<code>$ vim hadoop-env.sh</code><br>找到export JAVA_HOME=${JAVA_HOME}，并且注释掉这一行，添加下面的一行（jdk的根目录）<br>　　<code>export JAVA_HOME=/home/hadoop/app/lib/jdk-9.0.1</code><br><img src="http://oc3uwt4a5.bkt.clouddn.com/15141675279407.jpg" alt=""></p>
+<p>etc/hadoop/core-site.xml:  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;fs.defaultFS&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;hdfs://localhost:9000&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line"></span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;/home/hadoop/app/tmp&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="http://oc3uwt4a5.bkt.clouddn.com/15140317188202.jpg" alt=""></p>
+<p>etc/hadoop/hdfs-site.xml:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;1&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="http://oc3uwt4a5.bkt.clouddn.com/15140317495623.jpg" alt=""></p>
+<p>sudo vim /etc/profile 或者 vim ~/.bash_profile<br>尾部添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">export HADOOP_HOME=/home/hadoop/app/lib/hadoop-2.6.0-cdh5.7.0</span><br><span class="line">export PATH=$HADOOP/bin:$PATH</span><br><span class="line">export HADOOP_INSTALL=$HADOOP_HOME</span><br><span class="line">export HADOOP_MAPRED_HOME=$HADOOP_HOME</span><br><span class="line">export HADOOP_COMMON_HOME=$HADOOP_HOME</span><br><span class="line">export HADOOP_HDFS_HOME=$HADOOP_HOME</span><br><span class="line">export YARN_HOME=$HADOOP_HOME</span><br><span class="line">export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native</span><br><span class="line">export PATH=$PATH:$HADOOP_HOME/sbin:$HADOOP_HOME/bin</span><br></pre></td></tr></table></figure>
+<p>使配置文件生效<br>　　<code>. /etc/profile 或者 source /etc/profile</code><br>　　<code>. .~/.bash_profile 或者 source .~/.bash_profile</code></p>
+<h2 id="启动hdfs"><a href="#启动hdfs" class="headerlink" title="启动hdfs"></a>启动hdfs</h2><ol>
+<li><p>格式化文件系统（仅第一次执行即可，不要重复执行）：<br><code>./bin/hdfs namenode -format</code><br><img src="http://oc3uwt4a5.bkt.clouddn.com/15141681652941.jpg" alt=""></p>
+</li>
+<li><p><code>./sbin/start-dfs.sh</code></p>
+<blockquote>
+<p>可能会出现需要yes, 输入密码</p>
+</blockquote>
+</li>
+<li><p>验证是否成功<br>　　启动完成后，可以通过命令 jps 来判断是否成功启动，若成功启动则会列出如下进程: “NameNode”、”DataNode”和SecondaryNameNode（如果 SecondaryNameNode 没有启动，请运行 sbin/stop-dfs.sh 关闭进程，然后再次尝试启动尝试）。如果没有 NameNode 或 DataNode ，那就是配置不成功，请仔细检查之前步骤，或通过查看启动日志排查原因。<br>$ jps<br> 1425 NameNode<br> 1702 SecondaryNameNode<br> 1546 DataNode<br> 1855 Jps</p>
+</li>
+</ol>
+<p><img src="http://oc3uwt4a5.bkt.clouddn.com/15140320692255.jpg" alt=""></p>
+<p>  浏览器方式验证 <a href="http://localhost:50070/" target="_blank" rel="noopener">http://localhost:50070/</a>  （如果是远程主机则将localhost换成远程主机IP）</p>
+<ol start="4">
+<li>停止<br>$ sbin/stop-dfs.sh</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hadoop/" rel="tag"># Hadoop</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/01/共识机制/" rel="next" title="共识机制">
+                <i class="fa fa-chevron-left"></i> 共识机制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Frank yang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#环境"><span class="nav-number">1.</span> <span class="nav-text">环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建hadoop用户"><span class="nav-number">1.1.</span> <span class="nav-text">创建hadoop用户</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#免密登录设置"><span class="nav-number">2.</span> <span class="nav-text">免密登录设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关闭防火墙"><span class="nav-number">3.</span> <span class="nav-text">关闭防火墙</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从本机拷贝文件至远程主机"><span class="nav-number">4.</span> <span class="nav-text">从本机拷贝文件至远程主机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装Java环境"><span class="nav-number">5.</span> <span class="nav-text">安装Java环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hadoop配置文件的修改"><span class="nav-number">6.</span> <span class="nav-text">Hadoop配置文件的修改</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动hdfs"><span class="nav-number">7.</span> <span class="nav-text">启动hdfs</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Frank yang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

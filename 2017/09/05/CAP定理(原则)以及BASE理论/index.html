@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="BlockChain,Distributed," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="#CAP定理(原则)以及BASE理论 CAP定理(原则)概念　　CAP原则又称CAP定理，指的是在一个分布式系统中， Consistency（一致性）、 Availability（可用性）、Partition tolerance（分区容错性），三者不可得兼。">
+<meta name="keywords" content="BlockChain,Distributed">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CAP定理(原则)以及BASE理论">
+<meta property="og:url" content="http://yoursite.com/2017/09/05/CAP定理(原则)以及BASE理论/index.html">
+<meta property="og:site_name" content="紫魔戒的博客">
+<meta property="og:description" content="#CAP定理(原则)以及BASE理论 CAP定理(原则)概念　　CAP原则又称CAP定理，指的是在一个分布式系统中， Consistency（一致性）、 Availability（可用性）、Partition tolerance（分区容错性），三者不可得兼。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/“cap定理”的图片搜索结果.png">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/ebc7d2819bde9f31a64c600e52f55e82_b.png">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/e4aa992e9783a0b0d64875fee506105f_b.png">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/faa86dbe7cb3eb930b99bbabac7374ab_b.png">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/1813ef3a81e938baec57b5fe47657734_b.png">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/b948f04dd22849b3f839e19a3e8af771_b.png">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/41d7018aa8fa5b3b0a7f032b38d0234d_b.png">
+<meta property="og:updated_time" content="2017-09-05T04:02:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CAP定理(原则)以及BASE理论">
+<meta name="twitter:description" content="#CAP定理(原则)以及BASE理论 CAP定理(原则)概念　　CAP原则又称CAP定理，指的是在一个分布式系统中， Consistency（一致性）、 Availability（可用性）、Partition tolerance（分区容错性），三者不可得兼。">
+<meta name="twitter:image" content="http://oc3uwt4a5.bkt.clouddn.com/“cap定理”的图片搜索结果.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/09/05/CAP定理(原则)以及BASE理论/"/>
+
+
+
+
+
+  <title>CAP定理(原则)以及BASE理论 | 紫魔戒的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">紫魔戒的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">技术分享</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            Schedule
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            Sitemap
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            Commonweal 404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/05/CAP定理(原则)以及BASE理论/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Frank yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="紫魔戒的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CAP定理(原则)以及BASE理论</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-05T12:02:00+08:00">
+                2017-09-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Distributed/" itemprop="url" rel="index">
+                    <span itemprop="name">Distributed</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>#CAP定理(原则)以及BASE理论</p>
+<h2 id="CAP定理-原则-概念"><a href="#CAP定理-原则-概念" class="headerlink" title="CAP定理(原则)概念"></a>CAP定理(原则)概念</h2><p>　　CAP原则又称CAP定理，指的是在一个分布式系统中， Consistency（一致性）、 Availability（可用性）、Partition tolerance（分区容错性），三者不可得兼。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/“cap定理”的图片搜索结果.png" alt="“cap定理”的图片搜索结果"></p>
+<a id="more"></a>
+<p><strong>1. 数据一致性(consistency)</strong></p>
+<blockquote>
+<p>　　一致性（C）：在分布式系统中的所有数据备份，在同一时刻是否同样的值。（等同于所有节点访问同一份最新的数据副本）<br>　　在分布式系统中，如果能够做到针对一个数据项的更新操作执行成功后，所有的用户都可以读到其最新的值，那么这样的系统就被认为具有强一致性（严格的一致性）。</p>
+</blockquote>
+<p><strong>2. 服务可用性(availability)</strong></p>
+<blockquote>
+<p>　　可用性（A）：系统提供的服务必须一致出于可用的状态，对于用户的每一个请求总是能够有限的时间内返回结果。<br>　　在集群中一部分节点故障后，集群整体是否还能响应客户端的读写请求。（对数据更新具备高可用性）</p>
+</blockquote>
+<p><strong>3. 分区容错性(partition-tolerance)</strong></p>
+<blockquote>
+<p>　　分区容忍性（P）：在网络分区的情况下，被分隔的节点仍能正常对外服务<br>　　由于当前的网络硬件肯定会出现延迟丢包等问题，所以分区容忍性是我们必须需要实现的。<br>　　以实际效果而言，分区相当于对通信的时限要求。系统如果不能在时限内达成数据一致性，就意味着发生了分区的情况，必须就当前操作在C和A之间做出选择。<br>　　一个分布式系统里面，节点组成的网络本来应该是连通的。然而可能因为一些故障，使得有些节点之间不连通了，整个网络就分成了几块区域。数据就散布在了这些不连通的区域中。这就叫分区。<br>　　当你一个数据项只在一个节点中保存，那么分区出现后，和这个节点不连通的部分就访问不到这个数据了。这时分区就是无法容忍的。<br>　　提高分区容忍性的办法就是一个数据项复制到多个节点上，那么出现分区之后，这一数据项就可能分布到各个区里。容忍性就提高了。然而，要把数据复制到多个节点，就会带来一致性的问题，就是多个节点上面的数据可能是不一致的。要保证一致，每次写操作就都要等待全部节点写成功，而这等待又会带来可用性的问题。<br>　　总的来说就是，数据存在的节点越多，分区容忍性越高，但要复制更新的数据就越多，一致性就越难保证。为了保证一致性，更新所有节点数据所需要的时间就越长，可用性就会降低。</p>
+</blockquote>
+<p>　　根据定理，分布式系统只能满足三项中的两项而不可能满足全部三项。<br>　　理解CAP理论的最简单方式是想象两个节点分处分区两侧。 允许至少一个节点更新状态会导致数据不一致，即丧失了C性质。 如果为了保证数据一致性，将分区一侧的节点设置为不可用，那么又丧失了A性质。 除非两个节点可以互相通信，才能既保证C又保证A，这又会导致丧失P性质。</p>
+<table>
+<thead>
+<tr>
+<th>放弃CAP定理</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>放弃P</td>
+<td>如果希望能够避免系统出现分区容错性问题，一种较为简单地做法是将所有的数据（或者仅仅是那些与事务相关的数据）都放在一个分布式节点上。这样的做法虽然无法100%地保证系统不会出错，但至少不会碰到由于网络分区带来的负面影响。但同时需要注意的是，放弃P的同时也就意味着放弃了系统的可扩展性。</td>
+</tr>
+<tr>
+<td>放弃A</td>
+<td>相对于放弃“分区容错性”来说，放弃可用性则正好相反，其做法是一旦系统遇到网络分区或其他故障时，那么收到影响的服务需要等待一定的时间，因此在等待期间系统无法对外提供正常的服务，即不可用。</td>
+</tr>
+<tr>
+<td>放弃C</td>
+<td>这里所说的放弃一致性，并不是完全不需要数据一致性，而是放弃数据的强一致性，而保留数据的最终一致性。这样的系统无法保证数据保持实时的一致性，但是能够承诺的是，数据最终会达到一个一致的状态。这里就引入了一个时间窗口的概念，具体多久能够达到数据一致取决于系统的设计，主要包括数据副本在不同节点之间的复制时间长短。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="CA非0-1的选择"><a href="#CA非0-1的选择" class="headerlink" title="CA非0/1的选择"></a>CA非0/1的选择</h2><p>　　P 是必选项，那3选2的选择题不就变成数据一致性(consistency)、服务可用性(availability) 2选1？工程实践中一致性有不同程度，可用性也有不同等级，在保证分区容错性的前提下，放宽约束后可以兼顾一致性和可用性，两者不是非此即彼。<br>　　CAP定理证明中的一致性指强一致性，强一致性要求多节点组成的被调要能像单节点一样运作、操作具备原子性，数据在时间、时序上都有要求。如果放宽这些要求，还有其他一致性类型：</p>
+<ul>
+<li>序列一致性(sequential consistency)：不要求时序一致，A操作先于B操作，在B操作后如果所有调用端读操作得到A操作的结果，满足序列一致性</li>
+<li><a href="http://ov6v82oa9.bkt.clouddn.com/Eventual%20Consistent%20Databases-%20State%20of%20the%20Art.pdf" target="_blank" rel="noopener">最终一致性(eventual consistency)</a>：放宽对时间的要求，在被调完成操作响应后的某个时间点，被调多个节点的数据最终达成一致</li>
+</ul>
+<p>　　可用性在CAP定理里指所有读写操作必须要能终止，实际应用中从主调、被调两个不同的视角，可用性具有不同的含义。当P(网络分区)出现时，主调可以只支持读操作，通过牺牲部分可用性达成数据一致。<br>　　工程实践中，较常见的做法是通过异步拷贝副本(asynchronous replication)、quorum/NRW，实现在调用端看来数据强一致、被调端最终一致，在调用端看来服务可用、被调端允许部分节点不可用(或被网络分隔)的效果。</p>
+<p>　　<strong>延时(latency)</strong>，它是衡量系统可用性、与用户体验直接相关的一项重要指标[16]。CAP理论中的可用性要求操作能终止、不无休止地进行，除此之外，我们还关心到底需要多长时间能结束操作，这就是延时，它值得我们设计、实现分布式系统时单列出来考虑。<br>　　延时与数据一致性也是一对“冤家”，如果要达到强一致性、多个副本数据一致，必然增加延时。加上延时的考量，我们得到一个CAP理论的修改版本<a href="http://ov6v82oa9.bkt.clouddn.com/Consistency%20Tradeoffs%20in%20Modern%20Distributed%20Database%20System%20Design.pdf" target="_blank" rel="noopener">PACELC</a>：如果出现P(网络分区)，如何在A(服务可用性)、C(数据一致性)之间选择；否则，如何在L(延时)、C(数据一致性)之间选择。</p>
+<h2 id="CAP原理实例推导"><a href="#CAP原理实例推导" class="headerlink" title="CAP原理实例推导"></a>CAP原理实例推导</h2><p>　　以数据库为例，讨论一下CAP原理:</p>
+<h3 id="单实例"><a href="#单实例" class="headerlink" title="单实例"></a>单实例</h3><p>　　一种最简单的情况：”单数据库实例”。 这也是最常见的小站点、个人博客、小论坛的架构。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/ebc7d2819bde9f31a64c600e52f55e82_b.png" alt="ebc7d2819bde9f31a64c600e52f55e82_b"><br>　　可以很容易分析出来，由于单实例，所以不存在“网络分区”、“不一致”， 但单点故障后会导致整个数据库瘫痪，所以可用性不能保证。<br>　　这就是CAP定理中的，保证”C”和”P”，舍弃”A”。<br>　　所有单机版的系统都属于这个范畴，例如MySQL、memcached、redis。</p>
+<h3 id="分片Sharding"><a href="#分片Sharding" class="headerlink" title="分片Sharding"></a>分片Sharding</h3><p>　　为了提升可用性，我们在实际生产环境下经常会在客户端应用一些哈希算法，进行数据分片存放，如下图所示：<br><img src="http://oc3uwt4a5.bkt.clouddn.com/e4aa992e9783a0b0d64875fee506105f_b.png" alt="e4aa992e9783a0b0d64875fee506105f_b"><br>　　由于数据是分片存储在每个数据库中，所以依旧能保证数据一致性。由于数据库之间没有互相通信，并不依赖彼此的存在，所以分区可容忍性依旧没有破坏。那么可用性呢？很多时候会有人直接拍脑袋，这里我们用数学的方式来解答这个问题。<br>　　假设，集群有两台服务器，数据分布均匀，我们数据库实例宕机的概率是p。 那么这种利用哈希进行数据分片的集群的可用性为：<br><code>0.5*p*(1-p) + 0.5*p*(1-p) + 1*p*p = p</code><br>　　即使，数据分布均匀或者集群数量增大，结果也是一样的：“集群可用性依旧为p”。<br>　　那我们折腾了半天，CAP和单机竟然是一样的，这种情况下CAP各项指标虽然没有提升，但好处是：</p>
+<ul>
+<li>单个服务器宕机只会导致服务降级；</li>
+<li>集群有了扩容缩容的可能性，这就叫做scalability。</li>
+</ul>
+<p>　　这种分布式的方式常用于：分布式memcached、redis、传统的数据库Sharding、BigTable (列存储式数据库)、Hypertable (列存储式数据库)、HBase (列存储式数据库)、MongoDB (文档式数据库)、Terrastore (文档式数据库)、Redis (KV数据库)、Scalaris (KV数据库)、MemcacheDB (KV数据库)、Berkeley DB (KV数据库)</p>
+<h3 id="多副本写入"><a href="#多副本写入" class="headerlink" title="多副本写入"></a>多副本写入</h3><p><img src="http://oc3uwt4a5.bkt.clouddn.com/faa86dbe7cb3eb930b99bbabac7374ab_b.png" alt="faa86dbe7cb3eb930b99bbabac7374ab_b"><br>　　Client多副本写入，就是Client在写数据库的时候对多个数据库进行写入，并且在两个都写入成功后才认为成功。 由于数据存在多个副本，这种方式会大大的提高读取的可用性。但由于写入的时候要多写， 副本所在的所有实例都必须可用才能成功。所以写入的可用性反而下降了。<br>　　假设单机数据库的故障率为p（p&lt;1.0），那么单机数据库的可用性为1-p。 总结就是：</p>
+<ul>
+<li>在写入的场景下，一致性( C )和分区可容忍性( P )没有变化，可用性( A )反而有所下降， 从1-p降低到1-2p-p²</li>
+<li>在读取的场景下，一致性( C )和分区可容忍性( P )依旧没有变化，可用性( A )有所上升， 从1-p上升到1-p²</li>
+</ul>
+<p><strong>“Client多副本写入”这种写入方式非常适合于在”读多写少”的场景下提高可用性。</strong><br>　　为了改善写入时糟糕的可用性，这种方式还有一些“变种”，例如：</p>
+<ul>
+<li>写成功部分副本就返回成功，剩下的副本写入不保证结果。这样做的结果就是牺牲一定的一致性( C )，换取可用性( A )的提升。</li>
+</ul>
+<p>　　总的来说，这种方式属于广义的”Sharding”的范畴，除去上述的缺点还有一个较大的问题就是：</p>
+<ul>
+<li>假设副本数为n，Client写入单实例的耗时为t，多副本写入的耗时就是n*t；当n &gt; 1的时候会成倍的影响Client的写入性能。</li>
+</ul>
+<h3 id="集群Clustering"><a href="#集群Clustering" class="headerlink" title="集群Clustering"></a>集群Clustering</h3><p>　　为了解决Client写入慢调用复杂等问题，我们引入了集群方案，也就是Clustering。 Clustering和Sharding对比如下：<br><img src="http://oc3uwt4a5.bkt.clouddn.com/1813ef3a81e938baec57b5fe47657734_b.png" alt="1813ef3a81e938baec57b5fe47657734_b"></p>
+<h4 id="多副本模式1："><a href="#多副本模式1：" class="headerlink" title="多副本模式1："></a>多副本模式1：</h4><p><img src="http://oc3uwt4a5.bkt.clouddn.com/b948f04dd22849b3f839e19a3e8af771_b.png" alt="b948f04dd22849b3f839e19a3e8af771_b"><br>　　我们可以看到，由于多个副本写入成功才返回，这种方式一致性( C )依旧是保证的。 但写入可用性( A )和分区可容忍性( P )相对于单机均会下降。换来的是：</p>
+<ul>
+<li>较为简单的API，客户端不用关注“多写”问题；</li>
+<li>读取操作的高可用(HA)。</li>
+</ul>
+<p>　　由于上述方案是强一致性( C )的，这种应用场景常见于金融系统，这种这方面典型的代表有：ZooKeeper (KV数据库)、Vertica (列存储式数据库)、Aster Data (关系型数据库)、Greenplum (关系型数据库)</p>
+<h4 id="多副本模式2："><a href="#多副本模式2：" class="headerlink" title="多副本模式2："></a>多副本模式2：</h4><p>　　类似”Sharding”中我们采用的方案，生产环境线上的数据库也往往采用放弃一定的一致性( C ) ，来提高可用性( A )和分区可容忍性( P )。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/41d7018aa8fa5b3b0a7f032b38d0234d_b.png" alt="41d7018aa8fa5b3b0a7f032b38d0234d_b"><br>　　可以看到，由于大多数互联网公司的需求不是要求强一致性( C )， 所以通过放弃一致性，达到更高的可用性( A )和分区可容忍性 ( P )成了目前市面上大多数NoSQL数据库的核心思想。<br>　　在Amazon著名的分布式数据库Dynamo中，就是采用类似的方法：”3副本，写入2个成功后就返回成功，剩下的1个副本后续再进行同步”，我们称这种模式叫”最终一致性”。<br>　　这方面典型的代表还有：Dynamo (KV数据库)、Voldemort (KV数据库)、Tokyo Cabinet (KV数据库)、KAI (KV数据库)、Cassandra (列存储式数据库)、CouchDB (文档式数据库)、SimpleDB (文档式数据库)、Riak (文档式数据库)、MooseFS (类GFS分布式文件系统)</p>
+<p>　　<br>　　我们可以看到，系统设计就像穷人家的被子，盖住头和左脚就露出右脚，盖住头和右脚就露出左脚…… 即使你再有钱也不可能将CAP同时100%满足。<br>　　我们可以通过用更高可靠性的服务器、更可靠的网络设备达到CAP同时提升。</p>
+<h2 id="BASE理论概念"><a href="#BASE理论概念" class="headerlink" title="BASE理论概念"></a>BASE理论概念</h2><p>　　BASE是<strong>Basically Available（基本可用）</strong>、<strong>Soft state（软状态）</strong>和<strong>Eventually consistent（最终一致性）</strong>三个短语的简写，BASE是对CAP中一致性和可用性权衡的结果，其来源于对大规模互联网系统分布式实践的结论，是基于CAP定理逐步演化而来的，其核心思想是即使无法做到强一致性（Strong consistency），但每个应用都可以根据自身的业务特点，采用适当的方式来使系统达到最终一致性（Eventual consistency）。</p>
+<h3 id="Basically-Availble-–基本可用"><a href="#Basically-Availble-–基本可用" class="headerlink" title="Basically Availble –基本可用"></a>Basically Availble –基本可用</h3><p>　　支持分区失败（Sharding碎片划分数据库），出了问题服务仅降级（部分不可用）。<br>　　基本可用是指分布式系统在出现不可预知故障的时候，允许损失部分可用性——但请注意，这绝不等价于系统不可用，以下两个就是“基本可用”的典型例子：</p>
+<ul>
+<li>响应时间上的损失：正常情况下，一个在线搜索引擎需要0.5秒内返回给用户相应的查询结果，但由于出现异常（比如系统部分机房发生断电或断网故障），查询结果的响应时间增加到了1~2秒。</li>
+<li>功能上的损失：正常情况下，在一个电子商务网站上进行购物，消费者几乎能够顺利地完成每一笔订单，但是在一些节日大促购物高峰的时候，由于消费者的购物行为激增，为了保护购物系统的稳定性，部分消费者可能会被引导到一个降级页面。</li>
+</ul>
+<h3 id="Soft-state-–软状态-柔性"><a href="#Soft-state-–软状态-柔性" class="headerlink" title="Soft-state –软状态/柔性"></a>Soft-state –软状态/柔性</h3><p>　　事务”Soft state” 可以理解为”无连接”的, 而 “Hard state” 是”面向连接”的。软状态就是可以有一段时间不同步，异步。<br>　　软状态，指允许系统中的数据存在中间状态，并认为该中间状态的存在不会影响系统的整体可用性，即允许系统在不同节点的数据副本之间进行数据同步的过程存在延时。</p>
+<h3 id="Eventual-Consistency-–最终一致性"><a href="#Eventual-Consistency-–最终一致性" class="headerlink" title="Eventual Consistency –最终一致性"></a>Eventual Consistency –最终一致性</h3><p>　　最终一致性强调的是系统中所有的数据副本，在经过一段时间的同步后，最终能够达到一个一致的状态。因此，最终一致性的本质是需要系统保证最终数据能够达到一致，而不需要实时保证系统数据的强一致性。<br>　　亚马逊首席技术官Werner Vogels在于2008年发表的一篇文章中对最终一致性进行了非常详细的介绍。他认为最终一致性时一种特殊的弱一致性：系统能够保证在没有其他新的更新操作的情况下，数据最终一定能够达到一致的状态，因此所有客户端对系统的数据访问都能够获取到最新的值。同时，在没有发生故障的前提下，数据达到一致状态的时间延迟取决于网络延迟，系统负载和数据复制方案设计等因素。<br>　　<br>　　总的来说，BASE理论面向的是大型高可用可扩展的分布式系统，和传统事务的ACID【原子性（atomicity，或称不可分割性）、一致性（consistency）、隔离性（isolation，又称独立性）、持久性（durability）】特性是相反的，它完全不同于ACID的强一致性模型，而是提出通过牺牲强一致性来获得可用性，并允许数据在一段时间内是不一致的，但最终达到一致状态。但同时，在实际的分布式场景中，不同业务单元和组件对数据一致性的要求是不同的，因此在具体的分布式系统架构设计过程中，ACID特性与BASE理论往往又会结合在一起使用。</p>
+<p><a href="http://www.frankyang.cn/2017/09/05/cap-base/" target="_blank" rel="noopener">http://www.frankyang.cn/2017/09/05/cap-base/</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/BlockChain/" rel="tag"># BlockChain</a>
+          
+            <a href="/tags/Distributed/" rel="tag"># Distributed</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/04/Linux进程状态/" rel="next" title="Linux进程状态转换图">
+                <i class="fa fa-chevron-left"></i> Linux进程状态转换图
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/11/Paxos发展、算法原理/" rel="prev" title="Paxos发展、算法原理">
+                Paxos发展、算法原理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Frank yang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CAP定理-原则-概念"><span class="nav-number">1.</span> <span class="nav-text">CAP定理(原则)概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CA非0-1的选择"><span class="nav-number">2.</span> <span class="nav-text">CA非0/1的选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CAP原理实例推导"><span class="nav-number">3.</span> <span class="nav-text">CAP原理实例推导</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#单实例"><span class="nav-number">3.1.</span> <span class="nav-text">单实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分片Sharding"><span class="nav-number">3.2.</span> <span class="nav-text">分片Sharding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多副本写入"><span class="nav-number">3.3.</span> <span class="nav-text">多副本写入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集群Clustering"><span class="nav-number">3.4.</span> <span class="nav-text">集群Clustering</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#多副本模式1："><span class="nav-number">3.4.1.</span> <span class="nav-text">多副本模式1：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#多副本模式2："><span class="nav-number">3.4.2.</span> <span class="nav-text">多副本模式2：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BASE理论概念"><span class="nav-number">4.</span> <span class="nav-text">BASE理论概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Basically-Availble-–基本可用"><span class="nav-number">4.1.</span> <span class="nav-text">Basically Availble –基本可用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Soft-state-–软状态-柔性"><span class="nav-number">4.2.</span> <span class="nav-text">Soft-state –软状态/柔性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Eventual-Consistency-–最终一致性"><span class="nav-number">4.3.</span> <span class="nav-text">Eventual Consistency –最终一致性</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Frank yang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

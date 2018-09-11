@@ -112,7 +112,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Process,Linux," />
 
 
 
@@ -123,15 +123,23 @@
 
 
 
-<meta name="keywords" content="技术分享">
-<meta property="og:type" content="website">
-<meta property="og:title" content="标签">
-<meta property="og:url" content="http://yoursite.com/tags/index.html">
+<meta name="description" content="Linux进程状态Linux内核中的进程状态">
+<meta name="keywords" content="Process,Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux进程状态转换图">
+<meta property="og:url" content="http://yoursite.com/2017/09/04/Linux进程状态/index.html">
 <meta property="og:site_name" content="紫魔戒的博客">
+<meta property="og:description" content="Linux进程状态Linux内核中的进程状态">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-09-11T12:54:17.853Z">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201111/2/0_1320213851DMLL.gif">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/%E8%BF%9B%E7%A8%8B%E4%B8%89%E6%80%81.jpeg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/%E8%BF%9B%E7%A8%8B%E7%8A%B6%E6%80%81.jpeg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/%E8%BF%9B%E7%A8%8B%E4%BA%94%E6%80%81.jpeg">
+<meta property="og:updated_time" content="2017-09-04T04:08:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="标签">
+<meta name="twitter:title" content="Linux进程状态转换图">
+<meta name="twitter:description" content="Linux进程状态Linux内核中的进程状态">
+<meta name="twitter:image" content="http://hi.csdn.net/attachment/201111/2/0_1320213851DMLL.gif">
 
 
 
@@ -161,13 +169,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/04/Linux进程状态/"/>
 
 
 
 
 
-  <title>标签 | 紫魔戒的博客</title>
+  <title>Linux进程状态转换图 | 紫魔戒的博客</title>
   
 
 
@@ -322,40 +330,223 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/04/Linux进程状态/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Frank yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="紫魔戒的博客">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">标签</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <div class="tag-cloud">
-            <div class="tag-cloud-title">
-                23 tags in total
-            </div>
-            <div class="tag-cloud-tags">
-              <a href="/tags/BitCoin/" style="font-size: 12px; color: #ccc">BitCoin</a> <a href="/tags/Bitmap/" style="font-size: 12px; color: #ccc">Bitmap</a> <a href="/tags/BlockChain/" style="font-size: 30px; color: #111">BlockChain</a> <a href="/tags/Consensus/" style="font-size: 12px; color: #ccc">Consensus</a> <a href="/tags/Cpp/" style="font-size: 12px; color: #ccc">Cpp</a> <a href="/tags/Cryptography/" style="font-size: 12px; color: #ccc">Cryptography</a> <a href="/tags/Distributed/" style="font-size: 24px; color: #4f4f4f">Distributed</a> <a href="/tags/GC/" style="font-size: 12px; color: #ccc">GC</a> <a href="/tags/Hadoop/" style="font-size: 12px; color: #ccc">Hadoop</a> <a href="/tags/Http/" style="font-size: 12px; color: #ccc">Http</a> <a href="/tags/Https/" style="font-size: 12px; color: #ccc">Https</a> <a href="/tags/Linux/" style="font-size: 24px; color: #4f4f4f">Linux</a> <a href="/tags/Network/" style="font-size: 12px; color: #ccc">Network</a> <a href="/tags/Paxos/" style="font-size: 12px; color: #ccc">Paxos</a> <a href="/tags/Process/" style="font-size: 24px; color: #4f4f4f">Process</a> <a href="/tags/SHA/" style="font-size: 12px; color: #ccc">SHA</a> <a href="/tags/TCP-IP/" style="font-size: 18px; color: #8e8e8e">TCP/IP</a> <a href="/tags/hash/" style="font-size: 12px; color: #ccc">hash</a> <a href="/tags/大数据/" style="font-size: 12px; color: #ccc">大数据</a> <a href="/tags/隔离见证/" style="font-size: 12px; color: #ccc">隔离见证</a>
-            </div>
-          </div>
+          <h1 class="post-title" itemprop="name headline">Linux进程状态转换图</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-04T12:08:00+08:00">
+                2017-09-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h4 id="Linux进程状态"><a href="#Linux进程状态" class="headerlink" title="Linux进程状态"></a>Linux进程状态</h4><h4 id="Linux内核中的进程状态"><a href="#Linux内核中的进程状态" class="headerlink" title="Linux内核中的进程状态"></a>Linux内核中的进程状态</h4><center><img src="http://hi.csdn.net/attachment/201111/2/0_1320213851DMLL.gif" alt=""></center>
+
+<a id="more"></a>
+<p>◆运行状态（TASK_RUNNING）</p>
+<blockquote>
+<p>指正在被CPU运行或者就绪的状态。这样的进程被成为runnning进程。运行态的进程可以分为3种情况：内核运行态、用户运行态、就绪态。</p>
+</blockquote>
+<p>◆可中断睡眠状态（TASK_INTERRUPTIBLE）</p>
+<blockquote>
+<p>处于等待状态中的进程，一旦被该进程等待的资源被释放，那么该进程就会进入运行状态。</p>
+</blockquote>
+<p>◆不可中断睡眠状态（TASK_UNINTERRUPTIBLE）</p>
+<blockquote>
+<p>该状态的进程只能用wake_up()函数唤醒。</p>
+</blockquote>
+<p>◆暂停状态（TASK_STOPPED）</p>
+<blockquote>
+<p>当进程收到信号SIGSTOP、SIGTSTP、SIGTTIN或SIGTTOU时就会进入暂停状态。可向其发送SIGCONT信号让进程转换到可运行状态。</p>
+</blockquote>
+<p>◆僵死状态（TASK_ZOMBIE）</p>
+<blockquote>
+<p>当进程已经终止运行，但是父进程还没有询问其状态的情况。</p>
+</blockquote>
+<center><img src="http://oc3uwt4a5.bkt.clouddn.com/%E8%BF%9B%E7%A8%8B%E4%B8%89%E6%80%81.jpeg" alt=""></center><br><center><img src="http://oc3uwt4a5.bkt.clouddn.com/%E8%BF%9B%E7%A8%8B%E7%8A%B6%E6%80%81.jpeg" alt=""></center><br><center><img src="http://oc3uwt4a5.bkt.clouddn.com/%E8%BF%9B%E7%A8%8B%E4%BA%94%E6%80%81.jpeg" alt=""></center>
+
+<p><a href="http://www.frankyang.cn/2017/05/13/linux-jin-cheng-zhuang-tai/" target="_blank" rel="noopener">http://www.frankyang.cn/2017/05/13/linux-jin-cheng-zhuang-tai/</a></p>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Process/" rel="tag"># Process</a>
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/04/密码学hash函数-SHA256-512/" rel="next" title="密码学hash函数-SHA256-512">
+                <i class="fa fa-chevron-left"></i> 密码学hash函数-SHA256-512
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/05/CAP定理(原则)以及BASE理论/" rel="prev" title="CAP定理(原则)以及BASE理论">
+                CAP定理(原则)以及BASE理论 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
   </div>
 
 
@@ -388,8 +579,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -449,6 +649,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Linux进程状态"><span class="nav-number">1.</span> <span class="nav-text">Linux进程状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Linux内核中的进程状态"><span class="nav-number">2.</span> <span class="nav-text">Linux内核中的进程状态</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

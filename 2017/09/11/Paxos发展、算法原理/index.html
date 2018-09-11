@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Paxos," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Paxos发展史　　Leslie Lamport所提出的Paxos算法是现代分布式系统中的一项重要的基础性技术，得到广泛的应用。 Paxos的整个发展过程大概可以分为三个阶段：　　第一阶段：萌芽期，大致是1988-1996年。Liskov等人在PODC上发表了Viewstamped Replication: A New Primary Copy Method to Support Highly-A">
+<meta name="keywords" content="Paxos">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Paxos发展、算法原理">
+<meta property="og:url" content="http://yoursite.com/2017/09/11/Paxos发展、算法原理/index.html">
+<meta property="og:site_name" content="紫魔戒的博客">
+<meta property="og:description" content="Paxos发展史　　Leslie Lamport所提出的Paxos算法是现代分布式系统中的一项重要的基础性技术，得到广泛的应用。 Paxos的整个发展过程大概可以分为三个阶段：　　第一阶段：萌芽期，大致是1988-1996年。Liskov等人在PODC上发表了Viewstamped Replication: A New Primary Copy Method to Support Highly-A">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/Paxos背景.png">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/Message flow- Basic Paxos.jpg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/Paxos.png">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/1752522-44c5a422f917bfc5.jpg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/15050933433144.jpg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/15050931076257.jpg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/1752522-0fab48ed2bdf358a.png">
+<meta property="og:updated_time" content="2017-09-11T03:30:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Paxos发展、算法原理">
+<meta name="twitter:description" content="Paxos发展史　　Leslie Lamport所提出的Paxos算法是现代分布式系统中的一项重要的基础性技术，得到广泛的应用。 Paxos的整个发展过程大概可以分为三个阶段：　　第一阶段：萌芽期，大致是1988-1996年。Liskov等人在PODC上发表了Viewstamped Replication: A New Primary Copy Method to Support Highly-A">
+<meta name="twitter:image" content="http://oc3uwt4a5.bkt.clouddn.com/Paxos背景.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/09/11/Paxos发展、算法原理/"/>
+
+
+
+
+
+  <title>Paxos发展、算法原理 | 紫魔戒的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">紫魔戒的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">技术分享</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            Schedule
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            Sitemap
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            Commonweal 404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/11/Paxos发展、算法原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Frank yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="紫魔戒的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Paxos发展、算法原理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-11T11:30:00+08:00">
+                2017-09-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BlockChain/" itemprop="url" rel="index">
+                    <span itemprop="name">BlockChain</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BlockChain/Distributed/" itemprop="url" rel="index">
+                    <span itemprop="name">Distributed</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Paxos"><a href="#Paxos" class="headerlink" title="Paxos"></a>Paxos</h1><h2 id="发展史"><a href="#发展史" class="headerlink" title="发展史"></a>发展史</h2><p>　　<a href="http://www.lamport.org/" target="_blank" rel="noopener">Leslie Lamport</a>所提出的Paxos算法是现代分布式系统中的一项重要的基础性技术，得到广泛的应用。</p>
+<p>Paxos的整个发展过程大概可以分为三个阶段：<br>　　第一阶段：萌芽期，大致是1988-1996年。Liskov等人在<a href="https://www.podc.org/" target="_blank" rel="noopener">PODC</a>上发表了<a href="http://ov6v82oa9.bkt.clouddn.com/Viewstamped%20Replication-%20A%20New%20Primary%20Copy%20Method%20to%20Support%20Highly-Available%20Distributed%20Systems.pdf" target="_blank" rel="noopener">Viewstamped Replication: A New Primary Copy Method to Support Highly-Available Distributed Systems</a> ，提出了一个在副本出现宕机情况下仍能正常工作的主从备份算法，该算法与Paxos在本质上是一致的(<a href="http://ov6v82oa9.bkt.clouddn.com/The%20ABCD%E2%80%99s%20of%20Paxos.pdf" target="_blank" rel="noopener">The ABCD’s of Paxos</a>)。</p>
+<p>　　第二阶段：1996-2007年。涌现出一批Paxos的不同版本，这些Paxos的变种从不同侧面完善了基础Paxos算法，提升其性能。Liskov等人在1999年提出了<a href="http://ov6v82oa9.bkt.clouddn.com/Practical%20Byzantine%20Fault%20Tolerance.pdf" target="_blank" rel="noopener">PBFT（实用的拜占庭容错算法）</a>，这实际上也是Paxos的一个变种，被Lampson称为Byzantine Paxos，该算法对基础Paxos进行了改进，使其可以处理拜占庭错误。</p>
+<blockquote>
+<p>　　拜占庭将军问题（Byzantine failures），是由莱斯利·兰伯特提出的点对点通信中的基本问题。含义是在存在消息丢失的不可靠信道上试图通过消息传递的方式达到一致性是不可能的。<br>　　拜占庭位于如今的土耳其的伊斯坦布尔，是东罗马帝国的首都。由于当时拜占庭罗马帝国国土辽阔，为了防御目的，因此每个军队都分隔很远，将军与将军之间只能靠信差传消息。 在战争的时候，拜占庭军队内所有将军和副官必需达成一致的共识，决定是否有赢的机会才去攻打敌人的阵营。但是，在军队内有可能存有叛徒和敌军的间谍，左右将军们的决定又扰乱整体军队的秩序。在进行共识时，结果并不代表大多数人的意见。这时候，在已知有成员谋反的情况下，其余忠诚的将军在不受叛徒的影响下如何达成一致的协议，拜占庭问题就此形成。<br>　　拜占庭假设是对现实世界的模型化，由于硬件错误、网络拥塞或断开以及遭到恶意攻击，计算机和网络可能出现不可预料的行为。拜占庭容错协议必须处理这些失效，并且这些协议还要满足所要解决的问题要求的规范。</p>
+</blockquote>
+<p>Eli Gafni 和 Lamport 在2000年提出了<a href="">Disk Paxos</a>，这可以认为是Paxos基于磁盘的版本，以支持持久化。</p>
+<p>　　第三阶段：本阶段。Paxos开始在工业界得到了广泛应用。从2006年开始，谷歌公司有两篇影响深远的论文发表在OSDI上，一篇是“<a href="http://ov6v82oa9.bkt.clouddn.com/Bigtable-A%20Distributed%20Storage%20System%20for%20Structured%20Data.pdf" target="_blank" rel="noopener">Bigtable:A Distributed Storage System for Structured Data</a>”，另一篇“<a href="http://ov6v82oa9.bkt.clouddn.com/The%20Chubby%20lock%20service%20for%20loosely-coupled%20distributed%20systems.pdf" target="_blank" rel="noopener">The Chubby lock service for loosely-coupled distributed systems</a>”。两篇论文可以说是揭开了大数据管理的序幕，而Paxos则在大数据管理的核心技术（容错）中扮演了极为重要的角色。</p>
+<a id="more"></a>
+<h2 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h2><p>　　Paxos算法维基百科<a href="https://en.wikipedia.org/wiki/Paxos_(computer_science" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Paxos_(computer_science)</a>)<br>　　Paxos算法是基于消息传递且具有高度容错特性的一致性算法，是目前公认的解决分布式一致性问题最有效的算法之一。然而，Paxos算法也因为晦涩难懂而臭名昭著。<br>　　Paxos算法的目标就是要保证最终有一个提案会被选定，当提案被选定后，进程最终也能获取到被选定的提案。</p>
+<h3 id="问题产生的背景"><a href="#问题产生的背景" class="headerlink" title="问题产生的背景"></a>问题产生的背景</h3><p>　　在常见的分布式系统中，总会发生诸如机器宕机或网络异常（包括消息的延迟、丢失、重复、乱序，还有网络分区）等情况。Paxos算法需要解决的问题就是如何在一个可能发生上述异常的分布式系统中，快速且正确地在集群内部对某个数据的值达成一致，并且保证不论发生以上任何异常，都不会破坏整个系统的一致性。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/Paxos背景.png" alt="Paxos背景"></p>
+<h3 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h3><p>在Paxos算法中，有四种角色：</p>
+<ul>
+<li>Client：产生议题者</li>
+<li>Proposer ：提议者</li>
+<li>Acceptor(Voters)：决策者（投票者）</li>
+<li>Learner：最终决策学习者，也就是执行者。</li>
+</ul>
+<blockquote>
+<p>一个进程可能充当不止一种角色。<br>上面4种角色中，提议者和决策者是很重要的，其他的2个角色在整个算法中应该算做打酱油的，Proposer就像Client的使者，由Proposer使者拿着Client的议题去向Acceptor提议，让Acceptor来决策。</p>
+</blockquote>
+<ol>
+<li>Proposer拿着Client的议题去向Acceptor提议，让Acceptor来决策。</li>
+<li>Proposer提出议题，Acceptor初步接受或者Acceptor初步不接受。</li>
+<li>Acceptor初步接受则Proposer再次向Acceptor确认是否最终接受。</li>
+<li>Acceptor最终接受或者Acceptor最终不接受。</li>
+<li>Learner最终学习的目标是向所有Acceptor学习，如果有多数派个Acceptor最终接受了某提议，那就得到了最终的结果，算法的目的就达到了。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/Message flow- Basic Paxos.jpg" alt="Message flow- Basic Paxos"><br><img src="http://oc3uwt4a5.bkt.clouddn.com/Paxos.png" alt="Paxos"></li>
+</ol>
+<h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>　　假设有一组可以提出（propose）value（value在提案Proposal里）的进程集合。一个一致性算法需要保证提出的这么多value中：</p>
+<ul>
+<li>只有一个value被选定（chosen）</li>
+<li>如果没有value被提出，就不应该有value被选定</li>
+<li>如果一个value被选定，那么所有进程都应该能学习（learn）到这个被选定的value。</li>
+</ul>
+<p>　　对于一致性算法，安全性（safaty）要求如下：</p>
+<ul>
+<li>只有被提出的value才能被选定。</li>
+<li>只有一个value被选定，并且</li>
+<li>如果某个进程认为某个value被选定了，那么这个value必须是真的被选定的那个。</li>
+</ul>
+<p><strong>Paxos的目标：保证最终有一个value会被选定，当value被选定后，进程最终也能获取到被选定的value。</strong></p>
+<ul>
+<li>每个参与者以任意的速度执行，可能会因为出错而停止，也可能会重启。同时，即使一个提案被选定后，所有的参与者也都有可能失败或重启，因此除非那些失败或重启的参与者可以记录某些信息，否则将无法确定最终的值。</li>
+<li>消息在传输过程中可能会出现不可预知的延迟，也可能会重复或丢失，但是消息不会损坏，即消息内容不会被篡改（<a href="http://ov6v82oa9.bkt.clouddn.com/p382-lamport.pdf" target="_blank" rel="noopener">拜占庭式的问题</a>）。</li>
+</ul>
+<h3 id="算法描述"><a href="#算法描述" class="headerlink" title="算法描述"></a>算法描述</h3><h4 id="Paxos算法分为两个阶段。具体如下："><a href="#Paxos算法分为两个阶段。具体如下：" class="headerlink" title="Paxos算法分为两个阶段。具体如下："></a>Paxos算法分为两个阶段。具体如下：</h4><p><strong>阶段一：</strong><br>(a) Proposer选择一个提案编号N，然后向半数以上的Acceptor发送编号为N的Prepare请求。</p>
+<p>(b) 如果一个Acceptor收到一个编号为N的Prepare请求，且N大于该Acceptor已经响应过的所有Prepare请求的编号，那么它就会将它已经接受过的编号最大的提案（如果有的话）作为响应反馈给Proposer，同时该Acceptor承诺不再接受任何编号小于N的提案。</p>
+<p><strong>阶段二：</strong><br>(a) 如果Proposer收到半数以上Acceptor对其发出的编号为N的Prepare请求的响应，那么它就会发送一个针对[N,V]提案的Accept请求给半数以上的Acceptor。注意：V就是收到的响应中编号最大的提案的value，如果响应中不包含任何提案，那么V就由Proposer自己决定。</p>
+<p>(b) 如果Acceptor收到一个针对编号为N的提案的Accept请求，只要该Acceptor没有对编号大于N的Prepare请求做出过响应，它就接受该提案。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/1752522-44c5a422f917bfc5.jpg" alt="1752522-44c5a422f917bfc5"></p>
+<p><img src="http://oc3uwt4a5.bkt.clouddn.com/15050933433144.jpg" alt=""></p>
+<p>eg. <img src="http://oc3uwt4a5.bkt.clouddn.com/15050931076257.jpg" alt=""></p>
+<h4 id="Learner学习被选定的value"><a href="#Learner学习被选定的value" class="headerlink" title="Learner学习被选定的value"></a>Learner学习被选定的value</h4><p>Learner学习（获取）被选定的value有如下三种方案：<br><img src="http://oc3uwt4a5.bkt.clouddn.com/1752522-0fab48ed2bdf358a.png" alt="1752522-0fab48ed2bdf358a"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Paxos/" rel="tag"># Paxos</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/05/CAP定理(原则)以及BASE理论/" rel="next" title="CAP定理(原则)以及BASE理论">
+                <i class="fa fa-chevron-left"></i> CAP定理(原则)以及BASE理论
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/11/2PC&3PC/" rel="prev" title="2PC&3PC">
+                2PC&3PC <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Frank yang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Paxos"><span class="nav-number">1.</span> <span class="nav-text">Paxos</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#发展史"><span class="nav-number">1.1.</span> <span class="nav-text">发展史</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法原理"><span class="nav-number">1.2.</span> <span class="nav-text">算法原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题产生的背景"><span class="nav-number">1.2.1.</span> <span class="nav-text">问题产生的背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关概念"><span class="nav-number">1.2.2.</span> <span class="nav-text">相关概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题描述"><span class="nav-number">1.2.3.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#算法描述"><span class="nav-number">1.2.4.</span> <span class="nav-text">算法描述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Paxos算法分为两个阶段。具体如下："><span class="nav-number">1.2.4.1.</span> <span class="nav-text">Paxos算法分为两个阶段。具体如下：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Learner学习被选定的value"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">Learner学习被选定的value</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Frank yang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

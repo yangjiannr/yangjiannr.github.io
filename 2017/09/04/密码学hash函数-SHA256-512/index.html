@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Cryptography,hash,SHA," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Hash函数又称哈希函数、散列函数、杂凑函数。它是一种单向密码体制，即从一个从明文到密文的不可逆映射，只有加密过程，没有解密过程。Hash函数H将可变长度的数据块M作为输入，产生固定长度的Hash值h=H(M)。在安全应用中使用的Hash函数称为密码学Hash函数。（单向性）、（抗碰撞性）  弱抗碰撞性：给定一个消息M，要找到另一个消息M’，使得H(M)=H(M’)很难。强抗碰撞性：要找到两个随机">
+<meta name="keywords" content="Cryptography,hash,SHA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="密码学hash函数-SHA256-512">
+<meta property="og:url" content="http://yoursite.com/2017/09/04/密码学hash函数-SHA256-512/index.html">
+<meta property="og:site_name" content="紫魔戒的博客">
+<meta property="og:description" content="Hash函数又称哈希函数、散列函数、杂凑函数。它是一种单向密码体制，即从一个从明文到密文的不可逆映射，只有加密过程，没有解密过程。Hash函数H将可变长度的数据块M作为输入，产生固定长度的Hash值h=H(M)。在安全应用中使用的Hash函数称为密码学Hash函数。（单向性）、（抗碰撞性）  弱抗碰撞性：给定一个消息M，要找到另一个消息M’，使得H(M)=H(M’)很难。强抗碰撞性：要找到两个随机">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/SHA256.jpg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/SHA256a.jpg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/SHA256b.jpg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/SHA256a.jpg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/SHA512.jpg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/W.jpg">
+<meta property="og:updated_time" content="2017-09-04T03:19:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="密码学hash函数-SHA256-512">
+<meta name="twitter:description" content="Hash函数又称哈希函数、散列函数、杂凑函数。它是一种单向密码体制，即从一个从明文到密文的不可逆映射，只有加密过程，没有解密过程。Hash函数H将可变长度的数据块M作为输入，产生固定长度的Hash值h=H(M)。在安全应用中使用的Hash函数称为密码学Hash函数。（单向性）、（抗碰撞性）  弱抗碰撞性：给定一个消息M，要找到另一个消息M’，使得H(M)=H(M’)很难。强抗碰撞性：要找到两个随机">
+<meta name="twitter:image" content="http://oc3uwt4a5.bkt.clouddn.com/SHA256.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/09/04/密码学hash函数-SHA256-512/"/>
+
+
+
+
+
+  <title>密码学hash函数-SHA256-512 | 紫魔戒的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">紫魔戒的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">技术分享</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            Schedule
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            Sitemap
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            Commonweal 404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/04/密码学hash函数-SHA256-512/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Frank yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="紫魔戒的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">密码学hash函数-SHA256-512</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-04T11:19:00+08:00">
+                2017-09-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Cryptography/" itemprop="url" rel="index">
+                    <span itemprop="name">Cryptography</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Hash函数又称哈希函数、散列函数、杂凑函数。它是一种<strong>单向密码体制</strong>，即从一个从明文到密文的不可逆映射，只有加密过程，没有解密过程。<br>Hash函数H将可变长度的数据块M作为输入，产生固定长度的Hash值h=H(M)。<br>在安全应用中使用的Hash函数称为密码学Hash函数。（单向性）、（抗碰撞性）</p>
+<blockquote>
+<p>弱抗碰撞性：给定一个消息M，要找到另一个消息M’，使得H(M)=H(M’)很难。<br>强抗碰撞性：要找到两个随机明文M和M’，使得H(M)=H(M’)很难。</p>
+</blockquote>
+<a id="more"></a>
+<p>Hash函数特点：</p>
+<ol>
+<li>易压缩</li>
+<li>易计算</li>
+<li>单向性</li>
+<li>抗碰撞性</li>
+<li>高灵敏性</li>
+</ol>
+<h2 id="密码学Hash函数的应用范围"><a href="#密码学Hash函数的应用范围" class="headerlink" title="密码学Hash函数的应用范围"></a>密码学Hash函数的应用范围</h2><h3 id="消息认证"><a href="#消息认证" class="headerlink" title="消息认证"></a>消息认证</h3><p>消息认证是用来验证消息完整性的一种机制或服务。消息认证确保收到的数据确实和发送时的一样（即没有修改、插入、删除或重放）。<br>当Hash函数用于提供消息认证功能时，Hash函数值通常称为<strong>消息摘要</strong>。</p>
+<h3 id="数字签名"><a href="#数字签名" class="headerlink" title="数字签名"></a>数字签名</h3><p>在进行数字签名过程中使用用户的私钥加密消息的Hash值，其他任何知道该用户公钥的人都能够通过数字签名来验证消息的完整性。</p>
+<h3 id="其他应用"><a href="#其他应用" class="headerlink" title="其他应用"></a>其他应用</h3><p>单向口令文件。<br>入侵检测。<br>病毒检测。<br>构建随机函数（PRF）或用做伪随机数发生器（PRNG）</p>
+<h2 id="安全Hash算法（SHA）"><a href="#安全Hash算法（SHA）" class="headerlink" title="安全Hash算法（SHA）"></a>安全Hash算法（SHA）</h2><p>安全散列算法SHA（Secure Hash Algorithm）是美国国家安全局 （NSA） 设计，美国国家标准与技术研究院（NIST） 发布的一系列密码散列函数，包括 SHA-1、SHA-224、SHA-256、SHA-384 和 SHA-512 等变体。主要适用于数字签名标准（DigitalSignature Standard DSS）里面定义的数字签名算法（Digital Signature Algorithm DSA）。</p>
+<h3 id="SHA-1"><a href="#SHA-1" class="headerlink" title="SHA-1"></a>SHA-1</h3><p>SHA-1产生160位的Hash值。<br>SHA1始终把消息当成一个位（bit）字符串来处理。</p>
+<h3 id="SHA-2"><a href="#SHA-2" class="headerlink" title="SHA-2"></a>SHA-2</h3><p>Hash值长度依次为256位、384位和512位，分别称为SHA-256、SHA-384和SHA-512，这些算法统称为SHA-2。<br>SHA-2同SHA-1类似，都使用同样的迭代结构和同样的模算术运算与二元逻辑操作。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>SHA-1</th>
+<th>SHA-224</th>
+<th>SHA-256</th>
+<th>SHA-384</th>
+<th>SHA-512</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>消息摘要长度</td>
+<td>160</td>
+<td>224</td>
+<td>256</td>
+<td>384</td>
+<td>512</td>
+</tr>
+<tr>
+<td>消息长度</td>
+<td>&lt; 2^64</td>
+<td>&lt; 2^64</td>
+<td>&lt; 2^64</td>
+<td>&lt; 2^128</td>
+<td>&lt; 2^128</td>
+</tr>
+<tr>
+<td>分组长度</td>
+<td>512</td>
+<td>512</td>
+<td>512</td>
+<td>1024</td>
+<td>1024</td>
+</tr>
+<tr>
+<td>字长度</td>
+<td>32</td>
+<td>32</td>
+<td>32</td>
+<td>64</td>
+<td>64</td>
+</tr>
+<tr>
+<td>步骤数</td>
+<td>80</td>
+<td>64</td>
+<td>64</td>
+<td>80</td>
+<td>80</td>
+</tr>
+</tbody>
+</table>
+<h3 id="SHA-256算法"><a href="#SHA-256算法" class="headerlink" title="SHA-256算法"></a>SHA-256算法</h3><p>SHA-256算法的输入是最大长度小于2^64 位的消息，输出是256位的消息摘要，输入消息以512位的分组为单位进行处理。步骤如下<br><strong>（1）消息填充</strong></p>
+<blockquote>
+<p>添加一个“1”和若干个“0”使其长度模512与448同余（即长度≡448(mod 512)）.在消息后附加64位的长度块，其值为填充前消息的长度。从而产生长度为512整数倍的消息分组，填充后消息的长度最多为2^64位。</p>
+</blockquote>
+<p><strong>（2）初始化链接变量</strong></p>
+<blockquote>
+<p>链接变量的中间结果和最终结果存储于256位的缓冲区中，缓冲区用8个32位的寄存器A、B、C、D、E、F、G和H表示，输出仍放在缓冲区以代替旧的A、B、C、D、E、F、G、H。首先要对链接变量进行初始化，初始链接变量存储于8个寄存器A、B、C、D、E、F、G和H中：<br>A = 0x6a09e667     E = 0x510e527f<br>B = 0xbb67ae85     F = 0x9b05688c<br>C = 0x3c6ef372     G = 0x1f83d9ab<br>D = 0xa54ff53a     H = 0x5be0cd19<br>初始链接变量是取自前8个素数（2、3、5、7、11、13、17、19）的平方根的小数部分其二级制表示的前32位。</p>
+</blockquote>
+<p><strong>（3）处理主循环模块</strong></p>
+<blockquote>
+<p><img src="http://oc3uwt4a5.bkt.clouddn.com/SHA256.jpg" alt="SHA256"><br>消息块是以512位分组为单位进行处理的，要进行64步循环操作（如图）。每一轮的输入均为当前处理的消息分组和得到的上一轮输出的256位缓冲区A、B、C、D、E、F、G、H的值。每一步中均采用了不同的消息字和常数。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/SHA256a.jpg" alt="SHA256a"></p>
+</blockquote>
+<p><strong>（4）得出最终的Hash值</strong></p>
+<blockquote>
+<p>所有512位的消息块分组都处理完以后，最后一个分组处理后得到的结果即为最终输出的256位的消息摘要。</p>
+</blockquote>
+<p>步函数是SHA-256中最为重要的函数，也是SHA-256中最关键的部件。其运算过程如下图：<br><img src="http://oc3uwt4a5.bkt.clouddn.com/SHA256b.jpg" alt="SHA256b"><br>每一步都会生成两个临时变量，即T1、T2：<br>$$T_1=\Sigma_1(E)+Ch(E,F,G)+H+W_t+K_t$$<br>$$T_2=\Sigma_0(A)+Maj(A,B,C) mod 2^{32}$$<br>根据T1、T2的值，对寄存器A、E进行更新。A、B、C、D、E、F、G的输入值则一次赋值给B、C、D、F、G、H。<br>$A=(T_1+T_2) mod 2^{32}$  $E=(D+T_2) mod 2^{32}$<br>其中$Ch(E,F,G) = (E\wedge F)⊕(\overline{E}\wedge G)$<br>$Maj(A,B,C) = (A\wedge B)\bigoplus (A\wedge C)\bigoplus (B\wedge C)$<br>$\Sigma_0(A) = ROTR^{2}(A)\bigoplus ROTR^{13}(A)\bigoplus ROTR^{22}(A)$<br>$\Sigma_1(E) = ROTR^{6}(E)\bigoplus ROTR^{11}(E)\bigoplus ROTR^{25}(E)$<br>且ROTR^n (E)表示对32位的变量x循环右移n位。<br>K<sub>t</sub>的获取方法是取前64个素数（2，3，5，7……）立方根的小数部分，将其转换为二进制，然后取这64个数的前64位作为K<sub>t</sub>。其作用是提供了64位随机串集合以消除输入数据里的任何规则性。<br>对于每个输入分组导出的消息分组W<sub>t</sub>，前16个消息字W<sub>t</sub>（0&lt;=t&lt;=15）直接按照消息输入分组对应的16个32位字，其他的则按照如下公式来计算得出：<br>$$W_{t} = W_{t-16} + \sigma <em>0(W</em>{t-15}) + W_{t-7} + \sigma <em>1(W</em>{t-2}) , 16\leqslant t\leqslant 63$$<br>其中：$\sigma _0(x) = ROTR^{7}(x) \bigoplus ROTR^{18}(x) \bigoplus SHR^3(x)$<br>$\sigma _1(x) = ROTR^{17}(x) \bigoplus ROTR^{19}(x) \bigoplus SHR^{10}(x)$<br>式中，$SHR^{10}(x)$表示32位的变量x右移n位，其导出方法如图：<br><img src="http://oc3uwt4a5.bkt.clouddn.com/SHA256a.jpg" alt="SHA256a"></p>
+<h4 id="SHA-512逻辑"><a href="#SHA-512逻辑" class="headerlink" title="SHA-512逻辑"></a>SHA-512逻辑</h4><p>算法的输入时最大长度小于2^128 位的消息，输出是512位的消息摘要，输入消息1024位的分组为单位进行处理。<strong>步骤1：附加填充位</strong></p>
+<blockquote>
+<p>填充消息使其长度模1024与896同余（即长度≡896(mod 1024)），即使消息已经满足上述长度要求，仍然需要进行填充，因此填充位数在1~1024之间，填充由一个1和后续的0组成。</p>
+</blockquote>
+<p><strong>步骤2：附加长度</strong></p>
+<blockquote>
+<p>在消息后附加一个128位的块，将其视为128位的无符号整数（最高有效字节在前），它包含填充前消息的长度。</p>
+</blockquote>
+<p><img src="http://oc3uwt4a5.bkt.clouddn.com/SHA512.jpg" alt="SHA512 -w500"><br>前两步的结果产生了一个长度为1024整数倍的消息。</p>
+<p><strong>步骤3：初始化Hash缓冲区</strong></p>
+<blockquote>
+<p>Hash函数的中间结果和最终结果保存于512位的缓冲区中，缓冲区用8个64位的寄存器（a,b,c,d,e,f,g,h）表示，并将这些寄存器初始化为下列64位的整数（十六进制值）：<br>a = 6A09E667F3BCC908    e = 510E527FADE682D1<br>b = BB67AE8584CAA73B    f = 9B05688C2B3E6C1F<br>c = 3C6EF372FE94F82B    g = 1F83D9ABFB41Bd6B<br>d = A54FF53A5F1D36F1    h = 5BE0CD19137E2179<br>这些值以高位在前格式存储，也就是说，字的最高有效字节存于低地址字节位置（最左面）。这些字的获取方式如下：前8个素数取平方根，取小数部分的前64位。</p>
+</blockquote>
+<p><strong>步骤4：以1024位的分组（128个字节）为单位处理消息</strong></p>
+<blockquote>
+<p>算法的核心是具有80轮运算的模块。每一轮都把512位缓存区的值abcdefgh作为输入，并更新缓冲区的值。第一轮时，缓冲区里的值是中间值H<sub>i-1</sub>。每一轮，如第t轮，使用一个64位的值W<sub>t</sub>，该值由当前被处理的1024位消息分组M<sub>i</sub>导出，导出算法是下面将要讨论的消息扩展算法（如下图）。每一轮还将使用附加的常数K<sub>t</sub>，其中0&lt;=t&lt;=79，用来使每轮的运算不同。这些常数提供了64位随机串集合，可以初步消除输入数据里的统计规律。<br>第80轮的输出和第一轮的输入H<sub>i-1</sub>相加产生H<sub>i</sub>。缓冲区的8个字和H<sub>i-1</sub>中对应的字分别进行模2^64的加法运算。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/W.jpg" alt="W"></p>
+</blockquote>
+<p><strong>步骤5：输出</strong></p>
+<blockquote>
+<p>所有的N个1024位分组都处理完以后，从第N阶段输出的是512位的消息摘要。</p>
+</blockquote>
+<p>总结SHA-512的运算如下：<br>H<sub>0</sub> = IV<br>H<sub>i</sub> = SUM<sub>64</sub>(H<sub>i-1</sub>, abcdefgh<sub>i</sub>)<br>MD = H<sub>N</sub><br>其中，IV为第三步里中定义的abcdefgh缓冲区的初始值；abcdefgh<sub>i</sub>为第i个消息分组处理的最后一轮的输出；N为消息（包括填充和长度域）中的分组数；SUM<sub>64</sub>为对输入对中的每个字进行独立的模2^64加；MD为最后的消息摘要值。</p>
+<p><a href="http://www.frankyang.cn/2017/09/02/mi-ma-xuehash-han-shusha256512/" target="_blank" rel="noopener">http://www.frankyang.cn/2017/09/02/mi-ma-xuehash-han-shusha256512/</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Cryptography/" rel="tag"># Cryptography</a>
+          
+            <a href="/tags/hash/" rel="tag"># hash</a>
+          
+            <a href="/tags/SHA/" rel="tag"># SHA</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/04/大数据处理-Bitmap/" rel="next" title="大数据处理-Bitmap">
+                <i class="fa fa-chevron-left"></i> 大数据处理-Bitmap
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/04/Linux进程状态/" rel="prev" title="Linux进程状态转换图">
+                Linux进程状态转换图 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Frank yang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#密码学Hash函数的应用范围"><span class="nav-number">1.</span> <span class="nav-text">密码学Hash函数的应用范围</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#消息认证"><span class="nav-number">1.1.</span> <span class="nav-text">消息认证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数字签名"><span class="nav-number">1.2.</span> <span class="nav-text">数字签名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他应用"><span class="nav-number">1.3.</span> <span class="nav-text">其他应用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安全Hash算法（SHA）"><span class="nav-number">2.</span> <span class="nav-text">安全Hash算法（SHA）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SHA-1"><span class="nav-number">2.1.</span> <span class="nav-text">SHA-1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SHA-2"><span class="nav-number">2.2.</span> <span class="nav-text">SHA-2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SHA-256算法"><span class="nav-number">2.3.</span> <span class="nav-text">SHA-256算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SHA-512逻辑"><span class="nav-number">2.3.1.</span> <span class="nav-text">SHA-512逻辑</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Frank yang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
