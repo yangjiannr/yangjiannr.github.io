@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="BlockChain,Cryptography," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在数字签名应用中，有时需要多个用户对同一个文件进行签名和认证。比如，一个公司发布的声明中涉及财务部、开发部、销售部、售后服务部等部门，需要的到这些部门签名认可，那么，就需要这些部门对这个声明文件进行签名。能够实现多个用户对同一文件进行签名的数字签名方案称作多重数字签名方案。　　多重签名就是多个用户对同一个消息进行数字签名。　　多重签名，可以简单的理解为一个数字资产的多个签名。签名标定的是数字资">
+<meta name="keywords" content="BlockChain,Cryptography">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多重签名">
+<meta property="og:url" content="http://yoursite.com/2017/10/01/多重签名/index.html">
+<meta property="og:site_name" content="紫魔戒的博客">
+<meta property="og:description" content="在数字签名应用中，有时需要多个用户对同一个文件进行签名和认证。比如，一个公司发布的声明中涉及财务部、开发部、销售部、售后服务部等部门，需要的到这些部门签名认可，那么，就需要这些部门对这个声明文件进行签名。能够实现多个用户对同一文件进行签名的数字签名方案称作多重数字签名方案。　　多重签名就是多个用户对同一个消息进行数字签名。　　多重签名，可以简单的理解为一个数字资产的多个签名。签名标定的是数字资">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/多重签名1.jpeg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/多重签名2.png">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/相关图片.png">
+<meta property="og:updated_time" content="2017-10-01T06:58:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="多重签名">
+<meta name="twitter:description" content="在数字签名应用中，有时需要多个用户对同一个文件进行签名和认证。比如，一个公司发布的声明中涉及财务部、开发部、销售部、售后服务部等部门，需要的到这些部门签名认可，那么，就需要这些部门对这个声明文件进行签名。能够实现多个用户对同一文件进行签名的数字签名方案称作多重数字签名方案。　　多重签名就是多个用户对同一个消息进行数字签名。　　多重签名，可以简单的理解为一个数字资产的多个签名。签名标定的是数字资">
+<meta name="twitter:image" content="http://oc3uwt4a5.bkt.clouddn.com/多重签名1.jpeg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/01/多重签名/"/>
+
+
+
+
+
+  <title>多重签名 | 紫魔戒的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">紫魔戒的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">技术分享</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/01/多重签名/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Frank yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="紫魔戒的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">多重签名</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-01T14:58:00+08:00">
+                2017-10-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Cryptography/" itemprop="url" rel="index">
+                    <span itemprop="name">Cryptography</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://oc3uwt4a5.bkt.clouddn.com/多重签名1.jpeg" alt="多重签名1"><br>　　在数字签名应用中，有时需要多个用户对同一个文件进行签名和认证。比如，一个公司发布的声明中涉及财务部、开发部、销售部、售后服务部等部门，需要的到这些部门签名认可，那么，就需要这些部门对这个声明文件进行签名。能够实现多个用户对同一文件进行签名的数字签名方案称作多重数字签名方案。<br>　　多重签名就是多个用户对同一个消息进行数字签名。<br>　　多重签名，可以简单的理解为一个数字资产的多个签名。签名标定的是数字资产所属和权限，多重签名预示着数字资产可由多人支配和管理。在加密货币领域，如果要动用一个加密货币地址的资金，通常需要该地址的所有人使用他的私钥（由用户专属保护）进行签名。那么，多重签名，就是动用这笔资金需要多个私钥签名，通常这笔资金或数字资产会保存在一个多重签名的地址或帐号里（就比特币而言，多重签名地址通常以3开头）。<br><a id="more"></a><br><img src="http://oc3uwt4a5.bkt.clouddn.com/多重签名2.png" alt="多重签名2"><br>　　Alice和Bob怎么对同一个数字文件签名呢？不用单向散列函数，有两种选择：<br>　　第一种选择是Alice和Bob分别对文件的副本签名，结果签名的消息是原文的两倍；<br>　　第二种就是Alice首先签名，然后Bob对Alice的签名再进行签名。这是可行的，但是在不验证Bob签名的情况下就验证Alice的签名是不可能的。<br>　　采用单向散列函数，很容易实现多重签名：<br>　　(1)Alice对文件的散列签名。<br>　　(2)Bob对文件的散列签名。<br>　　(3)Bob将他的签名交给Alice。<br>　　(4)Alice把文件、她的签名和Bob的签名发给Carol。<br>　　(5)Carol验证Alice和Bob的签名。<br>　　Alice和Bob能同时或顺序地完成第(1)步和第(2)步；在第(5)步中Carol可以只验证其中一人的签名而不用验证另一人的签名。</p>
+<p>　　关于 MultiSig（多重签名），从原理角度上讲，多重签名本身并不复杂，简单来说，一句话就够了：<strong>“用 m 把钥匙生成一个多重签名的地址，需要其中的 n 把钥匙才能花费这个地址上的比特币，m &gt;= n，这就是 n/m 的多重签名”</strong><br>　　在实际的操作过程中，一个多重签名地址可以关联n个私钥，在需要转账等操作时，只要其中的m个私钥签名就可以把资金转移了，其中m要小于等于n，也就是说m/n小于1，可以是2/3, 3/5等等，是要在建立这个多重签名地址的时候确定好的。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/相关图片.png" alt="相关图片"></p>
+<p>　　多重签名给了加密货币腾飞的翅膀，让它单一单项支付的能力更具吸引力，让加密货币技术应用到各行各业成为可能。这里简单的罗列几个应用场景，供探索和思考：</p>
+<ul>
+<li>电子商务。比较常见的是2/3的模式。上面电子商务网站的例子，就是最典型的场景之一，目前已经有成功的案例了。延伸一下，这类应用本质就是中介，所以还可用在各类中介机构性质的服务上。</li>
+<li>财产分割。比如夫妻双方共有财产，可以使用1/2的模式，一个账户谁都可以使用，跟各自拥有帐号一样，好处是系统忠实记录了每个人的花销，闹掰的时候很容易清算。扩展到公司合伙经营，可以使用1/n模式，n个人合伙人，都可以直接支配共有资金，具体清算时，一目了然。</li>
+<li>资金监管。其实，这是多重签名的最直接作用，一笔钱需要多个人签名才能使用，任何一个人都无法直接动用资金，这在生活中太常见了，只要灵活设置多重签名的比重模式，就能解决生活中很多问题。比如，接着上面夫妻的例子，夫妻要储备一笔资金，供孩子上大学使用，在这之前谁都不能动，那么把模式改为2/2，不仅限制了夫妻双方，也给黑客攻击增加了难度。</li>
+</ul>
+<p>　　多重签名的设计，让各种业务去中心化充满无限可能。</p>
+<p><a href="http://www.frankyang.cn/2017/09/30/multisignature/" target="_blank" rel="noopener">http://www.frankyang.cn/2017/09/30/multisignature/</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/BlockChain/" rel="tag"># BlockChain</a>
+          
+            <a href="/tags/Cryptography/" rel="tag"># Cryptography</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/01/大数据处理-Bloom Filter/" rel="next" title="大数据处理——Bloom Filter">
+                <i class="fa fa-chevron-left"></i> 大数据处理——Bloom Filter
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/02/比特币交易本质--UTXO(Unspent Transaction Output)/" rel="prev" title="比特币交易本质--UTXO(Unspent Transaction Output)">
+                比特币交易本质--UTXO(Unspent Transaction Output) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Frank yang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Frank yang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="BlockChain,跨链," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="区块链技术是一种分布式账本技术，可以被应用在金融、健康医疗、供应链、资产管理等诸多领域，但是受吞吐量、网络孤立性、监管、伸缩性等因素的制约，目前的区块链项目并不能很好的服务于商业应用。在区块链所面临的诸多问题中，网络孤立性阻碍了不同区块链之间的协同操作，极大程度的限制了区块链的发挥空间。　　如果说共识机制是区块链的灵魂核心，那么对于区块链特别是联盟链及私链来看，跨链技术就是实现价值网络的关键，">
+<meta name="keywords" content="BlockChain,跨链">
+<meta property="og:type" content="article">
+<meta property="og:title" content="区块链的跨链技术介绍">
+<meta property="og:url" content="http://yoursite.com/2017/10/01/区块链的跨链技术介绍/index.html">
+<meta property="og:site_name" content="紫魔戒的博客">
+<meta property="og:description" content="区块链技术是一种分布式账本技术，可以被应用在金融、健康医疗、供应链、资产管理等诸多领域，但是受吞吐量、网络孤立性、监管、伸缩性等因素的制约，目前的区块链项目并不能很好的服务于商业应用。在区块链所面临的诸多问题中，网络孤立性阻碍了不同区块链之间的协同操作，极大程度的限制了区块链的发挥空间。　　如果说共识机制是区块链的灵魂核心，那么对于区块链特别是联盟链及私链来看，跨链技术就是实现价值网络的关键，">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/253c31f55b2d4a5c987e9ff248cf9845.jpg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/4582835-81ea8db1fb5956e2.png">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/btcrelay.jpeg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/rootstock.png">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/m2.jpeg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/Polkadot.jpeg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/独家 | 跨链通信：区块链技术发展的新趋势.jpeg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/ilp1.png">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/独家 | 跨链通信：区块链技术发展的新趋势.jpeg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/4582835-5baa16c4e5fc1cd8.png">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/4582835-350ceb3a8b9beb95.png">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/4582835-50990296aa72bef6.png">
+<meta property="og:updated_time" content="2017-10-01T01:01:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="区块链的跨链技术介绍">
+<meta name="twitter:description" content="区块链技术是一种分布式账本技术，可以被应用在金融、健康医疗、供应链、资产管理等诸多领域，但是受吞吐量、网络孤立性、监管、伸缩性等因素的制约，目前的区块链项目并不能很好的服务于商业应用。在区块链所面临的诸多问题中，网络孤立性阻碍了不同区块链之间的协同操作，极大程度的限制了区块链的发挥空间。　　如果说共识机制是区块链的灵魂核心，那么对于区块链特别是联盟链及私链来看，跨链技术就是实现价值网络的关键，">
+<meta name="twitter:image" content="http://oc3uwt4a5.bkt.clouddn.com/253c31f55b2d4a5c987e9ff248cf9845.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/01/区块链的跨链技术介绍/"/>
+
+
+
+
+
+  <title>区块链的跨链技术介绍 | 紫魔戒的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">紫魔戒的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">技术分享</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/01/区块链的跨链技术介绍/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Frank yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="紫魔戒的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">区块链的跨链技术介绍</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-10-01T09:01:00+08:00">
+                2017-10-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BlockChain/" itemprop="url" rel="index">
+                    <span itemprop="name">BlockChain</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>　　区块链技术是一种分布式账本技术，可以被应用在金融、健康医疗、供应链、资产管理等诸多领域，但是受吞吐量、网络孤立性、监管、伸缩性等因素的制约，目前的区块链项目并不能很好的服务于商业应用。在区块链所面临的诸多问题中，网络孤立性阻碍了不同区块链之间的协同操作，极大程度的限制了区块链的发挥空间。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/253c31f55b2d4a5c987e9ff248cf9845.jpg" alt="253c31f55b2d4a5c987e9ff248cf9845"><br>　　如果说共识机制是区块链的灵魂核心，那么对于区块链特别是联盟链及私链来看，跨链技术就是实现价值网络的关键，它是把联盟链从分散单独的孤岛中拯救出来的良药，是区块链向外拓展和连接的桥梁。<br><a id="more"></a></p>
+<p>侧链是以锚定比特币为基础的新型区块链，它以融合的方式实现新的金融生态目标和进一步扩展了比特币网络的应用场景。<br>　　联盟链和私链的方式从一定程度违背了区块链的去中心价值和信任体系，也让区块链里面的数字资产不能在不同的区块链间直接转移，主动或被动地导致了价值的孤岛，由此各种连接不同区块链的跨链技术也被人们开始关注和探索。<br>　　以太坊创始人Vitalik为银行联盟链R3写了一份关于跨链互操作的报告，文中提到三种跨链方式：</p>
+<ol>
+<li>公证人机制（Notary schemes）</li>
+<li>侧链/中继（Sidechains/relays）</li>
+<li>哈希锁定（Hash-locking）。</li>
+</ol>
+<p><img src="http://oc3uwt4a5.bkt.clouddn.com/4582835-81ea8db1fb5956e2.png" alt="4582835-81ea8db1fb5956e2"><br>　　早期跨链技术包括以Blockstream为代表的侧链技术(Sidechain)和以BTC-Relay为代表的中继技术(Relay)。早期的跨链技术更多关注的是资产转移，现有项目更多关注的是链状态的转移。</p>
+<h2 id="一、侧链"><a href="#一、侧链" class="headerlink" title="一、侧链"></a>一、侧链</h2><p>　　侧链是以锚定比特币为基础的新型区块链，就像美金锚定到金条一样。侧链是以融合的方式实现加密货币金融生态的目标，而不是像其它加密货币一样排斥现有的系统。利用侧链，我们可以轻松的建立各种智能化的金融合约，股票、期货、衍生品等等。<br>　　侧链技术进一步扩展了区块链技术的应用范围和创新空间，使传统区块链可以支持多种资产类型，以及小微支付、智能合约、安全处理机制、真实世界财产注册等，并可以增强区块链的隐私保护。</p>
+<h4 id="BTC-Relay"><a href="#BTC-Relay" class="headerlink" title="BTC Relay"></a>BTC Relay</h4><p>　　BTC Relay是一种基于以太坊区块链的智能合约，将把以太坊网络与比特币网络以一种安全去中心化的方式连接起来。BTC Relay通过使用以太坊的智能合约功能可以允许用户在以太坊区块链上验证比特币交易。BTC Relay使用区块头创建一种小型版本的比特币区块链，以太坊DApp开发者可以从智能合约向BTC Relay进行API调用来验证比特币网络活动。BTC Relay进行了跨区块链通信的有意义的尝试，打开了不同区块链交流的通道。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/btcrelay.jpeg" alt="btcrelay"></p>
+<h4 id="RootStock"><a href="#RootStock" class="headerlink" title="RootStock"></a>RootStock</h4><p>　　RootStock 是一个建立在比特币区块链上的智能合约分布式平台。它的目标是，将复杂的智能合约实施为一个侧链，为核心比特币网络增加价值和功能。RootStock实现了以太坊虚拟机的一个改进版本，它将作为比特币的一个侧链，使用了一种可转换为比特币的代币作为智能合约的“燃料”。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/rootstock.png" alt="rootstock"></p>
+<h4 id="元素链"><a href="#元素链" class="headerlink" title="元素链"></a>元素链</h4><p>　　元素链是Blockstream的开源侧链项目，使用了比特币双向挂钩技术，侧链协议的目的是实现双向锚定（Two-way Peg），使得比特币可以在主链和侧链中互转。元素链给比特币快速带来许多创新技术，除了智能合约外，他还给比特币快速带来许多创新技术，包括私密交易、证据分离、相对锁定时间、新操作码、签名覆盖金额等等特性。这些技术可以被任意组合应用到任意侧链中。</p>
+<h4 id="LISK"><a href="#LISK" class="headerlink" title="LISK"></a>LISK</h4><p>　　LISK是新一代的区块链平台，它把每个应用加到LISK的单独侧链上。用过比特币和以太坊的朋友都知道，由于比特币和以太坊只有一条主链，所有功能和数据都加入这条主链导致区块快速膨胀，超大的区块体积，超长的同步时间，这个一个很痛苦的经历。Lisk的侧链模式给在处理高交易量下如何解决网络拥堵的问题提供了一种方法，用户只有用到相关的应用时才需要下载对应的侧链，大大减小了无效的同步数据，保持了整个Lisk网络的高效运行，而且，Lisk网络的速度随着时间的推移会继续加快，越显示他的特别优势。</p>
+<h2 id="二、M2"><a href="#二、M2" class="headerlink" title="二、M2"></a>二、M2</h2><p>　　公证通（Factom）利用区块链技术来革新商业社会和政府部门的数据管理和数据记录方式，核心是在区块链上建立不可更改的审计公证业务流程。Factom原来是通过比特币网络进行数据存证，后来通过M2功能，同时整合比特币和以太坊区块链，以使得确保数据时时刻刻都是安全和可信的。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/m2.jpeg" alt="m2"><br>　　M2功能大概情况是，Factom将网络中所有数据整合成条目或者链。用户数据存储在条目中，而链与条目之间形成互动协作。每个链拥有条目区块，这些区块又以每十分钟的速度生成新的。十分钟的结尾所有链的全部新的条目区块会整合到一个目录区块中，然后嵌入比特币和以太坊区块链。如果10分钟之内某个链没有新的条目，该链就不会增加新的条目区块。<br>　　Factom这样做的意义，可以使他们的数据存储不会仅仅依赖于比特币账本一个单一的区块链，是作为链接多个公链的有意义的探索。</p>
+<h2 id="三、Polkadot"><a href="#三、Polkadot" class="headerlink" title="三、Polkadot"></a>三、Polkadot</h2><p>　　Polkadot技术是由以太坊核心开发Ethcore（Parity科技）推出的<strong>第三代公开无需授权的区块链科技</strong>，它的设计核心理念为即时拓展性和延伸性，解决了当今两大阻止区块链技术传播和接受的难题：<strong>即时拓展性和延伸性。</strong><br>　　Polkadot计划将私有链/联盟链融入到公有链的共识网络中去，同时又能保有私有链/联盟链的隐私和许可的防护措施。它给予了我们一个全新的交易层，并有机会将数百个区块链互相连接。<br>　　Polkadot的核心思想是区分交易方发起和执行交易的方式以及交易方统一记录的方式。Polkadot提供基础的中继链（relay-chain），很多可验证的、全球动态同步的数据架构都建立在这个基础上，这些数据架构为平行链或者侧链。区块链应用可以将以太坊分叉，按照各自需求调整，通过Polkadot与以太坊公有链连接，或者给不同的链设置不同的功能，实现更好的扩展性和效率。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/Polkadot.jpeg" alt="Polkadot"><br>　　Polkadot目前还是以以太坊为主，实现其与私链的互连，并以其他公有链网络为升级目标，最终让以太坊直接与任何链进行通讯。<br>　　Melonport 开发的软件Melon将是运行于多链网络（multi-chain network）Polkadot之上的第一款Dapp。</p>
+<h4 id="角色分工"><a href="#角色分工" class="headerlink" title="角色分工"></a>角色分工</h4><p>　　Polkadot的设计中通过建立明确的角色，如下图所示，完成不同的职能分工，再结合一套巧妙的奖惩机制，协同完成跨链通信。这个设想参考了现实社会的社会分工和权力制约体系，实现了其在保证信任、安全的前提下做到系统的水平扩展。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/独家 | 跨链通信：区块链技术发展的新趋势.jpeg" alt="独家 | 跨链通信：区块链技术发展的新趋势"><br>　　在此分工中还有很多开发性的话题留给大家去思考，如当惩罚的力度小于奖励的力度时，赏金猎人和验证者就有可能联合串通做违规行为。这种情况下，可以采用另外一种经济网络，赏金猎人以工作量证明的共识方式组成赏金网络，激励赏金猎人做正确的行为，维护Polkadot整套体系的健全性。 </p>
+<h2 id="四、Interledger"><a href="#四、Interledger" class="headerlink" title="四、Interledger"></a>四、Interledger</h2><p>　　早在2012年，Ripple Labs就提出了一种偏离比特币共识的替代性账本，并创造了他们自己的代币瑞波币(XRP)。Ripple的初衷是建立一套适用于所有记账系统，能够包容所有记账系统的差异性协议，从而建立一个全球统一的支付标准。<br>　　在不同账本之间进行价值转移和交换，总会碰到各种问题。比如Elwin希望通过比特币作为媒介向海外同事Jam进行汇款，Elwin目前只有人民币，Jam只接受美金。这笔交易是首先Elwin把人民币换成比特币再把比特币换成美金給到Jam，但这里有个问题就是币价会不稳定，导致价值损耗。而Ripple、Stellar、Circle等正是解决这些难题的利器，这几个的核心思想方向基本一致：账本提供的第三方，就会向发送者保证，他们的资金，只有当账本收到证明，且收件人已经收到支付时，才会将资金转移给连接者。第三方也会保证连接者，一旦他们完成了协议的最后部分，他们就会收到发件人的资金。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/ilp1.png" alt="ilp1"><br>　　Interledger Protocol，简称ILP，是由Ripple公司主导发起了互联账目协议，它将实现不同账本之间的连接从而创造账本之间的协作。Interledger协议适用于所有记账系统、能够包容所有记账系统的差异性，ILP推出的目标就是打造全球统一支付标准，创建统一的网络金融传输的协议。<br>　　金融机构基本上都是在自己的网络之中运行着各自的记账系统，即使运用了区块链技术后，也是在运行自己的私链或内部圈子的联盟链，这个除了是应对监管合规性的原因外，更重要是保护他们的内部数据避免泄密。ILP的由来是由于Ripple原来推广业务的困难导致的，银行宁愿用Ripple的源代码来搭建他们自己的私链，也不愿意连接到Ripple上。既然建立一个每个人都支持的全球金融传输协议很困难，Ripple就开发一个协议，能将所有我们目前正在使用记账系统连接在一起。</p>
+<p>　　Interledger协议创建了一个这样的系统，在这个系统中，<strong>两个不同的记账系统可以通过第三方“连接器”或“验证器”机器来互相自由地传输货币。</strong>记账系统无需去信任“连接器”，因为该协议采用密码算法为这两个记账系统和连接器创建资金托管，当所有参与方对资金量达成共识时，便可相互交易。ILP移除了交易参与者所需的信任，连接器不会丢失或窃取资金，这意味着，这种交易无需得到法律合同的保护和过多的审核，大大降低了门槛。同时，只有参与其中的记账系统才可以跟踪交易，交易的详情可隐藏起来，“验证器”是通过加密算法来运行，因此不会直接看到交易的详情。<br>　　理论上，interledger可以兼容任何在线记账系统，而银行现有的记账系统只需小小的改变就能使用该协议。</p>
+<p>　　Ripple让世界各地的银行可以无需中央对手方或代理银行就可直接交易，从而使得让世界上的不同货币（包括法定货币和虚拟货币）自由、近乎免费、零延时地进行汇兑；Circle则让用户可以在无需手续费的情况下，以发送消息的形式发起即时的国内或跨境转账、收付款。目前Ripple和Circle正受到资本市场的热捧，Elwin觉得其中的原因，与其说他们的崛起是由于跨境汇兑和P2P支付革新，还不如说他们是对价值交换的革新，它们将各种账本连接起来，实现在互联网上交换资金能像交换信息一样轻松。<br>　　无论是原有的Ripple网络还是现在的Interledger，都在强调其是作为一个基于信任转移的价值网络。这与传统区块链系统设计是很不相同的。类似的还有R3的Corda项目，自称为非区块链的区块链项目。正如前文所述，这与这两个项目都专注于银行业务，而银行本身是个封闭的系统的有关。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/独家 | 跨链通信：区块链技术发展的新趋势.jpeg" alt="独家 | 跨链通信：区块链技术发展的新趋势"></p>
+<h2 id="五、众安科技Anlink（联网-链路由）"><a href="#五、众安科技Anlink（联网-链路由）" class="headerlink" title="五、众安科技Anlink（联网+链路由）"></a>五、众安科技Anlink（联网+链路由）</h2><p>　　众安科技同样看到了单一区块链在许多应用场景中无法解决复杂问题以及在性能上相对于传统中心化系统所呈现的瓶颈，由此提出并发展了称为“<strong>安链-链路由</strong>”的区块链网络拓扑结构。<br>　　安链链路由引入了链网络的概念，如果将链通信比作局域网的话，安链链网络的目标就是打通各个局域网形成一个连接所有区块链/非区块链系统的广域去中心化的信任网络。其母链-子链的拓扑结构以及一系列的通信协议，保证了这个设计目标的实现。这种类互联网的分层协议实现，借鉴了已有的技术实现并且很好的解决了区块链系统的扩展性问题。<br>　　在Anlink区块链网络中：</p>
+<ul>
+<li>“母链”构成了信息主干道，不同的母链之间通过链路由协议交换信息。</li>
+<li>同时，一个母链上承载着不同的子链，这些子链可以是以太坊，可以是比特币，事实上也可以是任何一种分布式账本实现。</li>
+<li>子链间的通信则由跨链通信协议CBCP负责。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/4582835-5baa16c4e5fc1cd8.png" alt="4582835-5baa16c4e5fc1cd8"></li>
+</ul>
+<p>　　<strong>我们通过链路由实现了区块链的分片，提高区块链系统的交易处理能力。</strong></p>
+<ul>
+<li>相较于一条单独的区块链系统，链路由系统可以通过连接多条子链的方式在交易处理能力上直线增长。交易的请求通过链路由的分配进入不同子链，可以有效规避针对一条子链的集中请求。</li>
+<li>此外，我们可以在链路由上部署同构子链的不同节点数的集群，对于同构链而言，多节点数量的集群会有相对较高的安全性，少节点集群的处理速度则更快。</li>
+<li>通过链路由实现区块链的分片，可以帮助链网络根据业务需求灵活部署，为用户提供更高质量的区块链服务。</li>
+</ul>
+<p>　　<strong>打通各子链，在链与链间建立信任桥梁。</strong></p>
+<ul>
+<li>连接在链路由上的各子链之间通过链路由得以彼此传递消息，协同工作，实现“1+1&gt;2”的效果。</li>
+<li>我们也可以部署多个链路由系统，每一个链路由系统中都可以部署包括比特币，以太坊，安链在内的各种子链。因此每一个链路由都可以服务一个更完整的业务生态。</li>
+<li>同理，我们可以根据节点数量，地理位置，业务分类等不同需求，部署不同的链路由集群，根据路由规则，对应不同需求将请求分发到合适的集群之中处理。</li>
+</ul>
+<p><img src="http://oc3uwt4a5.bkt.clouddn.com/4582835-350ceb3a8b9beb95.png" alt="4582835-350ceb3a8b9beb95"><br>　　链路由网络的最终形态，是通过链路由的无限扩展和彼此之间的相互连接，形成连接不同集群的复杂区块链星状网络。创造一个由区块链组成的，互联，互通，互信的网络世界。</p>
+<p>对比：<br><img src="http://oc3uwt4a5.bkt.clouddn.com/4582835-50990296aa72bef6.png" alt="4582835-50990296aa72bef6"></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/BlockChain/" rel="tag"># BlockChain</a>
+          
+            <a href="/tags/跨链/" rel="tag"># 跨链</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/22/半小时学会LevelDB原理及应用/" rel="next" title="半小时学会LevelDB原理及应用">
+                <i class="fa fa-chevron-left"></i> 半小时学会LevelDB原理及应用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/01/大数据处理-Bloom Filter/" rel="prev" title="大数据处理——Bloom Filter">
+                大数据处理——Bloom Filter <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Frank yang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、侧链"><span class="nav-number">1.</span> <span class="nav-text">一、侧链</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#BTC-Relay"><span class="nav-number">1.0.1.</span> <span class="nav-text">BTC Relay</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RootStock"><span class="nav-number">1.0.2.</span> <span class="nav-text">RootStock</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#元素链"><span class="nav-number">1.0.3.</span> <span class="nav-text">元素链</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LISK"><span class="nav-number">1.0.4.</span> <span class="nav-text">LISK</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、M2"><span class="nav-number">2.</span> <span class="nav-text">二、M2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、Polkadot"><span class="nav-number">3.</span> <span class="nav-text">三、Polkadot</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#角色分工"><span class="nav-number">3.0.1.</span> <span class="nav-text">角色分工</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、Interledger"><span class="nav-number">4.</span> <span class="nav-text">四、Interledger</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、众安科技Anlink（联网-链路由）"><span class="nav-number">5.</span> <span class="nav-text">五、众安科技Anlink（联网+链路由）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Frank yang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
