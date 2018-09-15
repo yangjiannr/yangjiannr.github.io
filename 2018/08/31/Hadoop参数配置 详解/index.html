@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="hadoop,HDFS,MapReduce," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="hadoop doc： http://hadoop.apache.org/docs/current/ 配置文件介绍Hadoop的配置文件分为两类：  只读类型的默认文件： src/core/core-default.xml src/hdfs/hdfs-default.xml src/mapred/mapred-default.xml conf/mapred-queues.xml   定位(site">
+<meta name="keywords" content="hadoop,HDFS,MapReduce">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop参数配置 详解">
+<meta property="og:url" content="http://yoursite.com/2018/08/31/Hadoop参数配置 详解/index.html">
+<meta property="og:site_name" content="紫魔戒的博客">
+<meta property="og:description" content="hadoop doc： http://hadoop.apache.org/docs/current/ 配置文件介绍Hadoop的配置文件分为两类：  只读类型的默认文件： src/core/core-default.xml src/hdfs/hdfs-default.xml src/mapred/mapred-default.xml conf/mapred-queues.xml   定位(site">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-09-15T09:10:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hadoop参数配置 详解">
+<meta name="twitter:description" content="hadoop doc： http://hadoop.apache.org/docs/current/ 配置文件介绍Hadoop的配置文件分为两类：  只读类型的默认文件： src/core/core-default.xml src/hdfs/hdfs-default.xml src/mapred/mapred-default.xml conf/mapred-queues.xml   定位(site">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/31/Hadoop参数配置 详解/"/>
+
+
+
+
+
+  <title>Hadoop参数配置 详解 | 紫魔戒的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">紫魔戒的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">技术分享</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/31/Hadoop参数配置 详解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Frank yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oc3uwt4a5.bkt.clouddn.com/20180912avator.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="紫魔戒的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Hadoop参数配置 详解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-31T17:07:37+08:00">
+                2018-08-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BigData/" itemprop="url" rel="index">
+                    <span itemprop="name">BigData</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+
+          
+            <span class="post-meta-divider">|</span>
+            <span id="busuanzi_value_page_pv"></span>次阅读
+          
+
+          
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>hadoop doc： <a href="http://hadoop.apache.org/docs/current/" target="_blank" rel="noopener">http://hadoop.apache.org/docs/current/</a></p>
+<h2 id="配置文件介绍"><a href="#配置文件介绍" class="headerlink" title="配置文件介绍"></a>配置文件介绍</h2><p>Hadoop的配置文件分为两类：</p>
+<ol>
+<li>只读类型的默认文件：<ul>
+<li>src/core/core-default.xml</li>
+<li>src/hdfs/hdfs-default.xml</li>
+<li>src/mapred/mapred-default.xml</li>
+<li>conf/mapred-queues.xml</li>
+</ul>
+</li>
+<li><p>定位(site-specific)设置：</p>
+<ul>
+<li>conf/core-site.xml</li>
+<li>conf/hdfs-site.xml</li>
+<li>conf/mapred-site.xml</li>
+<li><p>conf/mapred-queues.xml</p>
+<p>除此之外，也可以通过设置conf/<strong>Hadoop-env.sh</strong>来为Hadoop的守护进程设置环境变量(在bin/文件夹内）。</p>
+</li>
+</ul>
+</li>
+</ol>
+<a id="more"></a>
+<p>hadoop-env.sh中比较重要的环境变量：</p>
+<table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JAVA_HOME</td>
+<td>无</td>
+<td>用于确定Hadoop使用的JDK，需要正确设置，否则无法启动Hadoop。</td>
+</tr>
+<tr>
+<td>HADOOP_LOG_DIR</td>
+<td>\${HADOOP_HOME}/logs</td>
+<td>守护进程的日志目录，默认值是\${HADOOP_HOME}/logs</td>
+</tr>
+<tr>
+<td>HADOOP_NAMENODE_OPTS</td>
+<td>无</td>
+<td>HDFS的NameNode的Java虚拟机选项，默认为空。对于规模较大的集群（二十个节点以上），可以通过这个选项增大NameNode进程的堆内存（例如-Xmx2048M）。</td>
+</tr>
+</tbody>
+</table>
+<p>hadoop是通过org.apache.hadoop.conf.configuration来读取配置文件的。在Hadoop的设置中，Hadoop的配置是通过资源（resource）定位的，每个资源由一系列name/value对以XML文件的形式构成，它以一个字符串命名或以Hadoop定义的Path类命名（这个类是用于定义文件系统内的文件或文件夹的）。如果是以字符串命名的，Hadoop会通过classpath调用此文件。如果以Path类命名，那么Hadoop会直接在本地文件系统中搜索文件。</p>
+<table>
+<thead>
+<tr>
+<th>配置文件名</th>
+<th>配置对象</th>
+<th>主要内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>core-site.xml</td>
+<td>集群全局参数</td>
+<td>用于定义系统级别的参数，如HDFS  URL、Hadoop的临时目录等</td>
+</tr>
+<tr>
+<td>hdfs-site.xml</td>
+<td>HDFS参数</td>
+<td>如名称节点和数据节点的存放位置、文件副本的个数、文件读取权限等</td>
+</tr>
+<tr>
+<td>mapred-site.xml</td>
+<td>Mapreduce参数</td>
+<td>包括JobHistory Server和应用程序参数两部分，如reduce任务的默认个数、任务所能够使用内存的默认上下限等</td>
+</tr>
+<tr>
+<td>yarn-site.xml</td>
+<td>集群资源管理系统参数</td>
+<td>配置 ResourceManager，NodeManager 的通信端口，web监控端口等</td>
+</tr>
+</tbody>
+</table>
+<h2 id="core-site-xml"><a href="#core-site-xml" class="headerlink" title="core-site.xml"></a>core-site.xml</h2><table>
+<thead>
+<tr>
+<th>参数名</th>
+<th>默认值</th>
+<th>参数解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fs.defaultFS</td>
+<td>file:///</td>
+<td>文件系统主机和端口</td>
+</tr>
+<tr>
+<td>io.file.buffer.size</td>
+<td>4096</td>
+<td>流文件的缓冲区大小</td>
+</tr>
+<tr>
+<td>hadoop.tmp.dir</td>
+<td>/tmp/hadoop-${user.name}</td>
+<td>临时文件夹</td>
+</tr>
+</tbody>
+</table>
+<h2 id="hdfs-site-xml"><a href="#hdfs-site-xml" class="headerlink" title="hdfs-site.xml"></a>hdfs-site.xml</h2><h3 id="HDFS参数配置"><a href="#HDFS参数配置" class="headerlink" title="HDFS参数配置"></a>HDFS参数配置</h3><table>
+<thead>
+<tr>
+<th>序号</th>
+<th>参数名</th>
+<th>默认值</th>
+<th>参数解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>dfs.namenode.secondary.http-address</td>
+<td>0.0.0.0:50090</td>
+<td>定义HDFS对应的HTTP服务器地址和端口</td>
+</tr>
+<tr>
+<td>2</td>
+<td>dfs.namenode.name.dir</td>
+<td>file://${hadoop.tmp.dir}/dfs/name</td>
+<td>定义DFS的名称节点在本地文件系统的位置</td>
+</tr>
+<tr>
+<td>3</td>
+<td>dfs.datanode.data.dir</td>
+<td>file://${hadoop.tmp.dir}/dfs/data</td>
+<td>定义DFS数据节点存储数据块时存储在本地文件系统的位置</td>
+</tr>
+<tr>
+<td>4</td>
+<td>dfs.replication</td>
+<td>3</td>
+<td>缺省的块复制数量</td>
+</tr>
+<tr>
+<td>5</td>
+<td>dfs.webhdfs.enabled</td>
+<td>true</td>
+<td>是否通过http协议读取hdfs文件，如果选是，则集群安全性较差</td>
+</tr>
+<tr>
+<td>6</td>
+<td>dfs.blocksize</td>
+<td>64M</td>
+<td>大型的文件系统HDFS块大小为64M</td>
+</tr>
+<tr>
+<td>7</td>
+<td>dfs.namenode.handler.count</td>
+<td>100</td>
+<td>设置更多的namenode线程，处理从 datanode发出的大量RPC请求</td>
+</tr>
+</tbody>
+</table>
+<h3 id="HDFS常用端口"><a href="#HDFS常用端口" class="headerlink" title="HDFS常用端口"></a>HDFS常用端口</h3><table>
+<thead>
+<tr>
+<th>组件</th>
+<th>节点</th>
+<th>默认端口</th>
+<th>配置</th>
+<th>用途说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HDFS</td>
+<td>DataNode</td>
+<td>50010</td>
+<td>dfs.datanote.address</td>
+<td>datanote服务端口，用于数据传输</td>
+</tr>
+<tr>
+<td>HDFS</td>
+<td>DataNode</td>
+<td>50075</td>
+<td>dfs.datanote.http.address</td>
+<td>http服务的端口</td>
+</tr>
+<tr>
+<td>HDFS</td>
+<td>DataNode</td>
+<td>50475</td>
+<td>dfs.datanote.https.address</td>
+<td>https服务的端口</td>
+</tr>
+<tr>
+<td>HDFS</td>
+<td>DataNode</td>
+<td>50020</td>
+<td>dfs.datanote.ipc.address</td>
+<td>IPC服务的端口</td>
+</tr>
+<tr>
+<td>HDFS</td>
+<td>NameNode</td>
+<td>50070</td>
+<td>dfs.namenode.http-address</td>
+<td>http服务的端口</td>
+</tr>
+<tr>
+<td>HDFS</td>
+<td>NameNode</td>
+<td>50470</td>
+<td>dfs.namenode.https-address</td>
+<td>https服务的端口</td>
+</tr>
+<tr>
+<td>HDFS</td>
+<td>NameNode</td>
+<td>8020</td>
+<td>fs.defaultFs</td>
+<td>接收Client连接的RPC端口，用于获取文件系统metadata信息</td>
+</tr>
+<tr>
+<td>HDFS</td>
+<td>JournalNode</td>
+<td>8485</td>
+<td>dfs.journalnode.rpc-address</td>
+<td>RPC服务</td>
+</tr>
+<tr>
+<td>HDFS</td>
+<td>JournalNode</td>
+<td>8480</td>
+<td>dfs.journalnode.http-address</td>
+<td>HTTP服务</td>
+</tr>
+<tr>
+<td>HDFS</td>
+<td>ZKFC</td>
+<td>8019</td>
+<td>dfs.ha.zkfc.port</td>
+<td>ZooKeeper Failover Controller，用于NN HA</td>
+</tr>
+</tbody>
+</table>
+<h2 id="yarn-site-xml"><a href="#yarn-site-xml" class="headerlink" title="yarn-site.xml"></a>yarn-site.xml</h2><h3 id="YARN常用端口"><a href="#YARN常用端口" class="headerlink" title="YARN常用端口"></a>YARN常用端口</h3><table>
+<thead>
+<tr>
+<th>组件</th>
+<th>节点</th>
+<th>默认端口</th>
+<th>配置</th>
+<th>用途说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>YARN</td>
+<td>ResourceManager</td>
+<td>8032</td>
+<td>yarn.resourcemanager.address</td>
+<td>RM的applications manager（ASM）端口，ResourceManager对客户端暴露的地址。客户端通过该地址向RM提交应用程序，杀死应用程序等</td>
+</tr>
+<tr>
+<td>YARN</td>
+<td>ResourceManager</td>
+<td>8030</td>
+<td>yarn.resourcemanager.scheduler.address</td>
+<td>scheduler组件的IPC端口，ResourceManager对ApplicationMaser暴露的访问地址。ApplicationMaster通过该地址向RM申请资源、释放资源等。</td>
+</tr>
+<tr>
+<td>YARN</td>
+<td>ResourceManager</td>
+<td>8031</td>
+<td>yarn.resourcemanager.resource-tracker.address</td>
+<td>IPC<br>ResourceManager对NodeManager暴露的地址。NodeManager通过该地址向RM汇报心跳，领取任务等。</td>
+</tr>
+<tr>
+<td>YARN</td>
+<td>ResourceManager</td>
+<td>8033</td>
+<td>yarn.resourcemanager.admin.address</td>
+<td>IPC<br>ResourceManager 对管理员暴露的访问地址。管理员通过该地址向RM发送管理命令等。</td>
+</tr>
+<tr>
+<td>YARN</td>
+<td>ResourceManager</td>
+<td>8088</td>
+<td>yarn.resourcemanager.webapp.address</td>
+<td>http服务端口<br>ResourceManager对外web ui地址。用户可以通过该地址在浏览器中查看集群各类信息</td>
+</tr>
+<tr>
+<td>YARN</td>
+<td>NodeManager</td>
+<td>8040</td>
+<td>yarn.nodemanager.localizer.address</td>
+<td>localizer IPC</td>
+</tr>
+<tr>
+<td>YARN</td>
+<td>NodeManager</td>
+<td>8042</td>
+<td>yarn.nodemanager.webapp.address</td>
+<td>http服务端口</td>
+</tr>
+<tr>
+<td>YARN</td>
+<td>NodeManager</td>
+<td>8041</td>
+<td>yarn.nodemanager.address</td>
+<td>NodeManager中container manager的端口</td>
+</tr>
+<tr>
+<td>YARN</td>
+<td>JobHistory Server</td>
+<td>10020</td>
+<td>mapreduce.jobhistory.address</td>
+<td>IPC</td>
+</tr>
+<tr>
+<td>YARN</td>
+<td>JobHistory Server</td>
+<td>19888</td>
+<td>mapreduce.jobhistory.webapp.address</td>
+<td>http服务端口</td>
+</tr>
+</tbody>
+</table>
+<h3 id="YARN参数配置"><a href="#YARN参数配置" class="headerlink" title="YARN参数配置"></a>YARN参数配置</h3><table>
+<thead>
+<tr>
+<th>组件</th>
+<th>节点</th>
+<th>缺省值</th>
+<th>配置</th>
+<th>用途说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>YARN</td>
+<td>NodeManager</td>
+<td>8192</td>
+<td>yarn.nodemanager.resource.memory-mb</td>
+<td>NodeManager总的可用物理内存。注意，该参数是不可修改的，一旦设置，整个运行过程中不 可动态修改。另外，该参数的默认值是8192MB，即使你的机器内存不够8192MB，YARN也会按照这些内存来使用，因此，这个值通过一 定要配置。不过，Apache已经正在尝试将该参数做成可动态修改的。</td>
+</tr>
+<tr>
+<td>YARN</td>
+<td>NodeManager</td>
+<td>2.1</td>
+<td>yarn.nodemanager.vmem-pmem-ratio</td>
+<td>每使用1MB物理内存，最多可用的虚拟内存数。</td>
+</tr>
+<tr>
+<td>YARN</td>
+<td>NodeManager</td>
+<td>8</td>
+<td>yarn.nodemanager.resource.cpu-vcores</td>
+<td>NodeManager总的可用虚拟CPU个数。</td>
+</tr>
+<tr>
+<td>YARN</td>
+<td>NodeManager</td>
+<td>${hadoop.tmp.dir}/nm-local-dir</td>
+<td>yarn.nodemanager.local-dirs</td>
+<td>中间结果存放位置，类似于1.0中的mapred.local.dir。注意，这个参数通常会配置多个目录，已分摊磁盘IO负载。</td>
+</tr>
+<tr>
+<td>YARN</td>
+<td>NodeManager</td>
+<td>10800（3小时）</td>
+<td>yarn.nodemanager.log.retain-seconds</td>
+<td>NodeManager上日志最多存放时间（不启用日志聚集功能时有效）。</td>
+</tr>
+<tr>
+<td>YARN</td>
+<td>NodeManager</td>
+<td>yarn.nodemanager.aux-services</td>
+<td>NodeManager上运行的附属服务。需配置成mapreduce_shuffle，才可运行MapReduce程序</td>
+</tr>
+<tr>
+<td>YARN</td>
+<td>NodeManager</td>
+<td>1024/8192</td>
+<td>yarn.scheduler.minimum-allocation-mb/ yarn.scheduler.maximum-allocation-mb</td>
+<td>单个可申请的最小/最大内存资源量。比如设置为1024和3072，则运行MapRedce作业时，每个Task最少可申请1024MB内存，最多可申请3072MB内存。</td>
+</tr>
+<tr>
+<td>YARN</td>
+<td>NodeManager</td>
+<td>yarn.scheduler.minimum-allocation-vcores / yarn.scheduler.maximum-allocation-vcores</td>
+<td>单个可申请的最小/最大虚拟CPU个数。比如设置为1和4，则运行MapRedce作业时，每个Task最少可申请1个虚拟CPU，最多可申请4个虚拟CPU。什么是虚拟CPU,查看：<a href="http://dongxicheng.org/mapreduce-nextgen/yarnmrv2-resource-manager-resource-manager/" target="_blank" rel="noopener">http://dongxicheng.org/mapreduce-nextgen/yarnmrv2-resource-manager-resource-manager/</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="mapred-site-xml"><a href="#mapred-site-xml" class="headerlink" title="mapred-site.xml"></a>mapred-site.xml</h2><h3 id="MapReduce参数配置"><a href="#MapReduce参数配置" class="headerlink" title="MapReduce参数配置"></a>MapReduce参数配置</h3><table>
+<thead>
+<tr>
+<th>参数名称</th>
+<th>缺省值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mapreduce.framework.name</td>
+<td>local</td>
+<td>取值local、classic或yarn其中之一，如果不是yarn，则不会使用YARN集群来实现资源的分配</td>
+</tr>
+<tr>
+<td>mapreduce.jobhistory.address</td>
+<td>0.0.0.0:10020</td>
+<td>定义历史服务器的地址和端口，通过历史服务器查看已经运行完的MapReduce作业记录</td>
+</tr>
+<tr>
+<td>mapreduce.jobhistory.webapp.address</td>
+<td>0.0.0.0:19888</td>
+<td>定义历史服务器web应用访问的地址和端口</td>
+</tr>
+<tr>
+<td>mapreduce.job.name</td>
+<td></td>
+<td>作业名称</td>
+</tr>
+<tr>
+<td>mapreduce.job.priority</td>
+<td>NORMAL</td>
+<td>作业优先级</td>
+</tr>
+<tr>
+<td>yarn.app.mapreduce.am.resource.mb</td>
+<td>1536</td>
+<td>MR ApplicationMaster占用的内存量</td>
+</tr>
+<tr>
+<td>yarn.app.mapreduce.am.resource.cpu-vcores</td>
+<td>1</td>
+<td>MR ApplicationMaster占用的虚拟CPU个数</td>
+</tr>
+<tr>
+<td>mapreduce.am.max-attempts</td>
+<td>2</td>
+<td>MR ApplicationMaster最大失败尝试次数</td>
+</tr>
+<tr>
+<td>mapreduce.map.memory.mb</td>
+<td>1024</td>
+<td>每个Map Task需要的内存量</td>
+</tr>
+<tr>
+<td>mapreduce.map.cpu.vcores</td>
+<td>1</td>
+<td>每个Map Task需要的虚拟CPU个数</td>
+</tr>
+<tr>
+<td>mapreduce.map.maxattempts</td>
+<td>4</td>
+<td>Map Task最大失败尝试次数</td>
+</tr>
+<tr>
+<td>mapreduce.reduce.memory.mb</td>
+<td>1024</td>
+<td>每个Reduce Task需要的内存量</td>
+</tr>
+<tr>
+<td>mapreduce.reduce.cpu.vcores</td>
+<td>1</td>
+<td>每个Reduce Task需要的虚拟CPU个数</td>
+</tr>
+<tr>
+<td>mapreduce.reduce.maxattempts</td>
+<td>4</td>
+<td>Reduce Task最大失败尝试次数</td>
+</tr>
+<tr>
+<td>mapreduce.map.speculative</td>
+<td>false</td>
+<td>是否对Map Task启用推测执行机制</td>
+</tr>
+<tr>
+<td>mapreduce.reduce.speculative</td>
+<td>false</td>
+<td>是否对Reduce Task启用推测执行机制</td>
+</tr>
+<tr>
+<td>mapreduce.job.queuename</td>
+<td>default</td>
+<td>作业提交到的队列</td>
+</tr>
+<tr>
+<td>mapreduce.task.io.sort.mb</td>
+<td>100</td>
+<td>任务内部排序缓冲区大小</td>
+</tr>
+<tr>
+<td>mapreduce.map.sort.spill.percent</td>
+<td>0.8</td>
+<td>Map阶段溢写文件的阈值（排序缓冲区大小的百分比）</td>
+</tr>
+<tr>
+<td>mapreduce.reduce.shuffle.parallelcopies</td>
+<td>5</td>
+<td>Reduce Task启动的并发拷贝数据的线程数目</td>
+</tr>
+</tbody>
+</table>
+<h2 id="mapred-queues-xml"><a href="#mapred-queues-xml" class="headerlink" title="mapred-queues.xml"></a>mapred-queues.xml</h2><table>
+<thead>
+<tr>
+<th>标签或属性 （Tag/Attribute）</th>
+<th>值（value）</th>
+<th>是否可刷新</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Queues</td>
+<td>配置文件的根元素</td>
+<td>无意义</td>
+</tr>
+<tr>
+<td>AclsEnabled</td>
+<td>布尔类型<queue>标签的属性，表示存取控制列表是否支持控制Job的提交及所有queue的管理</queue></td>
+<td>是</td>
+</tr>
+<tr>
+<td>queue</td>
+<td><queues>的子元素，定义系统中的queue</queues></td>
+<td>无意义</td>
+</tr>
+<tr>
+<td>Name</td>
+<td><queue>的子元素，代表名字</queue></td>
+<td>否</td>
+</tr>
+<tr>
+<td>State</td>
+<td><queue>的子元素，代表queue的状态</queue></td>
+<td>是</td>
+</tr>
+<tr>
+<td>Acl-submit-job</td>
+<td><queue>的子元素，定义一个能提交Job到该queue的用户或组的名单列表</queue></td>
+<td>是</td>
+</tr>
+<tr>
+<td>Acl-administrator-job</td>
+<td><queue>的子元素，定义一个能更改Job的优先级或能杀死已提交到该queue的Job用户或组的名单列表</queue></td>
+<td>是</td>
+</tr>
+<tr>
+<td>properties</td>
+<td><queue>的子元素，定义优先调度规则</queue></td>
+<td>无意义</td>
+</tr>
+<tr>
+<td>Property</td>
+<td><properties>的子元素</properties></td>
+<td>无意义</td>
+</tr>
+<tr>
+<td>Key</td>
+<td><property>的子元素</property></td>
+<td>调度程序指定</td>
+</tr>
+<tr>
+<td>Value</td>
+<td><property>的属性</property></td>
+<td>调度程序指定</td>
+</tr>
+</tbody>
+</table>
+<h2 id="其他常用端口"><a href="#其他常用端口" class="headerlink" title="其他常用端口"></a>其他常用端口</h2><h3 id="HBase常用端口"><a href="#HBase常用端口" class="headerlink" title="HBase常用端口"></a>HBase常用端口</h3><table>
+<thead>
+<tr>
+<th>组件</th>
+<th>节点</th>
+<th>默认端口</th>
+<th>配置</th>
+<th>用途说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HBase</td>
+<td>Master</td>
+<td>60000</td>
+<td>hbase.master.port</td>
+<td>IPC</td>
+</tr>
+<tr>
+<td>HBase</td>
+<td>Master</td>
+<td>60010</td>
+<td>hbase.master.info.port</td>
+<td>http服务端口</td>
+</tr>
+<tr>
+<td>HBase</td>
+<td>RegionServer</td>
+<td>60020</td>
+<td>hbase.regionserver.port</td>
+<td>IPC</td>
+</tr>
+<tr>
+<td>HBase</td>
+<td>RegionServer</td>
+<td>60030</td>
+<td>hbase.regionserver.info.port</td>
+<td>http服务端口</td>
+</tr>
+<tr>
+<td>HBase</td>
+<td>HQuorumPeer</td>
+<td>2181</td>
+<td>hbase.zookeeper.property.clientPort</td>
+<td>HBase-managed ZK mode，使用独立的ZooKeeper集群则不会启用该端口。</td>
+</tr>
+<tr>
+<td>HBase</td>
+<td>HQuorumPeer</td>
+<td>2888</td>
+<td>hbase.zookeeper.peerport</td>
+<td>HBase-managed ZK mode，使用独立的ZooKeeper集群则不会启用该端口。</td>
+</tr>
+<tr>
+<td>HBase</td>
+<td>HQuorumPeer</td>
+<td>3888</td>
+<td>hbase.zookeeper.leaderport</td>
+<td>HBase-managed ZK mode，使用独立的ZooKeeper集群则不会启用该端口。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Hive常用端口"><a href="#Hive常用端口" class="headerlink" title="Hive常用端口"></a>Hive常用端口</h3><table>
+<thead>
+<tr>
+<th>组件</th>
+<th>节点</th>
+<th>默认端口</th>
+<th>配置</th>
+<th>用途说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hive</td>
+<td>Metastore</td>
+<td>9083</td>
+<td>/etc/default/hive-metastore中export PORT=<port>来更新默认端口</port></td>
+<td></td>
+</tr>
+<tr>
+<td>Hive</td>
+<td>HiveServer</td>
+<td>10000</td>
+<td>/etc/hive/conf/hive-env.sh中export HIVE_SERVER2_THRIFT_PORT=<port>来更新默认端口</port></td>
+</tr>
+</tbody>
+</table>
+<h3 id="ZooKeep常用端口"><a href="#ZooKeep常用端口" class="headerlink" title="ZooKeep常用端口"></a>ZooKeep常用端口</h3><table>
+<thead>
+<tr>
+<th>组件</th>
+<th>节点</th>
+<th>默认端口</th>
+<th>配置</th>
+<th>用途说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ZooKeeper</td>
+<td>Server</td>
+<td>2181</td>
+<td>/etc/zookeeper/conf/zoo.cfg中clientPort=<port></port></td>
+<td>对客户端提供服务的端口</td>
+</tr>
+<tr>
+<td>ZooKeeper</td>
+<td>Server</td>
+<td>2888</td>
+<td>/etc/zookeeper/conf/zoo.cfg中server.x=[hostname]:nnnnn[:nnnnn]，标蓝部分</td>
+<td>follower用来连接到leader，只在leader上监听该端口。</td>
+</tr>
+<tr>
+<td>ZooKeeper</td>
+<td>Server</td>
+<td>3888</td>
+<td>/etc/zookeeper/conf/zoo.cfg中server.x=[hostname]:nnnnn[:nnnnn]，标蓝部分</td>
+<td>用于leader选举的。只在electionAlg是1,2或3(默认)时需要。</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/hadoop/" rel="tag"># hadoop</a>
+          
+            <a href="/tags/HDFS/" rel="tag"># HDFS</a>
+          
+            <a href="/tags/MapReduce/" rel="tag"># MapReduce</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/07/eclipse代码补全按键修改成Tab/" rel="next" title="eclipse代码补全按键修改成Tab">
+                <i class="fa fa-chevron-left"></i> eclipse代码补全按键修改成Tab
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/15/Linux设置静态IP(固定IP)/" rel="prev" title="Linux设置静态IP(固定IP)">
+                Linux设置静态IP(固定IP) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://oc3uwt4a5.bkt.clouddn.com/20180912avator.jpg"
+                alt="Frank yang" />
+            
+              <p class="site-author-name" itemprop="name">Frank yang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置文件介绍"><span class="nav-number">1.</span> <span class="nav-text">配置文件介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#core-site-xml"><span class="nav-number">2.</span> <span class="nav-text">core-site.xml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hdfs-site-xml"><span class="nav-number">3.</span> <span class="nav-text">hdfs-site.xml</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HDFS参数配置"><span class="nav-number">3.1.</span> <span class="nav-text">HDFS参数配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HDFS常用端口"><span class="nav-number">3.2.</span> <span class="nav-text">HDFS常用端口</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yarn-site-xml"><span class="nav-number">4.</span> <span class="nav-text">yarn-site.xml</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#YARN常用端口"><span class="nav-number">4.1.</span> <span class="nav-text">YARN常用端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#YARN参数配置"><span class="nav-number">4.2.</span> <span class="nav-text">YARN参数配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mapred-site-xml"><span class="nav-number">5.</span> <span class="nav-text">mapred-site.xml</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MapReduce参数配置"><span class="nav-number">5.1.</span> <span class="nav-text">MapReduce参数配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mapred-queues-xml"><span class="nav-number">6.</span> <span class="nav-text">mapred-queues.xml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他常用端口"><span class="nav-number">7.</span> <span class="nav-text">其他常用端口</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HBase常用端口"><span class="nav-number">7.1.</span> <span class="nav-text">HBase常用端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hive常用端口"><span class="nav-number">7.2.</span> <span class="nav-text">Hive常用端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ZooKeep常用端口"><span class="nav-number">7.3.</span> <span class="nav-text">ZooKeep常用端口</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Frank yang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style='display:none'>
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    <span class="post-meta-divider">|</span>
+</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+    有<span id="busuanzi_value_site_uv"></span>人看过我的博客啦
+</span>
+</div>
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
