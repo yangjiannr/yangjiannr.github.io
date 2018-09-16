@@ -294,6 +294,157 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/22/半小时学会LevelDB原理及应用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Frank yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oc3uwt4a5.bkt.clouddn.com/20180912avator.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="紫魔戒的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/22/半小时学会LevelDB原理及应用/" itemprop="url">半小时学会LevelDB原理及应用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-22T15:57:00+08:00">
+                2017-09-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DataBase/" itemprop="url" rel="index">
+                    <span itemprop="name">DataBase</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+
+          
+
+          
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="LevelDB"><a href="#LevelDB" class="headerlink" title="LevelDB"></a>LevelDB</h1><h2 id="LevelDB之概览"><a href="#LevelDB之概览" class="headerlink" title="LevelDB之概览"></a>LevelDB之概览</h2><p>　　LevelDB是Google传奇工程师<a href="https://research.google.com/pubs/jeff.html" target="_blank" rel="noopener">Jeff Dean</a>和<a href="https://research.google.com/pubs/SanjayGhemawat.html" target="_blank" rel="noopener">Sanjay Ghemawat</a>开源的KV存储引擎。<br>　　了解原理之前首先要用起来，下面动手实现个例子：<a href="https://github.com/google/leveldb" target="_blank" rel="noopener">安装调试</a>(mac上直接命令行下<a href="https://brew.sh/" target="_blank" rel="noopener">brew</a> install leveldb即可安装，编译时候记得加上-lleveldb)<br>　　example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;assert.h&gt;</span><br><span class="line">#include &lt;string.h&gt;</span><br><span class="line">#include &lt;leveldb/db.h&gt;</span><br><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">int main(int argc, char** argv)</span><br><span class="line">&#123;</span><br><span class="line">    leveldb::DB* db;</span><br><span class="line">    leveldb::Options options;</span><br><span class="line">    // 如果打开已存在数据库的时候，需要抛出错误，将以下代码插在leveldb::DB::Open方法前面</span><br><span class="line">    options.create_if_missing = true;</span><br><span class="line">    // 打开一个数据库实例</span><br><span class="line">    leveldb::Status status = leveldb::DB::Open(options, &quot;/tmp/testdb&quot;, &amp;db);</span><br><span class="line">    assert(status.ok());</span><br><span class="line">    // LevelDB提供了Put、Get和Delete三个方法对数据库进行添加、查询和删除</span><br><span class="line">    std::string key = &quot;key&quot;;</span><br><span class="line">    std::string value = &quot;value&quot;;</span><br><span class="line">    // 添加key=value</span><br><span class="line">    status = db-&gt;Put(leveldb::WriteOptions(), key, value);</span><br><span class="line">    assert(status.ok());</span><br><span class="line">    // 根据key查询value</span><br><span class="line">    status = db-&gt;Get(leveldb::ReadOptions(), key, &amp;value);</span><br><span class="line">    assert(status.ok());</span><br><span class="line">    std::cout&lt;&lt;value&lt;&lt;std::endl;</span><br><span class="line">    // 修改操作（原生没有提供）由添加和删除合起来实现</span><br><span class="line">    std::string key2 = &quot;key2&quot;;</span><br><span class="line">    // 添加key2=value</span><br><span class="line">    status = db-&gt;Put(leveldb::WriteOptions(),key2,value);</span><br><span class="line">    assert(status.ok());</span><br><span class="line">    // 删除key</span><br><span class="line">    status = db-&gt;Delete(leveldb::WriteOptions(), key);</span><br><span class="line">    // 查询key2</span><br><span class="line">    assert(status.ok());</span><br><span class="line">    status = db-&gt;Get(leveldb::ReadOptions(), key2, &amp;value);</span><br><span class="line">    assert(status.ok());</span><br><span class="line">    std::cout&lt;&lt;key2&lt;&lt;&quot;==&quot;&lt;&lt;value&lt;&lt;std::endl;</span><br><span class="line">    // 查询key</span><br><span class="line">    status = db-&gt;Get(leveldb::ReadOptions(), key, &amp;value);</span><br><span class="line">    if (!status.ok()) &#123;</span><br><span class="line">        std::cerr &lt;&lt; key &lt;&lt; &quot;: &quot; &lt;&lt; status.ToString() &lt;&lt; std::endl;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        std::cout &lt;&lt; key &lt;&lt; &quot;==&quot; &lt;&lt; value &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">    delete db;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/09/22/半小时学会LevelDB原理及应用/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/11/2PC&3PC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1648,153 +1799,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/25/进程死锁及解决办法-紫魔戒/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Frank yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://oc3uwt4a5.bkt.clouddn.com/20180912avator.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="紫魔戒的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/25/进程死锁及解决办法-紫魔戒/" itemprop="url">进程死锁及解决办法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-25T21:44:00+08:00">
-                2017-06-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-
-          
-
-          
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>【摘要】进程死锁及解决办法一、要点提示（1） 掌握死锁的概念和产生死锁的根本原因。（2） 理解产生死锁的必要条件–以下四个条件同时具备：互斥条件、不可抢占条件、占有且申请条件、循环等待条件。（3） 记住解决死锁的一般方法，掌握死锁的预防和死锁的避免二者的基本思想。（4） 掌握死锁的预防策略中… <a href="http://www.cnblogs.com/yangjiannr/p/7391326.html" target="_blank" rel="noopener">阅读全文</a></p>
-<p><a href="http://www.frankyang.cn/2017/06/25/lock/" target="_blank" rel="noopener">http://www.frankyang.cn/2017/06/25/lock/</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1849,7 +1853,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1871,7 +1875,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

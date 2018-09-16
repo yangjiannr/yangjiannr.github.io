@@ -406,13 +406,23 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">su              # 上述提到的以 root 用户登录</span><br><span class="line">useradd -m hadoop -s /bin/bash   # 创建新用户hadoop</span><br><span class="line">passwd hadoop   # 修改密码，按提示输入两次密码 </span><br><span class="line">visudo 或 vim /etc/sudoers</span><br><span class="line"># 找到 root ALL=(ALL) ALL 这行</span><br><span class="line"># 然后在这行下面增加一行内容：hadoop ALL=(ALL) ALL （当中的间隔为tab）</span><br></pre></td></tr></table></figure>
 <p><img src="http://oc3uwt4a5.bkt.clouddn.com/15141656457549.jpg" alt=""></p>
 <a id="more"></a>
-<h2 id="免密登录设置"><a href="#免密登录设置" class="headerlink" title="免密登录设置"></a>免密登录设置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install ssh</span><br><span class="line">sudo yum install openssh-clients</span><br><span class="line">sudo yum install openssh-server</span><br><span class="line"></span><br><span class="line">//免密登录</span><br><span class="line">ssh-keygen -t rsa</span><br><span class="line">//回车回车</span><br><span class="line">ll -a   //生成了 .ssh文件夹，文件夹内有id_rsa 和 id_rsa.pub 两个文件</span><br><span class="line"></span><br><span class="line">cp ~/.ssh/id_rsa.pub  ~/.ssh/authorized_keys</span><br><span class="line"></span><br><span class="line">//测试是否成功</span><br><span class="line">ssh localhost   // 无需密码则表示设置成功</span><br></pre></td></tr></table></figure>
-<h2 id="关闭防火墙"><a href="#关闭防火墙" class="headerlink" title="关闭防火墙"></a>关闭防火墙</h2><p>Centos直接</p>
+<h2 id="免密登录设置"><a href="#免密登录设置" class="headerlink" title="免密登录设置"></a>免密登录设置</h2><p><code>sudo yum install ssh</code><br><code>sudo yum install openssh-clients</code><br><code>sudo yum install openssh-server</code></p>
+<p><code>vi /etc/ssh/sshd_config</code></p>
+<p>找到以下内容，并去掉注释符“#”<br><code>RSAAuthentication yes</code><br><code>PubbkeyAuthentication yes</code><br><code>AuthorizedKeysFile .ssh/authorized_keys</code></p>
+<p>重启sshd服务<br><code>service sshd restart 或 /etc/init.d/sshd restart</code></p>
+<p>//免密登录<br><code>ssh-keygen -t rsa</code></p>
+<p>//回车回车<br><code>ll -a</code>   //生成了 .ssh文件夹，文件夹内有id_rsa 和 id_rsa.pub 两个文件</p>
+<p><code>cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys</code><br><code>chmod 600 ~/.ssh/authorized_keys</code></p>
+<p>//测试是否成功<br><code>ssh localhost</code>   // 无需密码则表示设置成功</p>
+<h2 id="关闭防火墙"><a href="#关闭防火墙" class="headerlink" title="关闭防火墙"></a>关闭防火墙</h2><p>Centos6</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo service iptables stop       --临时关闭防火墙</span><br><span class="line">sudo chkconfig iptables off      --永久关闭防火墙</span><br><span class="line">sudo service iptables status     --查看防火墙状态</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>iptables: Firewall is not running.</code></p>
+</blockquote>
+<p>Centos7</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl stop firewalld.service #停止firewall</span><br><span class="line">sudo systemctl disable firewalld.service #禁止firewall开机启动</span><br><span class="line">sudo firewall-cmd --state #查看默认防火墙状态（关闭后显示notrunning，开启后显示running）</span><br></pre></td></tr></table></figure>
-<p>Centos7系统的防火墙放开50070端口</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">步骤：</span><br><span class="line">1.sudo firewall-cmd --zone=public --add-port=50070/tcp --permanent </span><br><span class="line">2.重启防火墙  sudo firewall-cmd --reload</span><br></pre></td></tr></table></figure>
-<h2 id="从本机拷贝文件至远程主机"><a href="#从本机拷贝文件至远程主机" class="headerlink" title="从本机拷贝文件至远程主机"></a>从本机拷贝文件至远程主机</h2><p>jdk-9.0.1：<br><a href="http://download.oracle.com/otn-pub/java/jdk/9.0.1+11/jdk-9.0.1_linux-x64_bin.tar.gz" target="_blank" rel="noopener">jdk-9.0.1_linux-x64_bin.tar.gz</a></p>
-<p>hadoop-2.6.0-cdh5.7.0.tar.gz<br><a href="http://archive.cloudera.com/cdh5/cdh/5/hadoop-2.6.0-cdh5.7.0.tar.gz" target="_blank" rel="noopener">hadoop-2.6.0-cdh5.7.0.tar.gz</a></p>
+<h2 id="从本机拷贝文件至远程主机"><a href="#从本机拷贝文件至远程主机" class="headerlink" title="从本机拷贝文件至远程主机"></a>从本机拷贝文件至远程主机</h2><p><a href="http://download.oracle.com/otn-pub/java/jdk/9.0.1+11/jdk-9.0.1_linux-x64_bin.tar.gz" target="_blank" rel="noopener">jdk-9.0.1_linux-x64_bin.tar.gz</a></p>
+<p><a href="http://archive.cloudera.com/cdh5/cdh/5/hadoop-2.6.0-cdh5.7.0.tar.gz" target="_blank" rel="noopener">hadoop-2.6.0-cdh5.7.0.tar.gz</a></p>
 <p>远程主机（用户名hadoop）：<br>　　<code>[hadoop@localhost ~]$ mkdir -p app/lib</code><br>　　<code>[hadoop@localhost ~]$ mkdir package</code></p>
 <p>本机，将需要的文件远程拷贝到远程主机中<br>　　<code>scp jdk-9.0.1_linux-x64_bin.tar.gz hadoop@hadoop:/home/hadoop/package</code><br>　　<code>scp hadoop-2.6.0-cdh5.7.0.tar.gz hadoop@hadoop:/home/hadoop/package</code></p>
 <h2 id="安装Java环境"><a href="#安装Java环境" class="headerlink" title="安装Java环境"></a>安装Java环境</h2><p>远程主机 /home/hadoop/package :<br>　　<code>tar -zxvf jdk-9.0.1_linux-x64_bin.tar.gz -C ~/app/lib</code><br>　　<code>tar -zxvf hadoop-2.6.0-cdh5.7.0.tar.gz -C ../app/lib/</code></p>
@@ -602,7 +612,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -624,7 +634,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

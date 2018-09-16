@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Hadoop集群搭建配置实例]]></title>
+    <url>%2F2018%2F09%2F16%2FHadoop%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA%E9%85%8D%E7%BD%AE%E5%AE%9E%E4%BE%8B%2F</url>
+    <content type="text"><![CDATA[重要的放在前面：遇到问题，看Logs很重要 环境 三台CenOS6.10 X86_64 uname -acat /etc/redhat-release jdk1.8.0_181 hadoop-2.8.4 分配IP地址及相应的角色： 192.168.31.100 - master namenode jobtracker-master 192.168.31.101 - slave1 datanode tasktracker-slave1 192.168.31.102 - slave2 datanode tasktracker-slave2 配置1. 网卡配置 vim /etc/sysconfig/network-scripts/ifcfg-enp0s3 (ifcfg-exxxxxx) 需要修改的是： 12345678NM_CONTROLLED=noONBOOT=yesBOOTPROTO=noneIPADDR=192.168.31.100NETMASK=255.255.255.0GATEWAY=192.168.31.1DNS1=8.8.8.8DNS2=114.114.114.114 chkconfig network on # 网络服务进程network配置为开机即启动service network restart # 重启网络服务进程 关闭防火墙Centos6 123sudo service iptables stop --临时关闭防火墙sudo chkconfig iptables off --永久关闭防火墙sudo service iptables status --查看防火墙状态 iptables: Firewall is not running. Centos7 123sudo systemctl stop firewalld.service #停止firewallsudo systemctl disable firewalld.service #禁止firewall开机启动sudo firewall-cmd --state #查看默认防火墙状态（关闭后显示notrunning，开启后显示running） ping网络其他主机测试网络是否设置好。 2. 三台主机均安装JDK，并设置环境变量https://yangjiannr.github.io/2017/12/25/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E8%BD%BD/ tar -zxvf jdk-8u181-linux-x64.tar.gz -C ~/app/lib/tar -zxvf hadoop-2.8.4.tar.gz -C ../app/lib/ sudo vim ~/.bash_profile 或者 vim /etc/profile尾部添加 123export JAVA_HOME=/home/hadoop/app/lib/jdk1.8.0_181export PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=&quot;.:$JAVA_HOME/lib:$CLASSPATH&quot; 使配置文件生效 source /etc/profile 或者 . /etc/profile source .~/.bash_profile 或者 . .~/.bash_profile 验证： java -version 3. 三台主机分别设置/etc/hosts及/etc/hostname vim /etc/hosts hosts中添加 123192.168.31.100 master192.168.31.101 slave1192.168.31.102 slave2 修改/etc/hostname文件 vim /etc/hostname在master中，输入：master 在slave1中，输入：slave1在slave2中，输入：slave2 重启三台机器，输入命令：sudo reboot 4. 安装OpenSSH，并配置SSH可以免密登录三台主机分别执行： ssh-keygen -t rsacp ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys 在master主机的终端中输入命令： cd ~/.sshscp authorized_keys slave1:~/.ssh/scp authorized_keys slave2:~/.ssh/ 查看是否可以从Master主机免密码登录Slave，输入命令： ssh slave1ssh slave2 5. 安装Hadoop，并设置环境变量https://yangjiannr.github.io/2017/12/25/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E8%BD%BD/ tar -zxvf hadoop-2.8.4.tar.gz -C ../app/lib/ 如果是linux系统下则可以 rm -rf .cmd，删除cmd文件`find . -name ‘.cmd’ -type f -print -exec rm -rf {} \;` 6. 配置三台主机的Hadoop文件 编辑hadoop-env.sh文件 vim hadoop-2.8.4/etc/hadoop/hadoop-env.sh修改hadoop中Java路径export JAVA_HOME=/home/hadoop/app/lib/jdk1.8.0_181/ 编辑core-site.xml vim hadoop-2.8.4/etc/hadoop/core-site.xml 三台主机上的core-site.xml文件： 1234567891011&lt;configuration&gt; &lt;property&gt; &lt;name&gt;fs.default.name&lt;/name&gt; &lt;value&gt;hdfs://master:9000&lt;/value&gt; &lt;/property&gt; &lt;property&gt; &lt;name&gt;hadoop.tmp.dir&lt;/name&gt; &lt;value&gt;/home/hadoop/app/tmp&lt;/value&gt; &lt;/property&gt;&lt;/configuration&gt; 编辑hdfs-site.xml 三台主机上的hdfs-site.xml文件： 123456&lt;configuration&gt; &lt;property&gt; &lt;name&gt;dfs.replication&lt;/name&gt; &lt;value&gt;2&lt;/value&gt; &lt;/property&gt;&lt;/configuration&gt; 编辑yarn-site.xml 三台主机上的yarn-site.xml文件： 1234567&lt;configuration&gt; &lt;property&gt; &lt;description&gt;The hostname of the RM.&lt;/description&gt; &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt; &lt;value&gt;master&lt;/value&gt; &lt;/property&gt;&lt;/configuration&gt; 编辑mapred-site.xml 三台主机上的mapred-site.xml文件： 1234567891011&lt;configuration&gt; &lt;property&gt; &lt;name&gt;mapreduce.framework.name&lt;/name&gt; &lt;value&gt;yarn&lt;/value&gt; &lt;/property&gt; &lt;property&gt; &lt;name&gt;mapred.job.tracker&lt;/name&gt; &lt;value&gt;master:9001&lt;/value&gt; &lt;/property&gt;&lt;/configuration&gt; 编辑masters vim masters 输入内容：master 编辑slaves vim slaves 输入内容：slave1 `slave2` 7. 启动Hadoop 关闭三台主机的防火墙，在三台主机中输入命令：service iptables stop 格式化NameNode，在master中/home/hadoop/app/lib/hadoop-2.8.4/bin目录下输入命令：./hadoop namenode -format 启动Hadoop，在master中/home/hadoop/app/lib/hadoop-2.8.4/sbin目录下输入命令：./start-all.sh 8. 使用jps检验各后台进程是否成功启动 在主节点master上查看namenode、SecondaryNameNode、ResourceManager进程是否启动，如图： 在slave1和slave2节点查看DataNode、NodeManager进程是否启动，如图： 9. 通过网站（Web UI）查看集群情况 在浏览器中输入:http://192.168.31.100:50070 ，网址为master节点所对应的IP，如图： 在浏览器中输入:http://192.168.31.100:8088 ，网址为master节点所对应的IP，如图：]]></content>
+      <categories>
+        <category>BigData</category>
+      </categories>
+      <tags>
+        <tag>MapReduce</tag>
+        <tag>Hadoop</tag>
+        <tag>集群</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Linux设置静态IP(固定IP)]]></title>
     <url>%2F2018%2F09%2F15%2FLinux%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81IP(%E5%9B%BA%E5%AE%9AIP)%2F</url>
     <content type="text"><![CDATA[切换成root用户： # su# 输入密码 修改网络配置文件： # cd /etc/sysconfig/network-scripts/# vim ifcfg-enp0s3 修改配置如下： 12345678910111213141516171819TYPE=EthernetPROXY_METHOD=noneBROWSER_ONLY=noBOOTPROTO=staticDEFROUTE=yesIPV4_FAILURE_FATAL=noNETWORKING_IPV6=noIPV6INIT=noIPV6_AUTOCONF=noIPV6_DEFROUTE=noIPV6_FAILURE_FATAL=noNAME=enp0s3UUID=75026fc8-e226-4754-9ae6-998a294c89feDEVICE=enp0s3ONBOOT=yesIPADDR=192.168.31.100NETMASK=255.255.255.0GATEWAY=192.168.31.1 设置DNS vim /etc/resolv.conf 重启网络 重新启动网络配置# service network restart或# /etc/init.d/network restart 查看修改后网络 ifconfig ping www.baidu.com 注： 如果是用ssh远程修改的，需要用新的IP重新进行ssh远程连接]]></content>
@@ -40,7 +53,7 @@
   <entry>
     <title><![CDATA[Hadoop环境搭载]]></title>
     <url>%2F2017%2F12%2F25%2FHadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E8%BD%BD%2F</url>
-    <content type="text"><![CDATA[官网安装教程：http://archive.cloudera.com/cdh5/cdh/5/hadoop-2.6.0-cdh5.13.0/hadoop-project-dist/hadoop-common/SingleCluster.html 环境本教程使用 CentOS 7 64位 作为系统环境，请自行安装系统。装好了 CentOS 系统之后，在安装 Hadoop 前还需要做一些必备工作。 创建hadoop用户如果你安装 CentOS 的时候不是用的 “hadoop” 用户，那么需要增加一个名为 hadoop 的用户。 123456su # 上述提到的以 root 用户登录useradd -m hadoop -s /bin/bash # 创建新用户hadooppasswd hadoop # 修改密码，按提示输入两次密码 visudo 或 vim /etc/sudoers# 找到 root ALL=(ALL) ALL 这行# 然后在这行下面增加一行内容：hadoop ALL=(ALL) ALL （当中的间隔为tab） 免密登录设置12345678910111213sudo yum install sshsudo yum install openssh-clientssudo yum install openssh-server//免密登录ssh-keygen -t rsa//回车回车ll -a //生成了 .ssh文件夹，文件夹内有id_rsa 和 id_rsa.pub 两个文件cp ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys//测试是否成功ssh localhost // 无需密码则表示设置成功 关闭防火墙Centos直接 123sudo systemctl stop firewalld.service #停止firewallsudo systemctl disable firewalld.service #禁止firewall开机启动sudo firewall-cmd --state #查看默认防火墙状态（关闭后显示notrunning，开启后显示running） Centos7系统的防火墙放开50070端口 123步骤：1.sudo firewall-cmd --zone=public --add-port=50070/tcp --permanent 2.重启防火墙 sudo firewall-cmd --reload 从本机拷贝文件至远程主机jdk-9.0.1：jdk-9.0.1_linux-x64_bin.tar.gz hadoop-2.6.0-cdh5.7.0.tar.gzhadoop-2.6.0-cdh5.7.0.tar.gz 远程主机（用户名hadoop）： [hadoop@localhost ~]$ mkdir -p app/lib [hadoop@localhost ~]$ mkdir package 本机，将需要的文件远程拷贝到远程主机中 scp jdk-9.0.1_linux-x64_bin.tar.gz hadoop@hadoop:/home/hadoop/package scp hadoop-2.6.0-cdh5.7.0.tar.gz hadoop@hadoop:/home/hadoop/package 安装Java环境远程主机 /home/hadoop/package : tar -zxvf jdk-9.0.1_linux-x64_bin.tar.gz -C ~/app/lib tar -zxvf hadoop-2.6.0-cdh5.7.0.tar.gz -C ../app/lib/ sudo vim /etc/profile 或者 vim ~/.bash_profile尾部添加 123export JAVA_HOME=/home/hadoop/app/lib/jdk-9.0.1export PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=&quot;.:$JAVA_HOME/lib:$CLASSPATH&quot; 使配置文件生效 . /etc/profile 或者 source /etc/profile . .~/.bash_profile 或者 source .~/.bash_profile 验证： echo $JAVA_HOME /home/hadoop/app/lib/jdk-9.0.1 java -version 123java version &quot;9.0.1&quot;Java(TM) SE Runtime Environment (build 9.0.1+11)Java HotSpot(TM) 64-Bit Server VM (build 9.0.1+11, mixed mode) Hadoop配置文件的修改 如果是linux系统下则可以 rm -rf .cmd，删除cmd文件[hadoop@localhost hadoop-2.6.0-cdh5.7.0]$ `find . -name ‘.cmd’ -type f -print -exec rm -rf {} \;` 在hadoop_home/etc/hadoop路径下 $ vim hadoop-env.sh找到export JAVA_HOME=${JAVA_HOME}，并且注释掉这一行，添加下面的一行（jdk的根目录） export JAVA_HOME=/home/hadoop/app/lib/jdk-9.0.1 etc/hadoop/core-site.xml: 1234567891011&lt;configuration&gt; &lt;property&gt; &lt;name&gt;fs.defaultFS&lt;/name&gt; &lt;value&gt;hdfs://localhost:9000&lt;/value&gt; &lt;/property&gt; &lt;property&gt; &lt;name&gt;hadoop.tmp.dir&lt;/name&gt; &lt;value&gt;/home/hadoop/app/tmp&lt;/value&gt; &lt;/property&gt;&lt;/configuration&gt; etc/hadoop/hdfs-site.xml: 123456&lt;configuration&gt; &lt;property&gt; &lt;name&gt;dfs.replication&lt;/name&gt; &lt;value&gt;1&lt;/value&gt; &lt;/property&gt;&lt;/configuration&gt; sudo vim /etc/profile 或者 vim ~/.bash_profile尾部添加 123456789export HADOOP_HOME=/home/hadoop/app/lib/hadoop-2.6.0-cdh5.7.0export PATH=$HADOOP/bin:$PATHexport HADOOP_INSTALL=$HADOOP_HOMEexport HADOOP_MAPRED_HOME=$HADOOP_HOMEexport HADOOP_COMMON_HOME=$HADOOP_HOMEexport HADOOP_HDFS_HOME=$HADOOP_HOMEexport YARN_HOME=$HADOOP_HOMEexport HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/nativeexport PATH=$PATH:$HADOOP_HOME/sbin:$HADOOP_HOME/bin 使配置文件生效 . /etc/profile 或者 source /etc/profile . .~/.bash_profile 或者 source .~/.bash_profile 启动hdfs 格式化文件系统（仅第一次执行即可，不要重复执行）：./bin/hdfs namenode -format ./sbin/start-dfs.sh 可能会出现需要yes, 输入密码 验证是否成功 启动完成后，可以通过命令 jps 来判断是否成功启动，若成功启动则会列出如下进程: “NameNode”、”DataNode”和SecondaryNameNode（如果 SecondaryNameNode 没有启动，请运行 sbin/stop-dfs.sh 关闭进程，然后再次尝试启动尝试）。如果没有 NameNode 或 DataNode ，那就是配置不成功，请仔细检查之前步骤，或通过查看启动日志排查原因。$ jps 1425 NameNode 1702 SecondaryNameNode 1546 DataNode 1855 Jps 浏览器方式验证 http://localhost:50070/ （如果是远程主机则将localhost换成远程主机IP） 停止$ sbin/stop-dfs.sh]]></content>
+    <content type="text"><![CDATA[官网安装教程：http://archive.cloudera.com/cdh5/cdh/5/hadoop-2.6.0-cdh5.13.0/hadoop-project-dist/hadoop-common/SingleCluster.html 环境本教程使用 CentOS 7 64位 作为系统环境，请自行安装系统。装好了 CentOS 系统之后，在安装 Hadoop 前还需要做一些必备工作。 创建hadoop用户如果你安装 CentOS 的时候不是用的 “hadoop” 用户，那么需要增加一个名为 hadoop 的用户。 123456su # 上述提到的以 root 用户登录useradd -m hadoop -s /bin/bash # 创建新用户hadooppasswd hadoop # 修改密码，按提示输入两次密码 visudo 或 vim /etc/sudoers# 找到 root ALL=(ALL) ALL 这行# 然后在这行下面增加一行内容：hadoop ALL=(ALL) ALL （当中的间隔为tab） 免密登录设置sudo yum install sshsudo yum install openssh-clientssudo yum install openssh-server vi /etc/ssh/sshd_config 找到以下内容，并去掉注释符“#”RSAAuthentication yesPubbkeyAuthentication yesAuthorizedKeysFile .ssh/authorized_keys 重启sshd服务service sshd restart 或 /etc/init.d/sshd restart //免密登录ssh-keygen -t rsa //回车回车ll -a //生成了 .ssh文件夹，文件夹内有id_rsa 和 id_rsa.pub 两个文件 cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keyschmod 600 ~/.ssh/authorized_keys //测试是否成功ssh localhost // 无需密码则表示设置成功 关闭防火墙Centos6 123sudo service iptables stop --临时关闭防火墙sudo chkconfig iptables off --永久关闭防火墙sudo service iptables status --查看防火墙状态 iptables: Firewall is not running. Centos7 123sudo systemctl stop firewalld.service #停止firewallsudo systemctl disable firewalld.service #禁止firewall开机启动sudo firewall-cmd --state #查看默认防火墙状态（关闭后显示notrunning，开启后显示running） 从本机拷贝文件至远程主机jdk-9.0.1_linux-x64_bin.tar.gz hadoop-2.6.0-cdh5.7.0.tar.gz 远程主机（用户名hadoop）： [hadoop@localhost ~]$ mkdir -p app/lib [hadoop@localhost ~]$ mkdir package 本机，将需要的文件远程拷贝到远程主机中 scp jdk-9.0.1_linux-x64_bin.tar.gz hadoop@hadoop:/home/hadoop/package scp hadoop-2.6.0-cdh5.7.0.tar.gz hadoop@hadoop:/home/hadoop/package 安装Java环境远程主机 /home/hadoop/package : tar -zxvf jdk-9.0.1_linux-x64_bin.tar.gz -C ~/app/lib tar -zxvf hadoop-2.6.0-cdh5.7.0.tar.gz -C ../app/lib/ sudo vim /etc/profile 或者 vim ~/.bash_profile尾部添加 123export JAVA_HOME=/home/hadoop/app/lib/jdk-9.0.1export PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=&quot;.:$JAVA_HOME/lib:$CLASSPATH&quot; 使配置文件生效 . /etc/profile 或者 source /etc/profile . .~/.bash_profile 或者 source .~/.bash_profile 验证： echo $JAVA_HOME /home/hadoop/app/lib/jdk-9.0.1 java -version 123java version &quot;9.0.1&quot;Java(TM) SE Runtime Environment (build 9.0.1+11)Java HotSpot(TM) 64-Bit Server VM (build 9.0.1+11, mixed mode) Hadoop配置文件的修改 如果是linux系统下则可以 rm -rf .cmd，删除cmd文件[hadoop@localhost hadoop-2.6.0-cdh5.7.0]$ `find . -name ‘.cmd’ -type f -print -exec rm -rf {} \;` 在hadoop_home/etc/hadoop路径下 $ vim hadoop-env.sh找到export JAVA_HOME=${JAVA_HOME}，并且注释掉这一行，添加下面的一行（jdk的根目录） export JAVA_HOME=/home/hadoop/app/lib/jdk-9.0.1 etc/hadoop/core-site.xml: 1234567891011&lt;configuration&gt; &lt;property&gt; &lt;name&gt;fs.defaultFS&lt;/name&gt; &lt;value&gt;hdfs://localhost:9000&lt;/value&gt; &lt;/property&gt; &lt;property&gt; &lt;name&gt;hadoop.tmp.dir&lt;/name&gt; &lt;value&gt;/home/hadoop/app/tmp&lt;/value&gt; &lt;/property&gt;&lt;/configuration&gt; etc/hadoop/hdfs-site.xml: 123456&lt;configuration&gt; &lt;property&gt; &lt;name&gt;dfs.replication&lt;/name&gt; &lt;value&gt;1&lt;/value&gt; &lt;/property&gt;&lt;/configuration&gt; sudo vim /etc/profile 或者 vim ~/.bash_profile尾部添加 123456789export HADOOP_HOME=/home/hadoop/app/lib/hadoop-2.6.0-cdh5.7.0export PATH=$HADOOP/bin:$PATHexport HADOOP_INSTALL=$HADOOP_HOMEexport HADOOP_MAPRED_HOME=$HADOOP_HOMEexport HADOOP_COMMON_HOME=$HADOOP_HOMEexport HADOOP_HDFS_HOME=$HADOOP_HOMEexport YARN_HOME=$HADOOP_HOMEexport HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/nativeexport PATH=$PATH:$HADOOP_HOME/sbin:$HADOOP_HOME/bin 使配置文件生效 . /etc/profile 或者 source /etc/profile . .~/.bash_profile 或者 source .~/.bash_profile 启动hdfs 格式化文件系统（仅第一次执行即可，不要重复执行）：./bin/hdfs namenode -format ./sbin/start-dfs.sh 可能会出现需要yes, 输入密码 验证是否成功 启动完成后，可以通过命令 jps 来判断是否成功启动，若成功启动则会列出如下进程: “NameNode”、”DataNode”和SecondaryNameNode（如果 SecondaryNameNode 没有启动，请运行 sbin/stop-dfs.sh 关闭进程，然后再次尝试启动尝试）。如果没有 NameNode 或 DataNode ，那就是配置不成功，请仔细检查之前步骤，或通过查看启动日志排查原因。$ jps 1425 NameNode 1702 SecondaryNameNode 1546 DataNode 1855 Jps 浏览器方式验证 http://localhost:50070/ （如果是远程主机则将localhost换成远程主机IP） 停止$ sbin/stop-dfs.sh]]></content>
       <categories>
         <category>Hadoop</category>
       </categories>
@@ -57,8 +70,8 @@
         <category>BlockChain</category>
       </categories>
       <tags>
-        <tag>BlockChain</tag>
         <tag>Distributed</tag>
+        <tag>BlockChain</tag>
         <tag>Consensus</tag>
       </tags>
   </entry>
@@ -94,8 +107,8 @@
         <category>BigData</category>
       </categories>
       <tags>
-        <tag>Bloom</tag>
         <tag>BigData</tag>
+        <tag>Bloom</tag>
       </tags>
   </entry>
   <entry>
@@ -130,8 +143,8 @@
         <category>Distributed</category>
       </categories>
       <tags>
-        <tag>BlockChain</tag>
         <tag>Distributed</tag>
+        <tag>BlockChain</tag>
       </tags>
   </entry>
   <entry>
@@ -142,8 +155,8 @@
         <category>Distributed</category>
       </categories>
       <tags>
-        <tag>BlockChain</tag>
         <tag>Distributed</tag>
+        <tag>BlockChain</tag>
         <tag>Paxos</tag>
       </tags>
   </entry>
@@ -155,8 +168,8 @@
         <category>Distributed</category>
       </categories>
       <tags>
-        <tag>BlockChain</tag>
         <tag>Distributed</tag>
+        <tag>BlockChain</tag>
       </tags>
   </entry>
   <entry>
@@ -167,8 +180,8 @@
         <category>BigData</category>
       </categories>
       <tags>
-        <tag>BigData</tag>
         <tag>Trie</tag>
+        <tag>BigData</tag>
       </tags>
   </entry>
   <entry>
@@ -179,8 +192,8 @@
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>Process</tag>
         <tag>Linux</tag>
+        <tag>Process</tag>
       </tags>
   </entry>
   <entry>
@@ -238,8 +251,8 @@
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>Process</tag>
         <tag>Linux</tag>
+        <tag>Process</tag>
       </tags>
   </entry>
   <entry>
@@ -250,8 +263,8 @@
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>Process</tag>
         <tag>Linux</tag>
+        <tag>Process</tag>
       </tags>
   </entry>
   <entry>

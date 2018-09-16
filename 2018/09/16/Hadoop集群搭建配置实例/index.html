@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="MapReduce,Hadoop,集群," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="重要的放在前面：遇到问题，看Logs很重要 环境 三台CenOS6.10 X86_64  uname -acat /etc/redhat-release   jdk1.8.0_181  hadoop-2.8.4   分配IP地址及相应的角色： 192.168.31.100 - master namenode jobtracker-master 192.168.31.101 - slave1 dat">
+<meta name="keywords" content="MapReduce,Hadoop,集群">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop集群搭建配置实例">
+<meta property="og:url" content="http://yoursite.com/2018/09/16/Hadoop集群搭建配置实例/index.html">
+<meta property="og:site_name" content="紫魔戒的博客">
+<meta property="og:description" content="重要的放在前面：遇到问题，看Logs很重要 环境 三台CenOS6.10 X86_64  uname -acat /etc/redhat-release   jdk1.8.0_181  hadoop-2.8.4   分配IP地址及相应的角色： 192.168.31.100 - master namenode jobtracker-master 192.168.31.101 - slave1 dat">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/2018-09-16-15370618848434.jpg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/2018-09-15-15370163435144.jpg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/2018-09-16-15370626092099.jpg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/2018-09-16-15370626865964.jpg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/2018-09-16-15370628503033.jpg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/2018-09-16-15370629183962.jpg">
+<meta property="og:updated_time" content="2018-09-16T01:57:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hadoop集群搭建配置实例">
+<meta name="twitter:description" content="重要的放在前面：遇到问题，看Logs很重要 环境 三台CenOS6.10 X86_64  uname -acat /etc/redhat-release   jdk1.8.0_181  hadoop-2.8.4   分配IP地址及相应的角色： 192.168.31.100 - master namenode jobtracker-master 192.168.31.101 - slave1 dat">
+<meta name="twitter:image" content="http://oc3uwt4a5.bkt.clouddn.com/2018-09-16-15370618848434.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/16/Hadoop集群搭建配置实例/"/>
+
+
+
+
+
+  <title>Hadoop集群搭建配置实例 | 紫魔戒的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">紫魔戒的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">技术分享</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/16/Hadoop集群搭建配置实例/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Frank yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oc3uwt4a5.bkt.clouddn.com/20180912avator.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="紫魔戒的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Hadoop集群搭建配置实例</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-16T09:57:36+08:00">
+                2018-09-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BigData/" itemprop="url" rel="index">
+                    <span itemprop="name">BigData</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+
+          
+            <span class="post-meta-divider">|</span>
+            <span id="busuanzi_value_page_pv"></span>次阅读
+          
+
+          
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>重要的放在前面：遇到问题，看Logs很重要</strong></p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><ol>
+<li><p>三台CenOS6.10 X86_64</p>
+<blockquote>
+<p>uname -a<br>cat /etc/redhat-release</p>
+</blockquote>
+</li>
+<li><p>jdk1.8.0_181</p>
+</li>
+<li><p>hadoop-2.8.4</p>
+</li>
+</ol>
+<h2 id="分配IP地址及相应的角色："><a href="#分配IP地址及相应的角色：" class="headerlink" title="分配IP地址及相应的角色："></a>分配IP地址及相应的角色：</h2><ul>
+<li>192.168.31.100 - master namenode jobtracker-master</li>
+<li>192.168.31.101 - slave1 datanode tasktracker-slave1</li>
+<li>192.168.31.102 - slave2 datanode tasktracker-slave2</li>
+</ul>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="1-网卡配置"><a href="#1-网卡配置" class="headerlink" title="1. 网卡配置"></a>1. 网卡配置</h3><blockquote>
+<p><code>vim /etc/sysconfig/network-scripts/ifcfg-enp0s3 (ifcfg-exxxxxx)</code></p>
+</blockquote>
+<p>需要修改的是：</p>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">NM_CONTROLLED=no</span><br><span class="line">ONBOOT=yes</span><br><span class="line">BOOTPROTO=none</span><br><span class="line">IPADDR=192.168.31.100</span><br><span class="line">NETMASK=255.255.255.0</span><br><span class="line">GATEWAY=192.168.31.1</span><br><span class="line">DNS1=8.8.8.8</span><br><span class="line">DNS2=114.114.114.114</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>chkconfig network on</code>   # 网络服务进程network配置为开机即启动<br><code>service network restart</code>   # 重启网络服务进程</p>
+</blockquote>
+<h4 id="关闭防火墙"><a href="#关闭防火墙" class="headerlink" title="关闭防火墙"></a>关闭防火墙</h4><p>Centos6</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo service iptables stop       --临时关闭防火墙</span><br><span class="line">sudo chkconfig iptables off      --永久关闭防火墙</span><br><span class="line">sudo service iptables status     --查看防火墙状态</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>iptables: Firewall is not running.</code></p>
+</blockquote>
+<p>Centos7</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl stop firewalld.service #停止firewall</span><br><span class="line">sudo systemctl disable firewalld.service #禁止firewall开机启动</span><br><span class="line">sudo firewall-cmd --state #查看默认防火墙状态（关闭后显示notrunning，开启后显示running）</span><br></pre></td></tr></table></figure>
+<p>ping网络其他主机测试网络是否设置好。</p>
+<h3 id="2-三台主机均安装JDK，并设置环境变量"><a href="#2-三台主机均安装JDK，并设置环境变量" class="headerlink" title="2. 三台主机均安装JDK，并设置环境变量"></a>2. 三台主机均安装JDK，并设置环境变量</h3><p><a href="https://yangjiannr.github.io/2017/12/25/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E8%BD%BD/" target="_blank" rel="noopener">https://yangjiannr.github.io/2017/12/25/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E8%BD%BD/</a></p>
+<p><code>tar -zxvf jdk-8u181-linux-x64.tar.gz -C ~/app/lib/</code><br><code>tar -zxvf hadoop-2.8.4.tar.gz -C ../app/lib/</code></p>
+<p><code>sudo vim ~/.bash_profile 或者 vim /etc/profile</code><br>尾部添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/home/hadoop/app/lib/jdk1.8.0_181</span><br><span class="line">export PATH=$JAVA_HOME/bin:$PATH</span><br><span class="line">export CLASSPATH=&quot;.:$JAVA_HOME/lib:$CLASSPATH&quot;</span><br></pre></td></tr></table></figure>
+<p>使配置文件生效<br>　　<code>source /etc/profile  或者 . /etc/profile</code><br>　　<code>source .~/.bash_profile 或者 . .~/.bash_profile</code></p>
+<p>验证：<br>　　<code>java -version</code><br>　　<br><img src="http://oc3uwt4a5.bkt.clouddn.com/2018-09-16-15370618848434.jpg" alt=""></p>
+<h3 id="3-三台主机分别设置-etc-hosts及-etc-hostname"><a href="#3-三台主机分别设置-etc-hosts及-etc-hostname" class="headerlink" title="3. 三台主机分别设置/etc/hosts及/etc/hostname"></a>3. 三台主机分别设置/etc/hosts及/etc/hostname</h3><blockquote>
+<p><code>vim /etc/hosts</code></p>
+</blockquote>
+<p>hosts中添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">192.168.31.100    master</span><br><span class="line">192.168.31.101    slave1</span><br><span class="line">192.168.31.102    slave2</span><br></pre></td></tr></table></figure>
+<p>修改/etc/hostname文件</p>
+<blockquote>
+<p><code>vim /etc/hostname</code><br>在master中，输入：<code>master</code></p>
+</blockquote>
+<p><img src="http://oc3uwt4a5.bkt.clouddn.com/2018-09-15-15370163435144.jpg" alt=""></p>
+<blockquote>
+<p>在slave1中，输入：<code>slave1</code><br>在slave2中，输入：<code>slave2</code></p>
+</blockquote>
+<p>重启三台机器，输入命令：<code>sudo reboot</code></p>
+<h3 id="4-安装OpenSSH，并配置SSH可以免密登录"><a href="#4-安装OpenSSH，并配置SSH可以免密登录" class="headerlink" title="4. 安装OpenSSH，并配置SSH可以免密登录"></a>4. 安装OpenSSH，并配置SSH可以免密登录</h3><p>三台主机分别执行：</p>
+<blockquote>
+<p><code>ssh-keygen -t rsa</code><br><code>cp ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys</code></p>
+</blockquote>
+<p>在master主机的终端中输入命令：</p>
+<blockquote>
+<p><code>cd ~/.ssh</code><br><code>scp authorized_keys slave1:~/.ssh/</code><br><code>scp authorized_keys slave2:~/.ssh/</code></p>
+</blockquote>
+<p>查看是否可以从Master主机免密码登录Slave，输入命令：</p>
+<blockquote>
+<p><code>ssh slave1</code><br><code>ssh slave2</code></p>
+</blockquote>
+<h3 id="5-安装Hadoop，并设置环境变量"><a href="#5-安装Hadoop，并设置环境变量" class="headerlink" title="5. 安装Hadoop，并设置环境变量"></a>5. 安装Hadoop，并设置环境变量</h3><p><a href="https://yangjiannr.github.io/2017/12/25/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E8%BD%BD/" target="_blank" rel="noopener">https://yangjiannr.github.io/2017/12/25/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E8%BD%BD/</a></p>
+<p><code>tar -zxvf hadoop-2.8.4.tar.gz -C ../app/lib/</code></p>
+<blockquote>
+<p>如果是linux系统下则可以 rm -rf <em>.cmd，删除cmd文件<br>`find  .  -name  ‘</em>.cmd’  -type  f  -print  -exec  rm  -rf  {} \;`</p>
+</blockquote>
+<h3 id="6-配置三台主机的Hadoop文件"><a href="#6-配置三台主机的Hadoop文件" class="headerlink" title="6. 配置三台主机的Hadoop文件"></a>6. 配置三台主机的Hadoop文件</h3><ul>
+<li><p>编辑hadoop-env.sh文件</p>
+<blockquote>
+<p><code>vim hadoop-2.8.4/etc/hadoop/hadoop-env.sh</code><br>修改hadoop中Java路径<br><code>export JAVA_HOME=/home/hadoop/app/lib/jdk1.8.0_181/</code></p>
+</blockquote>
+</li>
+<li><p>编辑core-site.xml </p>
+<blockquote>
+<p><code>vim hadoop-2.8.4/etc/hadoop/core-site.xml</code></p>
+</blockquote>
+<p>  三台主机上的core-site.xml文件：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;fs.default.name&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;hdfs://master:9000&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line"></span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;/home/hadoop/app/tmp&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>编辑hdfs-site.xml </p>
+<p>  三台主机上的hdfs-site.xml文件：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;name&gt;dfs.replication&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;2&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>编辑yarn-site.xml </p>
+<p>  三台主机上的yarn-site.xml文件：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;property&gt;</span><br><span class="line">        &lt;description&gt;The hostname of the RM.&lt;/description&gt;</span><br><span class="line">        &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;master&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>编辑mapred-site.xml</p>
+<p> 三台主机上的mapred-site.xml文件：</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">        &lt;property&gt;</span><br><span class="line">                &lt;name&gt;mapreduce.framework.name&lt;/name&gt;</span><br><span class="line">                &lt;value&gt;yarn&lt;/value&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line"></span><br><span class="line">        &lt;property&gt;</span><br><span class="line">                &lt;name&gt;mapred.job.tracker&lt;/name&gt;</span><br><span class="line">                &lt;value&gt;master:9001&lt;/value&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>编辑masters</p>
+<blockquote>
+<p><code>vim masters</code></p>
+</blockquote>
+<p>  输入内容：<code>master</code></p>
+</li>
+<li><p>编辑slaves</p>
+<blockquote>
+<p><code>vim slaves</code></p>
+</blockquote>
+<p>  输入内容：<code>slave1</code></p>
+<pre><code>`slave2`
+</code></pre></li>
+</ul>
+<h3 id="7-启动Hadoop"><a href="#7-启动Hadoop" class="headerlink" title="7. 启动Hadoop"></a>7. 启动Hadoop</h3><ul>
+<li>关闭三台主机的防火墙，在三台主机中输入命令：<code>service iptables stop</code></li>
+<li>格式化NameNode，在master中/home/hadoop/app/lib/hadoop-2.8.4/bin目录下输入命令：<code>./hadoop namenode -format</code></li>
+<li>启动Hadoop，在master中/home/hadoop/app/lib/hadoop-2.8.4/sbin目录下输入命令：<code>./start-all.sh</code></li>
+</ul>
+<h3 id="8-使用jps检验各后台进程是否成功启动"><a href="#8-使用jps检验各后台进程是否成功启动" class="headerlink" title="8. 使用jps检验各后台进程是否成功启动"></a>8. 使用jps检验各后台进程是否成功启动</h3><ul>
+<li>在主节点master上查看namenode、SecondaryNameNode、ResourceManager进程是否启动，如图：</li>
+</ul>
+<p><img src="http://oc3uwt4a5.bkt.clouddn.com/2018-09-16-15370626092099.jpg" alt=""></p>
+<ul>
+<li>在slave1和slave2节点查看DataNode、NodeManager进程是否启动，如图：</li>
+</ul>
+<p><img src="http://oc3uwt4a5.bkt.clouddn.com/2018-09-16-15370626865964.jpg" alt=""></p>
+<h3 id="9-通过网站（Web-UI）查看集群情况"><a href="#9-通过网站（Web-UI）查看集群情况" class="headerlink" title="9. 通过网站（Web UI）查看集群情况"></a>9. 通过网站（Web UI）查看集群情况</h3><ul>
+<li>在浏览器中输入:<a href="http://192.168.31.100:50070" target="_blank" rel="noopener">http://192.168.31.100:50070</a> ，网址为master节点所对应的IP，如图：</li>
+</ul>
+<p><img src="http://oc3uwt4a5.bkt.clouddn.com/2018-09-16-15370628503033.jpg" alt=""></p>
+<ul>
+<li>在浏览器中输入:<a href="http://192.168.31.100:8088" target="_blank" rel="noopener">http://192.168.31.100:8088</a> ，网址为master节点所对应的IP，如图：</li>
+</ul>
+<p><img src="http://oc3uwt4a5.bkt.clouddn.com/2018-09-16-15370629183962.jpg" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MapReduce/" rel="tag"># MapReduce</a>
+          
+            <a href="/tags/Hadoop/" rel="tag"># Hadoop</a>
+          
+            <a href="/tags/集群/" rel="tag"># 集群</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/15/Linux设置静态IP(固定IP)/" rel="next" title="Linux设置静态IP(固定IP)">
+                <i class="fa fa-chevron-left"></i> Linux设置静态IP(固定IP)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://oc3uwt4a5.bkt.clouddn.com/20180912avator.jpg"
+                alt="Frank yang" />
+            
+              <p class="site-author-name" itemprop="name">Frank yang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#环境"><span class="nav-number">1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分配IP地址及相应的角色："><span class="nav-number">2.</span> <span class="nav-text">分配IP地址及相应的角色：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">3.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-网卡配置"><span class="nav-number">3.1.</span> <span class="nav-text">1. 网卡配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关闭防火墙"><span class="nav-number">3.1.1.</span> <span class="nav-text">关闭防火墙</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-三台主机均安装JDK，并设置环境变量"><span class="nav-number">3.2.</span> <span class="nav-text">2. 三台主机均安装JDK，并设置环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-三台主机分别设置-etc-hosts及-etc-hostname"><span class="nav-number">3.3.</span> <span class="nav-text">3. 三台主机分别设置/etc/hosts及/etc/hostname</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-安装OpenSSH，并配置SSH可以免密登录"><span class="nav-number">3.4.</span> <span class="nav-text">4. 安装OpenSSH，并配置SSH可以免密登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-安装Hadoop，并设置环境变量"><span class="nav-number">3.5.</span> <span class="nav-text">5. 安装Hadoop，并设置环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-配置三台主机的Hadoop文件"><span class="nav-number">3.6.</span> <span class="nav-text">6. 配置三台主机的Hadoop文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-启动Hadoop"><span class="nav-number">3.7.</span> <span class="nav-text">7. 启动Hadoop</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-使用jps检验各后台进程是否成功启动"><span class="nav-number">3.8.</span> <span class="nav-text">8. 使用jps检验各后台进程是否成功启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-通过网站（Web-UI）查看集群情况"><span class="nav-number">3.9.</span> <span class="nav-text">9. 通过网站（Web UI）查看集群情况</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Frank yang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style='display:none'>
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    <span class="post-meta-divider">|</span>
+</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+    有<span id="busuanzi_value_site_uv"></span>人看过我的博客啦
+</span>
+</div>
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
