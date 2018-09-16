@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[Hadoop集群搭建配置实例]]></title>
     <url>%2F2018%2F09%2F16%2FHadoop%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA%E9%85%8D%E7%BD%AE%E5%AE%9E%E4%BE%8B%2F</url>
-    <content type="text"><![CDATA[重要的放在前面：遇到问题，看Logs很重要 环境 三台CenOS6.10 X86_64 uname -acat /etc/redhat-release jdk1.8.0_181 hadoop-2.8.4 分配IP地址及相应的角色： 192.168.31.100 - master namenode jobtracker-master 192.168.31.101 - slave1 datanode tasktracker-slave1 192.168.31.102 - slave2 datanode tasktracker-slave2 配置1. 网卡配置 vim /etc/sysconfig/network-scripts/ifcfg-enp0s3 (ifcfg-exxxxxx) 需要修改的是： 12345678NM_CONTROLLED=noONBOOT=yesBOOTPROTO=noneIPADDR=192.168.31.100NETMASK=255.255.255.0GATEWAY=192.168.31.1DNS1=8.8.8.8DNS2=114.114.114.114 chkconfig network on # 网络服务进程network配置为开机即启动service network restart # 重启网络服务进程 关闭防火墙Centos6 123sudo service iptables stop --临时关闭防火墙sudo chkconfig iptables off --永久关闭防火墙sudo service iptables status --查看防火墙状态 iptables: Firewall is not running. Centos7 123sudo systemctl stop firewalld.service #停止firewallsudo systemctl disable firewalld.service #禁止firewall开机启动sudo firewall-cmd --state #查看默认防火墙状态（关闭后显示notrunning，开启后显示running） ping网络其他主机测试网络是否设置好。 2. 三台主机均安装JDK，并设置环境变量https://yangjiannr.github.io/2017/12/25/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E8%BD%BD/ tar -zxvf jdk-8u181-linux-x64.tar.gz -C ~/app/lib/tar -zxvf hadoop-2.8.4.tar.gz -C ../app/lib/ sudo vim ~/.bash_profile 或者 vim /etc/profile尾部添加 123export JAVA_HOME=/home/hadoop/app/lib/jdk1.8.0_181export PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=&quot;.:$JAVA_HOME/lib:$CLASSPATH&quot; 使配置文件生效 source /etc/profile 或者 . /etc/profile source .~/.bash_profile 或者 . .~/.bash_profile 验证： java -version 3. 三台主机分别设置/etc/hosts及/etc/hostname vim /etc/hosts hosts中添加 123192.168.31.100 master192.168.31.101 slave1192.168.31.102 slave2 修改/etc/hostname文件 vim /etc/hostname在master中，输入：master 在slave1中，输入：slave1在slave2中，输入：slave2 重启三台机器，输入命令：sudo reboot 4. 安装OpenSSH，并配置SSH可以免密登录三台主机分别执行： ssh-keygen -t rsacp ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys 在master主机的终端中输入命令： cd ~/.sshscp authorized_keys slave1:~/.ssh/scp authorized_keys slave2:~/.ssh/ 查看是否可以从Master主机免密码登录Slave，输入命令： ssh slave1ssh slave2 5. 安装Hadoop，并设置环境变量https://yangjiannr.github.io/2017/12/25/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E8%BD%BD/ tar -zxvf hadoop-2.8.4.tar.gz -C ../app/lib/ 如果是linux系统下则可以 rm -rf .cmd，删除cmd文件`find . -name ‘.cmd’ -type f -print -exec rm -rf {} \;` 6. 配置三台主机的Hadoop文件 编辑hadoop-env.sh文件 vim hadoop-2.8.4/etc/hadoop/hadoop-env.sh修改hadoop中Java路径export JAVA_HOME=/home/hadoop/app/lib/jdk1.8.0_181/ 编辑core-site.xml vim hadoop-2.8.4/etc/hadoop/core-site.xml 三台主机上的core-site.xml文件： 1234567891011&lt;configuration&gt; &lt;property&gt; &lt;name&gt;fs.default.name&lt;/name&gt; &lt;value&gt;hdfs://master:9000&lt;/value&gt; &lt;/property&gt; &lt;property&gt; &lt;name&gt;hadoop.tmp.dir&lt;/name&gt; &lt;value&gt;/home/hadoop/app/tmp&lt;/value&gt; &lt;/property&gt;&lt;/configuration&gt; 编辑hdfs-site.xml 三台主机上的hdfs-site.xml文件： 123456&lt;configuration&gt; &lt;property&gt; &lt;name&gt;dfs.replication&lt;/name&gt; &lt;value&gt;2&lt;/value&gt; &lt;/property&gt;&lt;/configuration&gt; 编辑yarn-site.xml 三台主机上的yarn-site.xml文件： 1234567&lt;configuration&gt; &lt;property&gt; &lt;description&gt;The hostname of the RM.&lt;/description&gt; &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt; &lt;value&gt;master&lt;/value&gt; &lt;/property&gt;&lt;/configuration&gt; 编辑mapred-site.xml 三台主机上的mapred-site.xml文件： 1234567891011&lt;configuration&gt; &lt;property&gt; &lt;name&gt;mapreduce.framework.name&lt;/name&gt; &lt;value&gt;yarn&lt;/value&gt; &lt;/property&gt; &lt;property&gt; &lt;name&gt;mapred.job.tracker&lt;/name&gt; &lt;value&gt;master:9001&lt;/value&gt; &lt;/property&gt;&lt;/configuration&gt; 编辑masters vim masters 输入内容：master 编辑slaves vim slaves 输入内容：slave1 `slave2` 7. 启动Hadoop 关闭三台主机的防火墙，在三台主机中输入命令：service iptables stop 格式化NameNode，在master中/home/hadoop/app/lib/hadoop-2.8.4/bin目录下输入命令：./hadoop namenode -format 启动Hadoop，在master中/home/hadoop/app/lib/hadoop-2.8.4/sbin目录下输入命令：./start-all.sh 8. 使用jps检验各后台进程是否成功启动 在主节点master上查看namenode、SecondaryNameNode、ResourceManager进程是否启动，如图： 在slave1和slave2节点查看DataNode、NodeManager进程是否启动，如图： 9. 通过网站（Web UI）查看集群情况 在浏览器中输入:http://192.168.31.100:50070 ，网址为master节点所对应的IP，如图： 在浏览器中输入:http://192.168.31.100:8088 ，网址为master节点所对应的IP，如图：]]></content>
+    <content type="text"><![CDATA[重要的放在前面：遇到问题，看Logs很重要 环境 三台CenOS6.10 X86_64 uname -acat /etc/redhat-release jdk1.8.0_181 hadoop-2.8.4 分配IP地址及相应的角色： 192.168.31.100 - master namenode jobtracker-master 192.168.31.101 - slave1 datanode tasktracker-slave1 192.168.31.102 - slave2 datanode tasktracker-slave2 配置1. 网卡配置 vim /etc/sysconfig/network-scripts/ifcfg-enp0s3 (ifcfg-exxxxxx) 需要修改的是： 12345678NM_CONTROLLED=noONBOOT=yesBOOTPROTO=noneIPADDR=192.168.31.100NETMASK=255.255.255.0GATEWAY=192.168.31.1DNS1=8.8.8.8DNS2=114.114.114.114 chkconfig network on # 网络服务进程network配置为开机即启动service network restart # 重启网络服务进程 关闭防火墙Centos6 123sudo service iptables stop --临时关闭防火墙sudo chkconfig iptables off --永久关闭防火墙sudo service iptables status --查看防火墙状态 iptables: Firewall is not running. Centos7 123sudo systemctl stop firewalld.service #停止firewallsudo systemctl disable firewalld.service #禁止firewall开机启动sudo firewall-cmd --state #查看默认防火墙状态（关闭后显示notrunning，开启后显示running） ping网络其他主机测试网络是否设置好。 2. 三台主机均安装JDK，并设置环境变量https://yangjiannr.github.io/2017/12/25/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E8%BD%BD/ tar -zxvf jdk-8u181-linux-x64.tar.gz -C ~/app/lib/tar -zxvf hadoop-2.8.4.tar.gz -C ../app/lib/ sudo vim ~/.bash_profile 或者 vim /etc/profile尾部添加 123export JAVA_HOME=/home/hadoop/app/lib/jdk1.8.0_181export PATH=$JAVA_HOME/bin:$PATHexport CLASSPATH=&quot;.:$JAVA_HOME/lib:$CLASSPATH&quot; 使配置文件生效 source /etc/profile 或者 . /etc/profile source .~/.bash_profile 或者 . .~/.bash_profile 验证： java -version 3. 三台主机分别设置/etc/hosts及/etc/hostname vim /etc/hosts hosts中添加 123192.168.31.100 master192.168.31.101 slave1192.168.31.102 slave2 修改/etc/hostname文件 vim /etc/hostname在master中，输入：master 在slave1中，输入：slave1在slave2中，输入：slave2 重启三台机器，输入命令：sudo reboot 4. 安装OpenSSH，并配置SSH可以免密登录三台主机分别执行： ssh-keygen -t rsacp ~/.ssh/id_rsa.pub ~/.ssh/authorized_keys 在master主机的终端中输入命令： cd ~/.sshscp authorized_keys slave1:~/.ssh/scp authorized_keys slave2:~/.ssh/ 查看是否可以从Master主机免密码登录Slave，输入命令： ssh slave1ssh slave2 5. 安装Hadoop，并设置环境变量https://yangjiannr.github.io/2017/12/25/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E8%BD%BD/ tar -zxvf hadoop-2.8.4.tar.gz -C ../app/lib/ 如果是linux系统下则可以 rm -rf .cmd，删除cmd文件`find . -name ‘.cmd’ -type f -print -exec rm -rf {} \;` 6. 配置三台主机的Hadoop文件 编辑hadoop-env.sh文件 vim hadoop-2.8.4/etc/hadoop/hadoop-env.sh修改hadoop中Java路径export JAVA_HOME=/home/hadoop/app/lib/jdk1.8.0_181/ 编辑core-site.xml vim hadoop-2.8.4/etc/hadoop/core-site.xml 三台主机上的core-site.xml文件： 1234567891011&lt;configuration&gt; &lt;property&gt; &lt;name&gt;fs.default.name&lt;/name&gt; &lt;value&gt;hdfs://master:9000&lt;/value&gt; &lt;/property&gt; &lt;property&gt; &lt;name&gt;hadoop.tmp.dir&lt;/name&gt; &lt;value&gt;/home/hadoop/app/tmp&lt;/value&gt; &lt;/property&gt;&lt;/configuration&gt; 编辑hdfs-site.xml 三台主机上的hdfs-site.xml文件： 123456&lt;configuration&gt; &lt;property&gt; &lt;name&gt;dfs.replication&lt;/name&gt; &lt;value&gt;2&lt;/value&gt; &lt;/property&gt;&lt;/configuration&gt; 编辑yarn-site.xml 三台主机上的yarn-site.xml文件： 1234567891011&lt;configuration&gt; &lt;property&gt; &lt;description&gt;The hostname of the RM.&lt;/description&gt; &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt; &lt;value&gt;master&lt;/value&gt; &lt;/property&gt; &lt;property&gt; &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt; &lt;value&gt;mapreduce_shuffle&lt;/value&gt; &lt;/property&gt;&lt;/configuration&gt; 编辑mapred-site.xml 三台主机上的mapred-site.xml文件： 1234567891011&lt;configuration&gt; &lt;property&gt; &lt;name&gt;mapreduce.framework.name&lt;/name&gt; &lt;value&gt;yarn&lt;/value&gt; &lt;/property&gt; &lt;property&gt; &lt;name&gt;mapred.job.tracker&lt;/name&gt; &lt;value&gt;master:9001&lt;/value&gt; &lt;/property&gt;&lt;/configuration&gt; 编辑masters vim masters 输入内容：master 编辑slaves vim slaves 输入内容：slave1 `slave2` 7. 启动Hadoop 关闭三台主机的防火墙，在三台主机中输入命令：service iptables stop 格式化NameNode，在master中/home/hadoop/app/lib/hadoop-2.8.4/bin目录下输入命令：./hadoop namenode -format 启动Hadoop，在master中/home/hadoop/app/lib/hadoop-2.8.4/sbin目录下输入命令：./start-all.sh 8. 使用jps检验各后台进程是否成功启动 在主节点master上查看namenode、SecondaryNameNode、ResourceManager进程是否启动，如图： 在slave1和slave2节点查看DataNode、NodeManager进程是否启动，如图： 9. 通过网站（Web UI）查看集群情况 在浏览器中输入:http://192.168.31.100:50070 ，网址为master节点所对应的IP，如图： 在浏览器中输入:http://192.168.31.100:8088 ，网址为master节点所对应的IP，如图： 运行实例（1）下载英文小说txt: （2）上传到集群 hadoop fs -mkdir /testhadoop fs -put data.txt /test/ （3）运行Hadoop的woedcount样例程序（向YARN提交作业） 参数中指定jar执行文件、输入数据目录（需要先创建好，并将待处理文本上传至其中）、输出目录（无需创建，由样例程序自己生成）。 hadoop jar hadoop-2.8.4/share/hadoop/mapreduce/hadoop-mapreduce-examples.jar wordcount /test/data.txt /result (4) 查看运行结果 hadoop fs -ls /result hadoop fs -cat /result/part-r-00000]]></content>
       <categories>
         <category>BigData</category>
       </categories>
@@ -70,8 +70,8 @@
         <category>BlockChain</category>
       </categories>
       <tags>
-        <tag>Distributed</tag>
         <tag>BlockChain</tag>
+        <tag>Distributed</tag>
         <tag>Consensus</tag>
       </tags>
   </entry>
@@ -143,8 +143,8 @@
         <category>Distributed</category>
       </categories>
       <tags>
-        <tag>Distributed</tag>
         <tag>BlockChain</tag>
+        <tag>Distributed</tag>
       </tags>
   </entry>
   <entry>
@@ -155,8 +155,8 @@
         <category>Distributed</category>
       </categories>
       <tags>
-        <tag>Distributed</tag>
         <tag>BlockChain</tag>
+        <tag>Distributed</tag>
         <tag>Paxos</tag>
       </tags>
   </entry>
@@ -168,8 +168,8 @@
         <category>Distributed</category>
       </categories>
       <tags>
-        <tag>Distributed</tag>
         <tag>BlockChain</tag>
+        <tag>Distributed</tag>
       </tags>
   </entry>
   <entry>
@@ -309,8 +309,8 @@
         <category>Network</category>
       </categories>
       <tags>
-        <tag>Network</tag>
         <tag>TCP/IP</tag>
+        <tag>Network</tag>
       </tags>
   </entry>
 </search>
