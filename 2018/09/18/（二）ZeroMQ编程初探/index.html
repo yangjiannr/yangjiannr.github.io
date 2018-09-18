@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Distributed,ZeroMQ," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="编程环境搭建MacOS通过brew安装：brew install zmq 如果使用c++语言编程还需要获取到zeroMQ的c++版头文件git clone https://github.com/zeromq/cppzmq.git将zmq.hpp拷贝到/usr/local/include下 Linux12345wget https://github.com/zeromq/libzmq/release">
+<meta name="keywords" content="Distributed,ZeroMQ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="（二）ZeroMQ编程初探">
+<meta property="og:url" content="http://yoursite.com/2018/09/18/（二）ZeroMQ编程初探/index.html">
+<meta property="og:site_name" content="紫魔戒的博客">
+<meta property="og:description" content="编程环境搭建MacOS通过brew安装：brew install zmq 如果使用c++语言编程还需要获取到zeroMQ的c++版头文件git clone https://github.com/zeromq/cppzmq.git将zmq.hpp拷贝到/usr/local/include下 Linux12345wget https://github.com/zeromq/libzmq/release">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/2018-09-18-15372776929833.png">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/2018-09-18-15372788649801.jpg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/2018-09-18-15372788865565.jpg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/2018-09-18-15372779415297.jpg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/2018-09-18-15372807062047.jpg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/2018-09-18-15372807244678.jpg">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/2018-09-18-15372808226070.png">
+<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/2018-09-18-15372829199006.jpg">
+<meta property="og:updated_time" content="2018-09-18T15:03:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="（二）ZeroMQ编程初探">
+<meta name="twitter:description" content="编程环境搭建MacOS通过brew安装：brew install zmq 如果使用c++语言编程还需要获取到zeroMQ的c++版头文件git clone https://github.com/zeromq/cppzmq.git将zmq.hpp拷贝到/usr/local/include下 Linux12345wget https://github.com/zeromq/libzmq/release">
+<meta name="twitter:image" content="http://oc3uwt4a5.bkt.clouddn.com/2018-09-18-15372776929833.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/18/（二）ZeroMQ编程初探/"/>
+
+
+
+
+
+  <title>（二）ZeroMQ编程初探 | 紫魔戒的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">紫魔戒的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">技术分享</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/18/（二）ZeroMQ编程初探/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Frank yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oc3uwt4a5.bkt.clouddn.com/20180912avator.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="紫魔戒的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">（二）ZeroMQ编程初探</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-18T23:03:39+08:00">
+                2018-09-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Distributed/" itemprop="url" rel="index">
+                    <span itemprop="name">Distributed</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+
+          
+            <span class="post-meta-divider">|</span>
+            <span id="busuanzi_value_page_pv"></span>次阅读
+          
+
+          
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="编程环境搭建"><a href="#编程环境搭建" class="headerlink" title="编程环境搭建"></a>编程环境搭建</h2><h4 id="MacOS"><a href="#MacOS" class="headerlink" title="MacOS"></a>MacOS</h4><p>通过brew安装：<code>brew install zmq</code></p>
+<p>如果使用c++语言编程还需要获取到<br>zeroMQ的c++版头文件<br><code>git clone https://github.com/zeromq/cppzmq.git</code><br>将zmq.hpp拷贝到/usr/local/include下</p>
+<h4 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/zeromq/libzmq/releases/download/v4.2.3/zeromq-4.2.3.tar.gz</span><br><span class="line">tar -zxvf zeromq-4.2.3.tar.gz</span><br><span class="line">cd zeromq-4.2.3.tar.gz</span><br><span class="line">./configure</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+<p>如果使用c++语言编程还需要获取到<br>zeroMQ的c++版头文件<br><code>git clone https://github.com/zeromq/cppzmq.git</code><br>将zmq.hpp拷贝到/usr/local/include下</p>
+<h2 id="三种模式实例"><a href="#三种模式实例" class="headerlink" title="三种模式实例"></a>三种模式实例</h2><h4 id="请求回应简单模式（Request-Reply）："><a href="#请求回应简单模式（Request-Reply）：" class="headerlink" title="请求回应简单模式（Request-Reply）："></a>请求回应简单模式（Request-Reply）：</h4><p><img src="http://oc3uwt4a5.bkt.clouddn.com/2018-09-18-15372776929833.png" alt=""></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  helloWorldServer.cpp </span></span><br><span class="line"><span class="comment">//  Hello World server in C++</span></span><br><span class="line"><span class="comment">//  Binds REP socket to tcp://*:5555</span></span><br><span class="line"><span class="comment">//  Expects "Hello" from client, replies with "World"</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;zmq.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> _WIN32</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;windows.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> sleep(n)    Sleep(n)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">//  Prepare our context and socket</span></span><br><span class="line">    zmq::<span class="keyword">context_t</span> context (<span class="number">1</span>);</span><br><span class="line">    zmq::<span class="keyword">socket_t</span> socket (context, ZMQ_REP);</span><br><span class="line">    socket.bind (<span class="string">"tcp://*:5555"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">        zmq::<span class="keyword">message_t</span> request;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//  Wait for next request from client</span></span><br><span class="line">        socket.recv (&amp;request);</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Received Hello"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//  Do some 'work'</span></span><br><span class="line">        sleep(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//  Send reply back to client</span></span><br><span class="line">        zmq::<span class="keyword">message_t</span> reply (<span class="number">5</span>);</span><br><span class="line">        <span class="built_in">memcpy</span> (reply.data (), <span class="string">"World"</span>, <span class="number">5</span>);</span><br><span class="line">        socket.send (reply);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  helloWorldClient.cpp</span></span><br><span class="line"><span class="comment">//  Hello World client in C++</span></span><br><span class="line"><span class="comment">//  Connects REQ socket to tcp://localhost:5555</span></span><br><span class="line"><span class="comment">//  Sends "Hello" to server, expects "World" back</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;zmq.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//  Prepare our context and socket</span></span><br><span class="line">    zmq::<span class="keyword">context_t</span> context (<span class="number">1</span>);</span><br><span class="line">    zmq::<span class="keyword">socket_t</span> socket (context, ZMQ_REQ);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Connecting to hello world server…"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    socket.connect (<span class="string">"tcp://localhost:5555"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Do 10 requests, waiting each time for a response</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> request_nbr = <span class="number">0</span>; request_nbr != <span class="number">10</span>; request_nbr++) &#123;</span><br><span class="line">        zmq::<span class="keyword">message_t</span> request (<span class="number">5</span>);</span><br><span class="line">        <span class="built_in">memcpy</span> (request.data (), <span class="string">"Hello"</span>, <span class="number">5</span>);</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Sending Hello "</span> &lt;&lt; request_nbr &lt;&lt; <span class="string">"…"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">        socket.send (request);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//  Get the reply.</span></span><br><span class="line">        zmq::<span class="keyword">message_t</span> reply;</span><br><span class="line">        socket.recv (&amp;reply);</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Received World "</span> &lt;&lt; request_nbr &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译运行：<br>(1)<br>helloWorldServer:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">g++ -o helloWorldServer helloWorldServer.cpp</span><br><span class="line">./helloWorldServer</span><br></pre></td></tr></table></figure>
+<p>helloWorldClient:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">g++ -o helloWorldClient helloWorldClient.cpp</span><br><span class="line">./helloWorldClient</span><br></pre></td></tr></table></figure>
+<p>(2)<br>Or Makefile:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">.PHONY : clean all </span><br><span class="line">CC = g++ </span><br><span class="line">BIN = helloWorldClient helloWorldServer</span><br><span class="line"></span><br><span class="line">all: $(BIN)</span><br><span class="line"></span><br><span class="line">client:</span><br><span class="line">    $(CC) $@.cpp -o $@ -lzmq  -I./include -L./lib</span><br><span class="line">server:</span><br><span class="line">    $(CC) $@.cpp -o $@ -lzmq  -I./include -L./lib</span><br><span class="line"></span><br><span class="line">clean:</span><br><span class="line">    rm $(BIN)</span><br></pre></td></tr></table></figure>
+<p>helloWorldServer:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./helloWorldServer</span><br></pre></td></tr></table></figure>
+<p>helloWorldClient:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./helloWorldClient</span><br></pre></td></tr></table></figure>
+<p>结果：<br><img src="http://oc3uwt4a5.bkt.clouddn.com/2018-09-18-15372788649801.jpg" alt=""></p>
+<p><img src="http://oc3uwt4a5.bkt.clouddn.com/2018-09-18-15372788865565.jpg" alt=""></p>
+<h4 id="发布订阅模式（Publish-Subscribe）："><a href="#发布订阅模式（Publish-Subscribe）：" class="headerlink" title="发布订阅模式（Publish-Subscribe）："></a>发布订阅模式（Publish-Subscribe）：</h4><p><img src="http://oc3uwt4a5.bkt.clouddn.com/2018-09-18-15372779415297.jpg" alt=""></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  weatherUpdateServer.cpp</span></span><br><span class="line"><span class="comment">//  Weather update server in C++</span></span><br><span class="line"><span class="comment">//  Binds PUB socket to tcp://*:5556</span></span><br><span class="line"><span class="comment">//  Publishes random weather updates</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Olivier Chamoux &lt;olivier.chamoux@fr.thalesgroup.com&gt;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;zmq.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;time.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> (defined (WIN32))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;zhelpers.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> within(num) (int) ((float) num * random () / (RAND_MAX + 1.0))</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Prepare our context and publisher</span></span><br><span class="line">    zmq::<span class="keyword">context_t</span> context (<span class="number">1</span>);</span><br><span class="line">    zmq::<span class="keyword">socket_t</span> publisher (context, ZMQ_PUB);</span><br><span class="line">    publisher.bind(<span class="string">"tcp://*:5556"</span>);</span><br><span class="line">    publisher.bind(<span class="string">"ipc://weather.ipc"</span>);                <span class="comment">// Not usable on Windows.</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Initialize random number generator</span></span><br><span class="line">    srandom ((<span class="keyword">unsigned</span>) time (<span class="literal">NULL</span>));</span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> zipcode, temperature, relhumidity;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//  Get values that will fool the boss</span></span><br><span class="line">        zipcode     = within (<span class="number">100000</span>);</span><br><span class="line">        temperature = within (<span class="number">215</span>) - <span class="number">80</span>;</span><br><span class="line">        relhumidity = within (<span class="number">50</span>) + <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//  Send message to all subscribers</span></span><br><span class="line">        zmq::<span class="keyword">message_t</span> message(<span class="number">20</span>);</span><br><span class="line">        <span class="built_in">snprintf</span> ((<span class="keyword">char</span> *) message.data(), <span class="number">20</span> ,</span><br><span class="line">            <span class="string">"%05d %d %d"</span>, zipcode, temperature, relhumidity);</span><br><span class="line">        publisher.send(message);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  weatherUpdateClient.cpp</span></span><br><span class="line"><span class="comment">//  Weather update client in C++</span></span><br><span class="line"><span class="comment">//  Connects SUB socket to tcp://localhost:5556</span></span><br><span class="line"><span class="comment">//  Collects weather updates and finds avg temp in zipcode</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Olivier Chamoux &lt;olivier.chamoux@fr.thalesgroup.com&gt;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;zmq.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sstream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    zmq::<span class="keyword">context_t</span> context (<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Socket to talk to server</span></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Collecting updates from weather server…\n"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    zmq::<span class="keyword">socket_t</span> subscriber (context, ZMQ_SUB);</span><br><span class="line">    subscriber.connect(<span class="string">"tcp://localhost:5556"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Subscribe to zipcode, default is NYC, 10001</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *filter = (argc &gt; <span class="number">1</span>)? argv [<span class="number">1</span>]: <span class="string">"10001 "</span>;</span><br><span class="line">    subscriber.setsockopt(ZMQ_SUBSCRIBE, filter, <span class="built_in">strlen</span> (filter));</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Process 100 updates</span></span><br><span class="line">    <span class="keyword">int</span> update_nbr;</span><br><span class="line">    <span class="keyword">long</span> total_temp = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (update_nbr = <span class="number">0</span>; update_nbr &lt; <span class="number">100</span>; update_nbr++) &#123;</span><br><span class="line"></span><br><span class="line">        zmq::<span class="keyword">message_t</span> update;</span><br><span class="line">        <span class="keyword">int</span> zipcode, temperature, relhumidity;</span><br><span class="line"></span><br><span class="line">        subscriber.recv(&amp;update);</span><br><span class="line"></span><br><span class="line">        std::istringstream iss(static_cast&lt;char*&gt;(update.data()));</span><br><span class="line">        iss &gt;&gt; zipcode &gt;&gt; temperature &gt;&gt; relhumidity ;</span><br><span class="line"></span><br><span class="line">        total_temp += temperature;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span>     &lt;&lt; <span class="string">"Average temperature for zipcode '"</span>&lt;&lt; filter</span><br><span class="line">                &lt;&lt;<span class="string">"' was "</span>&lt;&lt;(<span class="keyword">int</span>) (total_temp / update_nbr) &lt;&lt;<span class="string">"F"</span></span><br><span class="line">                &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译运行：<br>(1)<br>weatherUpdateServer:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">g++ -o weatherUpdateServer weatherUpdateServer.cpp</span><br><span class="line">./weatherUpdateServer</span><br></pre></td></tr></table></figure>
+<p>weatherUpdateClient:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">g++ -o weatherUpdateClient weatherUpdateClient.cpp</span><br><span class="line">./weatherUpdateClient</span><br></pre></td></tr></table></figure>
+<p>(2)<br>Or Makefile:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">.PHONY : clean all </span><br><span class="line">CC = g++ </span><br><span class="line">BIN = weatherUpdateServer weatherUpdateClient</span><br><span class="line"></span><br><span class="line">all: $(BIN)</span><br><span class="line"></span><br><span class="line">client:</span><br><span class="line">    $(CC) $@.cpp -o $@ -lzmq  -I./include -L./lib</span><br><span class="line">server:</span><br><span class="line">    $(CC) $@.cpp -o $@ -lzmq  -I./include -L./lib</span><br><span class="line"></span><br><span class="line">clean:</span><br><span class="line">    rm $(BIN)</span><br></pre></td></tr></table></figure>
+<p>weatherUpdateServer:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./weatherUpdateServer</span><br></pre></td></tr></table></figure>
+<p>weatherUpdateClient:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./weatherUpdateClient</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<p><img src="http://oc3uwt4a5.bkt.clouddn.com/2018-09-18-15372807062047.jpg" alt=""></p>
+<p><img src="http://oc3uwt4a5.bkt.clouddn.com/2018-09-18-15372807244678.jpg" alt=""></p>
+<h4 id="管道模式（Parallel-Pipeline）："><a href="#管道模式（Parallel-Pipeline）：" class="headerlink" title="管道模式（Parallel Pipeline）："></a>管道模式（Parallel Pipeline）：</h4><p><img src="http://oc3uwt4a5.bkt.clouddn.com/2018-09-18-15372808226070.png" alt=""></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  taskSink.cpp</span></span><br><span class="line"><span class="comment">//  Task sink in C++</span></span><br><span class="line"><span class="comment">//  Binds PULL socket to tcp://localhost:5558</span></span><br><span class="line"><span class="comment">//  Collects results from workers via that socket</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Olivier Chamoux &lt;olivier.chamoux@fr.thalesgroup.com&gt;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;zmq.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/time.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//  Prepare our context and socket</span></span><br><span class="line">    zmq::<span class="keyword">context_t</span> context(<span class="number">1</span>);</span><br><span class="line">    zmq::<span class="keyword">socket_t</span> receiver(context,ZMQ_PULL);</span><br><span class="line">    receiver.bind(<span class="string">"tcp://*:5558"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Wait for start of batch</span></span><br><span class="line">    zmq::<span class="keyword">message_t</span> message;</span><br><span class="line">    receiver.recv(&amp;message);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Start our clock now</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> <span class="title">tstart</span>;</span></span><br><span class="line">    gettimeofday (&amp;tstart, <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Process 100 confirmations</span></span><br><span class="line">    <span class="keyword">int</span> task_nbr;</span><br><span class="line">    <span class="keyword">int</span> total_msec = <span class="number">0</span>;     <span class="comment">//  Total calculated cost in msecs</span></span><br><span class="line">    <span class="keyword">for</span> (task_nbr = <span class="number">0</span>; task_nbr &lt; <span class="number">100</span>; task_nbr++) &#123;</span><br><span class="line"></span><br><span class="line">        receiver.recv(&amp;message);</span><br><span class="line">        <span class="keyword">if</span> ((task_nbr / <span class="number">10</span>) * <span class="number">10</span> == task_nbr)</span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">":"</span> &lt;&lt; <span class="built_in">std</span>::flush;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"."</span> &lt;&lt; <span class="built_in">std</span>::flush;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//  Calculate and report duration of batch</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">timeval</span> <span class="title">tend</span>, <span class="title">tdiff</span>;</span></span><br><span class="line">    gettimeofday (&amp;tend, <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (tend.tv_usec &lt; tstart.tv_usec) &#123;</span><br><span class="line">        tdiff.tv_sec = tend.tv_sec - tstart.tv_sec - <span class="number">1</span>;</span><br><span class="line">        tdiff.tv_usec = <span class="number">1000000</span> + tend.tv_usec - tstart.tv_usec;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        tdiff.tv_sec = tend.tv_sec - tstart.tv_sec;</span><br><span class="line">        tdiff.tv_usec = tend.tv_usec - tstart.tv_usec;</span><br><span class="line">    &#125;</span><br><span class="line">    total_msec = tdiff.tv_sec * <span class="number">1000</span> + tdiff.tv_usec / <span class="number">1000</span>;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"\nTotal elapsed time: "</span> &lt;&lt; total_msec &lt;&lt; <span class="string">" msec\n"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  taskWorker.cpp</span></span><br><span class="line"><span class="comment">//  Task worker in C++</span></span><br><span class="line"><span class="comment">//  Connects PULL socket to tcp://localhost:5557</span></span><br><span class="line"><span class="comment">//  Collects workloads from ventilator via that socket</span></span><br><span class="line"><span class="comment">//  Connects PUSH socket to tcp://localhost:5558</span></span><br><span class="line"><span class="comment">//  Sends results to sink via that socket</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Olivier Chamoux &lt;olivier.chamoux@fr.thalesgroup.com&gt;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"zhelpers.hpp"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    zmq::<span class="keyword">context_t</span> context(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Socket to receive messages on</span></span><br><span class="line">    zmq::<span class="keyword">socket_t</span> receiver(context, ZMQ_PULL);</span><br><span class="line">    receiver.connect(<span class="string">"tcp://localhost:5557"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Socket to send messages to</span></span><br><span class="line">    zmq::<span class="keyword">socket_t</span> sender(context, ZMQ_PUSH);</span><br><span class="line">    sender.connect(<span class="string">"tcp://localhost:5558"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Process tasks forever</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line"></span><br><span class="line">        zmq::<span class="keyword">message_t</span> message;</span><br><span class="line">        <span class="keyword">int</span> workload;           <span class="comment">//  Workload in msecs</span></span><br><span class="line"></span><br><span class="line">        receiver.recv(&amp;message);</span><br><span class="line">        std::string smessage(static_cast&lt;char*&gt;(message.data()), message.size());</span><br><span class="line"></span><br><span class="line">        <span class="built_in">std</span>::<span class="function"><span class="built_in">istringstream</span> <span class="title">iss</span><span class="params">(smessage)</span></span>;</span><br><span class="line">        iss &gt;&gt; workload;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//  Do the work</span></span><br><span class="line">        s_sleep(workload);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//  Send results to sink</span></span><br><span class="line">        message.rebuild();</span><br><span class="line">        sender.send(message);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//  Simple progress indicator for the viewer</span></span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"."</span> &lt;&lt; <span class="built_in">std</span>::flush;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//  taskVentilator.cpp</span></span><br><span class="line"><span class="comment">//  Task ventilator in C++</span></span><br><span class="line"><span class="comment">//  Binds PUSH socket to tcp://localhost:5557</span></span><br><span class="line"><span class="comment">//  Sends batch of tasks to workers via that socket</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Olivier Chamoux &lt;olivier.chamoux@fr.thalesgroup.com&gt;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;zmq.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> within(num) (int) ((float) num * random () / (RAND_MAX + 1.0))</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span> <span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    zmq::<span class="keyword">context_t</span> context (<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Socket to send messages on</span></span><br><span class="line">    zmq::<span class="keyword">socket_t</span>  sender(context, ZMQ_PUSH);</span><br><span class="line">    sender.bind(<span class="string">"tcp://*:5557"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Press Enter when the workers are ready: "</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    getchar ();</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Sending tasks to workers…\n"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  The first message is "0" and signals start of batch</span></span><br><span class="line">    zmq::<span class="keyword">socket_t</span> sink(context, ZMQ_PUSH);</span><br><span class="line">    sink.connect(<span class="string">"tcp://localhost:5558"</span>);</span><br><span class="line">    zmq::<span class="keyword">message_t</span> message(<span class="number">2</span>);</span><br><span class="line">    <span class="built_in">memcpy</span>(message.data(), <span class="string">"0"</span>, <span class="number">1</span>);</span><br><span class="line">    sink.send(message);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Initialize random number generator</span></span><br><span class="line">    srandom ((<span class="keyword">unsigned</span>) time (<span class="literal">NULL</span>));</span><br><span class="line"></span><br><span class="line">    <span class="comment">//  Send 100 tasks</span></span><br><span class="line">    <span class="keyword">int</span> task_nbr;</span><br><span class="line">    <span class="keyword">int</span> total_msec = <span class="number">0</span>;     <span class="comment">//  Total expected cost in msecs</span></span><br><span class="line">    <span class="keyword">for</span> (task_nbr = <span class="number">0</span>; task_nbr &lt; <span class="number">100</span>; task_nbr++) &#123;</span><br><span class="line">        <span class="keyword">int</span> workload;</span><br><span class="line">        <span class="comment">//  Random workload from 1 to 100msecs</span></span><br><span class="line">        workload = within (<span class="number">100</span>) + <span class="number">1</span>;</span><br><span class="line">        total_msec += workload;</span><br><span class="line"></span><br><span class="line">        message.rebuild(<span class="number">10</span>);</span><br><span class="line">        <span class="built_in">memset</span>(message.data(), <span class="string">'\0'</span>, <span class="number">10</span>);</span><br><span class="line">        <span class="built_in">sprintf</span> ((<span class="keyword">char</span> *) message.data(), <span class="string">"%d"</span>, workload);</span><br><span class="line">        sender.send(message);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Total expected cost: "</span> &lt;&lt; total_msec &lt;&lt; <span class="string">" msec"</span> &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    sleep (<span class="number">1</span>);              <span class="comment">//  Give 0MQ time to deliver</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译运行：<br>(1)<br>taskSink:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">g++ -o taskSink taskSink.cpp</span><br><span class="line">./taskSink</span><br></pre></td></tr></table></figure>
+<p>taskWorker:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">g++ -o taskWorker taskWorker.cpp</span><br><span class="line">./taskWorker</span><br></pre></td></tr></table></figure>
+<p>taskVentilator:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">g++ -o taskVentilator taskVentilator.cpp</span><br><span class="line">./taskVentilator</span><br></pre></td></tr></table></figure>
+<p>(2)<br>Or Makefile:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">.PHONY : clean all </span><br><span class="line">CC = g++ </span><br><span class="line">BIN = taskSink taskWorker taskVentilator</span><br><span class="line"></span><br><span class="line">all: $(BIN)</span><br><span class="line"></span><br><span class="line">taskSink:</span><br><span class="line">    $(CC) $@.cpp -o $@ -lzmq  -I./include -L./lib</span><br><span class="line">taskWorker:</span><br><span class="line">    $(CC) $@.cpp -o $@ -lzmq  -I./include -L./lib</span><br><span class="line">taskVentilator:</span><br><span class="line">    $(CC) $@.cpp -o $@ -lzmq  -I./include -L./lib</span><br><span class="line"></span><br><span class="line">clean:</span><br><span class="line">    rm $(BIN)</span><br></pre></td></tr></table></figure>
+<p>taskSink:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./taskSink</span><br></pre></td></tr></table></figure>
+<p>taskWorker:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./taskWorker</span><br></pre></td></tr></table></figure>
+<p>taskVentilator:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./taskVentilator</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<p><img src="http://oc3uwt4a5.bkt.clouddn.com/2018-09-18-15372829199006.jpg" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Distributed/" rel="tag"># Distributed</a>
+          
+            <a href="/tags/ZeroMQ/" rel="tag"># ZeroMQ</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/18/（一）ZeroMQ概述初探/" rel="next" title="（一）ZeroMQ概述初探">
+                <i class="fa fa-chevron-left"></i> （一）ZeroMQ概述初探
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://oc3uwt4a5.bkt.clouddn.com/20180912avator.jpg"
+                alt="Frank yang" />
+            
+              <p class="site-author-name" itemprop="name">Frank yang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#编程环境搭建"><span class="nav-number">1.</span> <span class="nav-text">编程环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MacOS"><span class="nav-number">1.0.1.</span> <span class="nav-text">MacOS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Linux"><span class="nav-number">1.0.2.</span> <span class="nav-text">Linux</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三种模式实例"><span class="nav-number">2.</span> <span class="nav-text">三种模式实例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#请求回应简单模式（Request-Reply）："><span class="nav-number">2.0.1.</span> <span class="nav-text">请求回应简单模式（Request-Reply）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#发布订阅模式（Publish-Subscribe）："><span class="nav-number">2.0.2.</span> <span class="nav-text">发布订阅模式（Publish-Subscribe）：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#管道模式（Parallel-Pipeline）："><span class="nav-number">2.0.3.</span> <span class="nav-text">管道模式（Parallel Pipeline）：</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Frank yang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style='display:none'>
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    <span class="post-meta-divider">|</span>
+</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+    有<span id="busuanzi_value_site_uv"></span>人看过我的博客啦
+</span>
+</div>
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
