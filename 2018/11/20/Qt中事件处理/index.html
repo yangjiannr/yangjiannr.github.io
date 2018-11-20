@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Qt,Event," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="事件处理当您执行QApplication的exec()方法之后，应用程序会进入事件循环来倾听应用程序的事件，事件来源通常是窗口系统，例如使用者的鼠标事件或键盘事件，事件来源可以是Qt应用程序事件本身，例如QTimerEvent，事件来源也可以是使用者自定义的事件，透过QApplicaiton的sendEvent()或postEvent()来发送。 事件的种类事件处理分为两种机制：  高级的：信号和">
+<meta name="keywords" content="Qt,Event">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Qt中事件处理">
+<meta property="og:url" content="http://yoursite.com/2018/11/20/Qt中事件处理/index.html">
+<meta property="og:site_name" content="紫魔戒的博客">
+<meta property="og:description" content="事件处理当您执行QApplication的exec()方法之后，应用程序会进入事件循环来倾听应用程序的事件，事件来源通常是窗口系统，例如使用者的鼠标事件或键盘事件，事件来源可以是Qt应用程序事件本身，例如QTimerEvent，事件来源也可以是使用者自定义的事件，透过QApplicaiton的sendEvent()或postEvent()来发送。 事件的种类事件处理分为两种机制：  高级的：信号和">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-11-20T12:03:49.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Qt中事件处理">
+<meta name="twitter:description" content="事件处理当您执行QApplication的exec()方法之后，应用程序会进入事件循环来倾听应用程序的事件，事件来源通常是窗口系统，例如使用者的鼠标事件或键盘事件，事件来源可以是Qt应用程序事件本身，例如QTimerEvent，事件来源也可以是使用者自定义的事件，透过QApplicaiton的sendEvent()或postEvent()来发送。 事件的种类事件处理分为两种机制：  高级的：信号和">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/20/Qt中事件处理/"/>
+
+
+
+
+
+  <title>Qt中事件处理 | 紫魔戒的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">紫魔戒的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">技术分享</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/20/Qt中事件处理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Frank yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oc3uwt4a5.bkt.clouddn.com/20180912avator.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="紫魔戒的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Qt中事件处理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-20T20:03:49+08:00">
+                2018-11-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Qt/" itemprop="url" rel="index">
+                    <span itemprop="name">Qt</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+
+          
+            <span class="post-meta-divider">|</span>
+            <span id="busuanzi_value_page_pv"></span>次阅读
+          
+
+          
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="事件处理"><a href="#事件处理" class="headerlink" title="事件处理"></a>事件处理</h1><p>当您执行QApplication的exec()方法之后，应用程序会进入事件循环来倾听应用程序的事件，事件来源通常是窗口系统，例如使用者的鼠标事件或键盘事件，事件来源可以是Qt应用程序事件本身，例如QTimerEvent，事件来源也可以是使用者自定义的事件，透过QApplicaiton的<code>sendEvent()</code>或<code>postEvent()</code>来发送。</p>
+<h2 id="事件的种类"><a href="#事件的种类" class="headerlink" title="事件的种类"></a>事件的种类</h2><p>事件处理分为两种机制：</p>
+<ul>
+<li>高级的：信号和槽机制</li>
+<li>低级的：事件处理程序（Event Handle）</li>
+</ul>
+<p>如果窗口部件不能处理这个事件，事件就会传递到该窗口部件的父窗口部件中。这样就可以把未处理事件从自窗口部件一直传递到父窗口部件直至顶层窗口部件，而如果还是没能处理掉这个时间，那么就会简单地予以扔掉。</p>
+<h3 id="PyQt为拦截和处理事件提供了5种不同方式："><a href="#PyQt为拦截和处理事件提供了5种不同方式：" class="headerlink" title="PyQt为拦截和处理事件提供了5种不同方式："></a>PyQt为拦截和处理事件提供了5种不同方式：</h3><ul>
+<li>重新实现特殊的事件处理器</li>
+</ul>
+<p>通过重新实现一些事件处理程序是可以控制窗口部件的行为的——例如，可以重新实现<code>KeyPressEvent()</code>、<code>mousePressEvent()</code>和<code>mouseReleaseEvent()</code>。通过重新实现<code>resizeEvent()</code>和<code>paintEvent()</code>，也可以控制一个窗口部件的外观。</p>
+<ul>
+<li>重新实现QObject::event()</li>
+</ul>
+<p>在任何特定事件处理程序调用之前，都会调用event()事件处理程序。重新实现这个方法可以允许我们处理那些不能在某一特定事件处理程序中处理的事件，或者实现那些勇于不存在明确事件处理程序的事件，不如<code>QEvent.ToolBarChange</code>。当需要重新事件这些处理程序时，可以对任何不是自己亲自处理的时间调用它们的基类实现。</p>
+<ul>
+<li>在QObject中安装事件过滤器</li>
+</ul>
+<p>可以对任何QOject调用<code>installEventFilter()</code>。这就意味着，对于QObject的全部事件来说，它们都会先传递到我们自己的事件过滤eventFilter()函数：在它们到达目标对象之前，可以抛弃或者修改这些事件中的任何一个。如果在同一个对象上安装了多个事件处理器，那么就会按照安装顺序逆序，从最近安装的到最先安装的，依次激活这些事件处理器。</p>
+<ul>
+<li>在QApplication对象中安装事件过滤器</li>
+</ul>
+<p>一旦在qApp（唯一的QApplication对象）中注册了事件过滤器，那么应用程序中每个对象的每个事件都会在发送到其他事件过滤器之前，先发送给这个<code>eventFilter()</code>函数。这种处理方式对于调试非常有用。它也可以用来处理哪些发送给失效窗口部件的鼠标事件，因为QApplication通常都会忽略这些事件。</p>
+<ul>
+<li>子类化QApplication并且重新实现notify()</li>
+</ul>
+<p>Qt调用<code>QApplication::notify()</code>来发送一个事件。重新实现这个函数是在事件过滤器得到所有事件之前获得它们的唯一方式。事件过滤器通常可以同时有多个，而<code>notify()</code>函数却只有一个。这个方法会在任何事件过滤程序或者事件处理程序之前得到调用，因此它提供了终极控制能力。实践中，仅会在调试时才会用到这一方法。</p>
+<h2 id="QWidget部分事件"><a href="#QWidget部分事件" class="headerlink" title="QWidget部分事件"></a>QWidget部分事件</h2><table>
+<thead>
+<tr>
+<th>语法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>w.closeEvent(e)</td>
+<td>重新实现本函数可以给用户一个保存那些未保存修改和用户设置的机会；w是QWidget的一个子类，e是QEvent的一个相关子类</td>
+</tr>
+<tr>
+<td>w.contextMenuEvent(e)</td>
+<td>重新实现本函数可以提供自定义的上下文菜单。一种更为简洁的替代方法是调用setContextMenuPolicy(Qt.ActionsContextMenu)并借助QWidget.addAction()想窗口部件添加一些动作</td>
+</tr>
+<tr>
+<td>w.dragEnterEvent(e)</td>
+<td>重新实现本函数可以用来说明窗口部件是否接受或者拒绝在QDragEnterEvent e中进行拖放操作</td>
+</tr>
+<tr>
+<td>w.dragMoveEvent(e)</td>
+<td>是对可接受的拖放动作的重新实现——例如，对QDragMoveEvent e不接受，或者接受一个或者多个移动、复制以及连接等操作事件</td>
+</tr>
+<tr>
+<td>w.dropEvent(e)</td>
+<td>是对在QDropEvent e中进行拖放操作的重新实现</td>
+</tr>
+<tr>
+<td>w.event(e)</td>
+<td>是对没有特定时间处理程序的那些事件处理方法的重新实现——例如，对于Tab键的处理。这个事件是从QObject继承来的</td>
+</tr>
+<tr>
+<td>w.keyPressEvent(e)</td>
+<td>是对按键事件的重新实现</td>
+</tr>
+<tr>
+<td>w.mouseDoubleClickEvent(e)</td>
+<td>是对QMouseEvent e中给定的鼠标双击事件响应的重新实现</td>
+</tr>
+<tr>
+<td>w.mouseMoveEvent(e)</td>
+<td>重新实现来响应在QMouseEvent e中给定的鼠标移动事件。这个事件处理程序会受QWidget.setMouseTracking()的影响</td>
+</tr>
+<tr>
+<td>w.mousePressEvent(e)</td>
+<td>重新实现对鼠标按下事件的影响</td>
+</tr>
+<tr>
+<td>w.mouseReleaseEvent(e)</td>
+<td>重新实现对鼠标松开事件的影响</td>
+</tr>
+<tr>
+<td>w.paintEvent(e)</td>
+<td>窗口部件绘制事件的重新实现</td>
+</tr>
+<tr>
+<td>w.resizeEvent(e)</td>
+<td>窗口部件尺寸大小改变事件的重新实现</td>
+</tr>
+</tbody>
+</table>
+<p>如果用户打开了鼠标状态跟踪（通过单机鼠标），将会产生一些鼠标移动事件，并且会在每个鼠标移动事件中都调用这个方法。</p>
+<h2 id="事件与信号-槽机制的不同"><a href="#事件与信号-槽机制的不同" class="headerlink" title="事件与信号-槽机制的不同"></a>事件与信号-槽机制的不同</h2><p>Qt的事件跟Signal、Slot机制是不同的。Signal与Slot的机制是同步的（Synchronous），Signal是由对象发出的，使 用QObject的connect()连接对象上定义的Slot来立即处理。Qt的事件可以是异步的（Asynchronous）的，Q使用一个事件队列来维护，新的事件产生时基本上会被排到队列的尾端，前一个事 件处理完成，再从队列的前端取出下一个队列来处理，必要的时候，Qt的事件也可以是同步的，而事件还可以使用事件过滤器进行过滤处理。</p>
+<h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PySide2.QtWidgets <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">EventLabel</span><span class="params">(QLabel)</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, parent=None)</span>:</span></span><br><span class="line">		super(EventLabel, self).__init__(parent)</span><br><span class="line">		</span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">mouseMoveEvent</span><span class="params">(self, event)</span>:</span></span><br><span class="line">	    <span class="comment"># 坐标系：物理坐标和逻辑坐标</span></span><br><span class="line">		msg = <span class="string">"&lt;center&gt;&lt;h1&gt;Move: \</span></span><br><span class="line"><span class="string">			(&#123;&#125;, &#123;&#125;)&lt;/h1&gt;&lt;/center&gt;"</span>.format(event.globalX(), event.globalY())</span><br><span class="line">		self.setText(msg)</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">mousePressEvent</span><span class="params">(self, event)</span>:</span></span><br><span class="line">		msg = <span class="string">"&lt;center&gt;&lt;h1&gt;Press: \</span></span><br><span class="line"><span class="string">			(&#123;&#125;, &#123;&#125;)&lt;/h1&gt;&lt;/center&gt;"</span>.format(event.x(), event.y())</span><br><span class="line">		self.setText(msg)</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">mouseReleaseEvent</span><span class="params">(self, event)</span>:</span></span><br><span class="line">		msg = <span class="string">"&lt;center&gt;&lt;h1&gt;Release: \</span></span><br><span class="line"><span class="string">			(&#123;&#125;, &#123;&#125;)&lt;/h1&gt;&lt;/center&gt;"</span>.format(event.x(), event.y())</span><br><span class="line">		self.setText(msg)</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">mouseDoubleClickEvent</span><span class="params">(self, event)</span>:</span></span><br><span class="line">		msg = <span class="string">"&lt;center&gt;&lt;h1&gt;Double Click: \</span></span><br><span class="line"><span class="string">			(&#123;&#125;, &#123;&#125;)&lt;/h1&gt;&lt;/center&gt;"</span>.format(event.x(), event.y())</span><br><span class="line">		self.setText(msg)</span><br><span class="line"></span><br><span class="line">app = QApplication(sys.argv)		</span><br><span class="line"></span><br><span class="line">window = EventLabel()</span><br><span class="line">window.setGeometry(<span class="number">200</span>, <span class="number">200</span>, <span class="number">500</span>, <span class="number">400</span>)</span><br><span class="line"><span class="comment"># 默认MouseTracking是False</span></span><br><span class="line"><span class="comment"># 如果mouseTracking是False, 光标在窗口中至少点击一次并且光标仍在窗口中移动时，触发鼠标移动事件</span></span><br><span class="line"><span class="comment"># 如果mouseTracking是True, 光标只要在窗口中移动就触发鼠标移动事件，不论是否点击窗口.</span></span><br><span class="line">window.setMouseTracking(<span class="keyword">True</span>)</span><br><span class="line">window.show()</span><br><span class="line"></span><br><span class="line">sys.exit(app.exec_())</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Qt/" rel="tag"># Qt</a>
+          
+            <a href="/tags/Event/" rel="tag"># Event</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/07/Python三种抓取方法性能对比/" rel="next" title="Python三种抓取方法性能对比（re、BeautifulSoup、lxml）">
+                <i class="fa fa-chevron-left"></i> Python三种抓取方法性能对比（re、BeautifulSoup、lxml）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="http://oc3uwt4a5.bkt.clouddn.com/20180912avator.jpg"
+                alt="Frank yang" />
+            
+              <p class="site-author-name" itemprop="name">Frank yang</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#事件处理"><span class="nav-number">1.</span> <span class="nav-text">事件处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#事件的种类"><span class="nav-number">1.1.</span> <span class="nav-text">事件的种类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PyQt为拦截和处理事件提供了5种不同方式："><span class="nav-number">1.1.1.</span> <span class="nav-text">PyQt为拦截和处理事件提供了5种不同方式：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#QWidget部分事件"><span class="nav-number">1.2.</span> <span class="nav-text">QWidget部分事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事件与信号-槽机制的不同"><span class="nav-number">1.3.</span> <span class="nav-text">事件与信号-槽机制的不同</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Example"><span class="nav-number">1.4.</span> <span class="nav-text">Example</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Frank yang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+<div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<span id="busuanzi_container_site_pv" style='display:none'>
+    本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    <span class="post-meta-divider">|</span>
+</span>
+<span id="busuanzi_container_site_uv" style='display:none'>
+    有<span id="busuanzi_value_site_uv"></span>人看过我的博客啦
+</span>
+</div>
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
