@@ -131,13 +131,13 @@
 <meta property="og:site_name" content="紫魔戒的博客">
 <meta property="og:description" content="TCP三次握手四次挥手   标志位缩写 全称 中文     SYN synchronous 建立联机   ACK acknowledgement 确认   PSH push 传送   FIN finish 结束   RST reset 重置   URG urgent 紧急   Seq Sequence number 顺序号码   ACK Acknowledge number 确认号码">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.jpg">
-<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/tcp1.jpg">
+<meta property="og:image" content="http://image.yangjiannr.cn/TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.jpg">
+<meta property="og:image" content="http://image.yangjiannr.cn/tcp1.jpg">
 <meta property="og:updated_time" content="2017-04-18T13:25:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TCP三次握手四次挥手">
 <meta name="twitter:description" content="TCP三次握手四次挥手   标志位缩写 全称 中文     SYN synchronous 建立联机   ACK acknowledgement 确认   PSH push 传送   FIN finish 结束   RST reset 重置   URG urgent 紧急   Seq Sequence number 顺序号码   ACK Acknowledge number 确认号码">
-<meta name="twitter:image" content="http://oc3uwt4a5.bkt.clouddn.com/TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.jpg">
+<meta name="twitter:image" content="http://image.yangjiannr.cn/TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.jpg">
 
 
 
@@ -305,7 +305,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Frank yang">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://oc3uwt4a5.bkt.clouddn.com/20180912avator.jpg">
+      <meta itemprop="image" content="http://image.yangjiannr.cn/20180912avator.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -502,7 +502,7 @@
 </tr>
 </tbody>
 </table>
-<p><img src="http://oc3uwt4a5.bkt.clouddn.com/TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.jpg" alt="TCP三次握手四次挥手 -w600"></p>
+<p><img src="http://image.yangjiannr.cn/TCP%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B.jpg" alt="TCP三次握手四次挥手 -w600"></p>
 <blockquote>
 <p>【注意】 在TIME_WAIT状态中，如果TCP client端最后一次发送的ACK丢失了，它将重新发送。TIME_WAIT状态中所需要的时间是依赖于实现方法的。典型的值为30秒、1分钟和2分钟。等待之后连接正式关闭，并且所有的资源(包括端口号)都被释放</p>
 </blockquote>
@@ -528,7 +528,7 @@
 </blockquote>
 <h3 id="SYN攻击："><a href="#SYN攻击：" class="headerlink" title="SYN攻击："></a>SYN攻击：</h3><p>&emsp;&emsp;在三次握手过程中，Server发送SYN-ACK之后，收到Client的ACK之前的TCP连接称为<code>半连接（half-open connect）</code>，此时Server处于SYN_RCVD状态，当收到ACK后，Server转入ESTABLISHED状态。<br>&emsp;&emsp;SYN攻击就是Client在短时间内伪造大量不存在的IP地址，并向Server不断地发送SYN包，Server回复确认包，并等待Client的确认，由于源地址是不存在的，因此，Server需要不断重发直至超时，这些伪造的SYN包将长时间占用未连接队列，导致正常的SYN请求因为队列满而被丢弃，从而引起网络堵塞甚至系统瘫痪。<br>&emsp;&emsp;SYN攻击时一种典型的DDOS攻击，检测SYN攻击的方式非常简单，即当Server上有大量半连接状态且源IP地址是随机的，则可以断定遭到SYN攻击了，使用如下命令可以让之现行：</p>
 <p>  #netstat -nap | grep SYN_RECV</p>
-<p><img src="http://oc3uwt4a5.bkt.clouddn.com/tcp1.jpg" alt=""></p>
+<p><img src="http://image.yangjiannr.cn/tcp1.jpg" alt=""></p>
 <p><a href="http://www.frankyang.cn/2017/08/23/tcp-san-ci-wo-shou-si-ci-hui-shou/" target="_blank" rel="noopener">http://www.frankyang.cn/2017/08/23/tcp-san-ci-wo-shou-si-ci-hui-shou/</a></p>
 
       
@@ -663,7 +663,7 @@ var jiathis_config={
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="http://oc3uwt4a5.bkt.clouddn.com/20180912avator.jpg"
+                src="http://image.yangjiannr.cn/20180912avator.jpg"
                 alt="Frank yang" />
             
               <p class="site-author-name" itemprop="name">Frank yang</p>

@@ -131,18 +131,18 @@
 <meta property="og:site_name" content="紫魔戒的博客">
 <meta property="og:description" content="Paxos发展史　　Leslie Lamport所提出的Paxos算法是现代分布式系统中的一项重要的基础性技术，得到广泛的应用。 Paxos的整个发展过程大概可以分为三个阶段：　　第一阶段：萌芽期，大致是1988-1996年。Liskov等人在PODC上发表了Viewstamped Replication: A New Primary Copy Method to Support Highly-A">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/Paxos背景.png">
-<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/Message flow- Basic Paxos.jpg">
-<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/Paxos.png">
-<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/1752522-44c5a422f917bfc5.jpg">
-<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/15050933433144.jpg">
-<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/15050931076257.jpg">
-<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/1752522-0fab48ed2bdf358a.png">
+<meta property="og:image" content="http://image.yangjiannr.cn/Paxos背景.png">
+<meta property="og:image" content="http://image.yangjiannr.cn/Message flow- Basic Paxos.jpg">
+<meta property="og:image" content="http://image.yangjiannr.cn/Paxos.png">
+<meta property="og:image" content="http://image.yangjiannr.cn/1752522-44c5a422f917bfc5.jpg">
+<meta property="og:image" content="http://image.yangjiannr.cn/15050933433144.jpg">
+<meta property="og:image" content="http://image.yangjiannr.cn/15050931076257.jpg">
+<meta property="og:image" content="http://image.yangjiannr.cn/1752522-0fab48ed2bdf358a.png">
 <meta property="og:updated_time" content="2017-09-11T03:30:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Paxos发展、算法原理">
 <meta name="twitter:description" content="Paxos发展史　　Leslie Lamport所提出的Paxos算法是现代分布式系统中的一项重要的基础性技术，得到广泛的应用。 Paxos的整个发展过程大概可以分为三个阶段：　　第一阶段：萌芽期，大致是1988-1996年。Liskov等人在PODC上发表了Viewstamped Replication: A New Primary Copy Method to Support Highly-A">
-<meta name="twitter:image" content="http://oc3uwt4a5.bkt.clouddn.com/Paxos背景.png">
+<meta name="twitter:image" content="http://image.yangjiannr.cn/Paxos背景.png">
 
 
 
@@ -310,7 +310,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Frank yang">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://oc3uwt4a5.bkt.clouddn.com/20180912avator.jpg">
+      <meta itemprop="image" content="http://image.yangjiannr.cn/20180912avator.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -411,7 +411,7 @@
 <p>　　第三阶段：本阶段。Paxos开始在工业界得到了广泛应用。从2006年开始，谷歌公司有两篇影响深远的论文发表在OSDI上，一篇是“<a href="http://ov6v82oa9.bkt.clouddn.com/Bigtable-A%20Distributed%20Storage%20System%20for%20Structured%20Data.pdf" target="_blank" rel="noopener">Bigtable:A Distributed Storage System for Structured Data</a>”，另一篇“<a href="http://ov6v82oa9.bkt.clouddn.com/The%20Chubby%20lock%20service%20for%20loosely-coupled%20distributed%20systems.pdf" target="_blank" rel="noopener">The Chubby lock service for loosely-coupled distributed systems</a>”。两篇论文可以说是揭开了大数据管理的序幕，而Paxos则在大数据管理的核心技术（容错）中扮演了极为重要的角色。</p>
 <a id="more"></a>
 <h2 id="算法原理"><a href="#算法原理" class="headerlink" title="算法原理"></a>算法原理</h2><p>　　Paxos算法维基百科<a href="https://en.wikipedia.org/wiki/Paxos_(computer_science" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Paxos_(computer_science)</a>)<br>　　Paxos算法是基于消息传递且具有高度容错特性的一致性算法，是目前公认的解决分布式一致性问题最有效的算法之一。然而，Paxos算法也因为晦涩难懂而臭名昭著。<br>　　Paxos算法的目标就是要保证最终有一个提案会被选定，当提案被选定后，进程最终也能获取到被选定的提案。</p>
-<h3 id="问题产生的背景"><a href="#问题产生的背景" class="headerlink" title="问题产生的背景"></a>问题产生的背景</h3><p>　　在常见的分布式系统中，总会发生诸如机器宕机或网络异常（包括消息的延迟、丢失、重复、乱序，还有网络分区）等情况。Paxos算法需要解决的问题就是如何在一个可能发生上述异常的分布式系统中，快速且正确地在集群内部对某个数据的值达成一致，并且保证不论发生以上任何异常，都不会破坏整个系统的一致性。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/Paxos背景.png" alt="Paxos背景"></p>
+<h3 id="问题产生的背景"><a href="#问题产生的背景" class="headerlink" title="问题产生的背景"></a>问题产生的背景</h3><p>　　在常见的分布式系统中，总会发生诸如机器宕机或网络异常（包括消息的延迟、丢失、重复、乱序，还有网络分区）等情况。Paxos算法需要解决的问题就是如何在一个可能发生上述异常的分布式系统中，快速且正确地在集群内部对某个数据的值达成一致，并且保证不论发生以上任何异常，都不会破坏整个系统的一致性。<br><img src="http://image.yangjiannr.cn/Paxos背景.png" alt="Paxos背景"></p>
 <h3 id="相关概念"><a href="#相关概念" class="headerlink" title="相关概念"></a>相关概念</h3><p>在Paxos算法中，有四种角色：</p>
 <ul>
 <li>Client：产生议题者</li>
@@ -427,7 +427,7 @@
 <li>Proposer提出议题，Acceptor初步接受或者Acceptor初步不接受。</li>
 <li>Acceptor初步接受则Proposer再次向Acceptor确认是否最终接受。</li>
 <li>Acceptor最终接受或者Acceptor最终不接受。</li>
-<li>Learner最终学习的目标是向所有Acceptor学习，如果有多数派个Acceptor最终接受了某提议，那就得到了最终的结果，算法的目的就达到了。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/Message flow- Basic Paxos.jpg" alt="Message flow- Basic Paxos"><br><img src="http://oc3uwt4a5.bkt.clouddn.com/Paxos.png" alt="Paxos"></li>
+<li>Learner最终学习的目标是向所有Acceptor学习，如果有多数派个Acceptor最终接受了某提议，那就得到了最终的结果，算法的目的就达到了。<br><img src="http://image.yangjiannr.cn/Message flow- Basic Paxos.jpg" alt="Message flow- Basic Paxos"><br><img src="http://image.yangjiannr.cn/Paxos.png" alt="Paxos"></li>
 </ol>
 <h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>　　假设有一组可以提出（propose）value（value在提案Proposal里）的进程集合。一个一致性算法需要保证提出的这么多value中：</p>
 <ul>
@@ -449,10 +449,10 @@
 <h3 id="算法描述"><a href="#算法描述" class="headerlink" title="算法描述"></a>算法描述</h3><h4 id="Paxos算法分为两个阶段。具体如下："><a href="#Paxos算法分为两个阶段。具体如下：" class="headerlink" title="Paxos算法分为两个阶段。具体如下："></a>Paxos算法分为两个阶段。具体如下：</h4><p><strong>阶段一：</strong><br>(a) Proposer选择一个提案编号N，然后向半数以上的Acceptor发送编号为N的Prepare请求。</p>
 <p>(b) 如果一个Acceptor收到一个编号为N的Prepare请求，且N大于该Acceptor已经响应过的所有Prepare请求的编号，那么它就会将它已经接受过的编号最大的提案（如果有的话）作为响应反馈给Proposer，同时该Acceptor承诺不再接受任何编号小于N的提案。</p>
 <p><strong>阶段二：</strong><br>(a) 如果Proposer收到半数以上Acceptor对其发出的编号为N的Prepare请求的响应，那么它就会发送一个针对[N,V]提案的Accept请求给半数以上的Acceptor。注意：V就是收到的响应中编号最大的提案的value，如果响应中不包含任何提案，那么V就由Proposer自己决定。</p>
-<p>(b) 如果Acceptor收到一个针对编号为N的提案的Accept请求，只要该Acceptor没有对编号大于N的Prepare请求做出过响应，它就接受该提案。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/1752522-44c5a422f917bfc5.jpg" alt="1752522-44c5a422f917bfc5"></p>
-<p><img src="http://oc3uwt4a5.bkt.clouddn.com/15050933433144.jpg" alt=""></p>
-<p>eg. <img src="http://oc3uwt4a5.bkt.clouddn.com/15050931076257.jpg" alt=""></p>
-<h4 id="Learner学习被选定的value"><a href="#Learner学习被选定的value" class="headerlink" title="Learner学习被选定的value"></a>Learner学习被选定的value</h4><p>Learner学习（获取）被选定的value有如下三种方案：<br><img src="http://oc3uwt4a5.bkt.clouddn.com/1752522-0fab48ed2bdf358a.png" alt="1752522-0fab48ed2bdf358a"></p>
+<p>(b) 如果Acceptor收到一个针对编号为N的提案的Accept请求，只要该Acceptor没有对编号大于N的Prepare请求做出过响应，它就接受该提案。<br><img src="http://image.yangjiannr.cn/1752522-44c5a422f917bfc5.jpg" alt="1752522-44c5a422f917bfc5"></p>
+<p><img src="http://image.yangjiannr.cn/15050933433144.jpg" alt=""></p>
+<p>eg. <img src="http://image.yangjiannr.cn/15050931076257.jpg" alt=""></p>
+<h4 id="Learner学习被选定的value"><a href="#Learner学习被选定的value" class="headerlink" title="Learner学习被选定的value"></a>Learner学习被选定的value</h4><p>Learner学习（获取）被选定的value有如下三种方案：<br><img src="http://image.yangjiannr.cn/1752522-0fab48ed2bdf358a.png" alt="1752522-0fab48ed2bdf358a"></p>
 
       
     </div>
@@ -592,7 +592,7 @@ var jiathis_config={
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="http://oc3uwt4a5.bkt.clouddn.com/20180912avator.jpg"
+                src="http://image.yangjiannr.cn/20180912avator.jpg"
                 alt="Frank yang" />
             
               <p class="site-author-name" itemprop="name">Frank yang</p>

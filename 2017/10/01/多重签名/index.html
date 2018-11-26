@@ -131,14 +131,14 @@
 <meta property="og:site_name" content="紫魔戒的博客">
 <meta property="og:description" content="在数字签名应用中，有时需要多个用户对同一个文件进行签名和认证。比如，一个公司发布的声明中涉及财务部、开发部、销售部、售后服务部等部门，需要的到这些部门签名认可，那么，就需要这些部门对这个声明文件进行签名。能够实现多个用户对同一文件进行签名的数字签名方案称作多重数字签名方案。　　多重签名就是多个用户对同一个消息进行数字签名。　　多重签名，可以简单的理解为一个数字资产的多个签名。签名标定的是数字资">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/多重签名1.jpeg">
-<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/多重签名2.png">
-<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/相关图片.png">
+<meta property="og:image" content="http://image.yangjiannr.cn/多重签名1.jpeg">
+<meta property="og:image" content="http://image.yangjiannr.cn/多重签名2.png">
+<meta property="og:image" content="http://image.yangjiannr.cn/相关图片.png">
 <meta property="og:updated_time" content="2017-10-01T06:58:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="多重签名">
 <meta name="twitter:description" content="在数字签名应用中，有时需要多个用户对同一个文件进行签名和认证。比如，一个公司发布的声明中涉及财务部、开发部、销售部、售后服务部等部门，需要的到这些部门签名认可，那么，就需要这些部门对这个声明文件进行签名。能够实现多个用户对同一文件进行签名的数字签名方案称作多重数字签名方案。　　多重签名就是多个用户对同一个消息进行数字签名。　　多重签名，可以简单的理解为一个数字资产的多个签名。签名标定的是数字资">
-<meta name="twitter:image" content="http://oc3uwt4a5.bkt.clouddn.com/多重签名1.jpeg">
+<meta name="twitter:image" content="http://image.yangjiannr.cn/多重签名1.jpeg">
 
 
 
@@ -306,7 +306,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Frank yang">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://oc3uwt4a5.bkt.clouddn.com/20180912avator.jpg">
+      <meta itemprop="image" content="http://image.yangjiannr.cn/20180912avator.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -397,8 +397,8 @@
       
 
       
-        <p><img src="http://oc3uwt4a5.bkt.clouddn.com/多重签名1.jpeg" alt="多重签名1"><br>　　在数字签名应用中，有时需要多个用户对同一个文件进行签名和认证。比如，一个公司发布的声明中涉及财务部、开发部、销售部、售后服务部等部门，需要的到这些部门签名认可，那么，就需要这些部门对这个声明文件进行签名。能够实现多个用户对同一文件进行签名的数字签名方案称作多重数字签名方案。<br>　　多重签名就是多个用户对同一个消息进行数字签名。<br>　　多重签名，可以简单的理解为一个数字资产的多个签名。签名标定的是数字资产所属和权限，多重签名预示着数字资产可由多人支配和管理。在加密货币领域，如果要动用一个加密货币地址的资金，通常需要该地址的所有人使用他的私钥（由用户专属保护）进行签名。那么，多重签名，就是动用这笔资金需要多个私钥签名，通常这笔资金或数字资产会保存在一个多重签名的地址或帐号里（就比特币而言，多重签名地址通常以3开头）。<br><a id="more"></a><br><img src="http://oc3uwt4a5.bkt.clouddn.com/多重签名2.png" alt="多重签名2"><br>　　Alice和Bob怎么对同一个数字文件签名呢？不用单向散列函数，有两种选择：<br>　　第一种选择是Alice和Bob分别对文件的副本签名，结果签名的消息是原文的两倍；<br>　　第二种就是Alice首先签名，然后Bob对Alice的签名再进行签名。这是可行的，但是在不验证Bob签名的情况下就验证Alice的签名是不可能的。<br>　　采用单向散列函数，很容易实现多重签名：<br>　　(1)Alice对文件的散列签名。<br>　　(2)Bob对文件的散列签名。<br>　　(3)Bob将他的签名交给Alice。<br>　　(4)Alice把文件、她的签名和Bob的签名发给Carol。<br>　　(5)Carol验证Alice和Bob的签名。<br>　　Alice和Bob能同时或顺序地完成第(1)步和第(2)步；在第(5)步中Carol可以只验证其中一人的签名而不用验证另一人的签名。</p>
-<p>　　关于 MultiSig（多重签名），从原理角度上讲，多重签名本身并不复杂，简单来说，一句话就够了：<strong>“用 m 把钥匙生成一个多重签名的地址，需要其中的 n 把钥匙才能花费这个地址上的比特币，m &gt;= n，这就是 n/m 的多重签名”</strong><br>　　在实际的操作过程中，一个多重签名地址可以关联n个私钥，在需要转账等操作时，只要其中的m个私钥签名就可以把资金转移了，其中m要小于等于n，也就是说m/n小于1，可以是2/3, 3/5等等，是要在建立这个多重签名地址的时候确定好的。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/相关图片.png" alt="相关图片"></p>
+        <p><img src="http://image.yangjiannr.cn/多重签名1.jpeg" alt="多重签名1"><br>　　在数字签名应用中，有时需要多个用户对同一个文件进行签名和认证。比如，一个公司发布的声明中涉及财务部、开发部、销售部、售后服务部等部门，需要的到这些部门签名认可，那么，就需要这些部门对这个声明文件进行签名。能够实现多个用户对同一文件进行签名的数字签名方案称作多重数字签名方案。<br>　　多重签名就是多个用户对同一个消息进行数字签名。<br>　　多重签名，可以简单的理解为一个数字资产的多个签名。签名标定的是数字资产所属和权限，多重签名预示着数字资产可由多人支配和管理。在加密货币领域，如果要动用一个加密货币地址的资金，通常需要该地址的所有人使用他的私钥（由用户专属保护）进行签名。那么，多重签名，就是动用这笔资金需要多个私钥签名，通常这笔资金或数字资产会保存在一个多重签名的地址或帐号里（就比特币而言，多重签名地址通常以3开头）。<br><a id="more"></a><br><img src="http://image.yangjiannr.cn/多重签名2.png" alt="多重签名2"><br>　　Alice和Bob怎么对同一个数字文件签名呢？不用单向散列函数，有两种选择：<br>　　第一种选择是Alice和Bob分别对文件的副本签名，结果签名的消息是原文的两倍；<br>　　第二种就是Alice首先签名，然后Bob对Alice的签名再进行签名。这是可行的，但是在不验证Bob签名的情况下就验证Alice的签名是不可能的。<br>　　采用单向散列函数，很容易实现多重签名：<br>　　(1)Alice对文件的散列签名。<br>　　(2)Bob对文件的散列签名。<br>　　(3)Bob将他的签名交给Alice。<br>　　(4)Alice把文件、她的签名和Bob的签名发给Carol。<br>　　(5)Carol验证Alice和Bob的签名。<br>　　Alice和Bob能同时或顺序地完成第(1)步和第(2)步；在第(5)步中Carol可以只验证其中一人的签名而不用验证另一人的签名。</p>
+<p>　　关于 MultiSig（多重签名），从原理角度上讲，多重签名本身并不复杂，简单来说，一句话就够了：<strong>“用 m 把钥匙生成一个多重签名的地址，需要其中的 n 把钥匙才能花费这个地址上的比特币，m &gt;= n，这就是 n/m 的多重签名”</strong><br>　　在实际的操作过程中，一个多重签名地址可以关联n个私钥，在需要转账等操作时，只要其中的m个私钥签名就可以把资金转移了，其中m要小于等于n，也就是说m/n小于1，可以是2/3, 3/5等等，是要在建立这个多重签名地址的时候确定好的。<br><img src="http://image.yangjiannr.cn/相关图片.png" alt="相关图片"></p>
 <p>　　多重签名给了加密货币腾飞的翅膀，让它单一单项支付的能力更具吸引力，让加密货币技术应用到各行各业成为可能。这里简单的罗列几个应用场景，供探索和思考：</p>
 <ul>
 <li>电子商务。比较常见的是2/3的模式。上面电子商务网站的例子，就是最典型的场景之一，目前已经有成功的案例了。延伸一下，这类应用本质就是中介，所以还可用在各类中介机构性质的服务上。</li>
@@ -439,7 +439,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/01/大数据处理-Bloom Filter/" rel="next" title="大数据处理——Bloom Filter">
+              <a href="/2017/10/01/大数据处理-Bloom_Filter/" rel="next" title="大数据处理——Bloom Filter">
                 <i class="fa fa-chevron-left"></i> 大数据处理——Bloom Filter
               </a>
             
@@ -449,7 +449,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/10/02/比特币交易本质--UTXO(Unspent Transaction Output)/" rel="prev" title="比特币交易本质--UTXO(Unspent Transaction Output)">
+              <a href="/2017/10/02/比特币交易本质--UTXO(Unspent_Transaction_Output)/" rel="prev" title="比特币交易本质--UTXO(Unspent Transaction Output)">
                 比特币交易本质--UTXO(Unspent Transaction Output) <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -535,7 +535,7 @@ var jiathis_config={
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="http://oc3uwt4a5.bkt.clouddn.com/20180912avator.jpg"
+                src="http://image.yangjiannr.cn/20180912avator.jpg"
                 alt="Frank yang" />
             
               <p class="site-author-name" itemprop="name">Frank yang</p>

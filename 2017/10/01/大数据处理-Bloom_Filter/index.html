@@ -112,7 +112,7 @@
 
 
 
-  <meta name="keywords" content="BigData,Bloom," />
+  <meta name="keywords" content="Bloom,BigData," />
 
 
 
@@ -124,22 +124,22 @@
 
 
 <meta name="description" content="大数据处理——Bloom Filter　　布隆过滤器（Bloom Filter）是由巴顿.布隆于一九七零年提出的。它实际上是一个很长的二进制向量和一系列随机映射函数。　　如果想判断一个元素是不是在一个集合里，一般想到的是将集合中所有元素保存起来，然后通过比较确定。链表、树、散列表（又叫哈希表，Hash table）等等数据结构都是这种思路。但是随着集合中元素的增加，我们需要的存储空间越来越大。同时">
-<meta name="keywords" content="BigData,Bloom">
+<meta name="keywords" content="Bloom,BigData">
 <meta property="og:type" content="article">
 <meta property="og:title" content="大数据处理——Bloom Filter">
-<meta property="og:url" content="http://yoursite.com/2017/10/01/大数据处理-Bloom Filter/index.html">
+<meta property="og:url" content="http://yoursite.com/2017/10/01/大数据处理-Bloom_Filter/index.html">
 <meta property="og:site_name" content="紫魔戒的博客">
 <meta property="og:description" content="大数据处理——Bloom Filter　　布隆过滤器（Bloom Filter）是由巴顿.布隆于一九七零年提出的。它实际上是一个很长的二进制向量和一系列随机映射函数。　　如果想判断一个元素是不是在一个集合里，一般想到的是将集合中所有元素保存起来，然后通过比较确定。链表、树、散列表（又叫哈希表，Hash table）等等数据结构都是这种思路。但是随着集合中元素的增加，我们需要的存储空间越来越大。同时">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/14973179752164.jpg">
-<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/Bloom Filter.jpeg">
-<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/14973179645247.jpg">
-<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/Snip20170628_2.png">
+<meta property="og:image" content="http://image.yangjiannr.cn/14973179752164.jpg">
+<meta property="og:image" content="http://image.yangjiannr.cn/Bloom Filter.jpeg">
+<meta property="og:image" content="http://image.yangjiannr.cn/14973179645247.jpg">
+<meta property="og:image" content="http://image.yangjiannr.cn/Snip20170628_2.png">
 <meta property="og:updated_time" content="2017-10-01T02:05:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="大数据处理——Bloom Filter">
 <meta name="twitter:description" content="大数据处理——Bloom Filter　　布隆过滤器（Bloom Filter）是由巴顿.布隆于一九七零年提出的。它实际上是一个很长的二进制向量和一系列随机映射函数。　　如果想判断一个元素是不是在一个集合里，一般想到的是将集合中所有元素保存起来，然后通过比较确定。链表、树、散列表（又叫哈希表，Hash table）等等数据结构都是这种思路。但是随着集合中元素的增加，我们需要的存储空间越来越大。同时">
-<meta name="twitter:image" content="http://oc3uwt4a5.bkt.clouddn.com/14973179752164.jpg">
+<meta name="twitter:image" content="http://image.yangjiannr.cn/14973179752164.jpg">
 
 
 
@@ -169,7 +169,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/10/01/大数据处理-Bloom Filter/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/10/01/大数据处理-Bloom_Filter/"/>
 
 
 
@@ -302,12 +302,12 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/01/大数据处理-Bloom Filter/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/01/大数据处理-Bloom_Filter/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Frank yang">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://oc3uwt4a5.bkt.clouddn.com/20180912avator.jpg">
+      <meta itemprop="image" content="http://image.yangjiannr.cn/20180912avator.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -403,10 +403,10 @@
 <p>如果这些点有任何一个 0，则被检索元素一定不在；<br>如果都是 1，则被检索元素很可能在。</p>
 </blockquote>
 <a id="more"></a>
-<p>　　当一个元素被加入集合中时,通过k各散列函数将这个元素映射成一个位数组中的k个点,并将这k个点全部置为1.<br><img src="http://oc3uwt4a5.bkt.clouddn.com/14973179752164.jpg" alt=""><br>　　Bloom Filter使用k个相互独立的哈希函数（Hash Function），它们分别将集合中的每个元素映射到{1,…,m}的范围中。对任意一个元素x，第i个哈希函数映射的位置hi(x)就会被置为1（1≤i≤k）。注：如果一个位置多次被置为1，那么只有第一次会起作用，后面几次将没有任何效果。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/Bloom Filter.jpeg" alt="Bloom Filte"><br>在判断y是否属于这个集合时，对y应用k次哈希函数，若所有hi(y)的位置都是1（1≤i≤k），就认为y是集合中的元素，否则就认为y不是集合中的元素。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/14973179645247.jpg" alt=""></p>
+<p>　　当一个元素被加入集合中时,通过k各散列函数将这个元素映射成一个位数组中的k个点,并将这k个点全部置为1.<br><img src="http://image.yangjiannr.cn/14973179752164.jpg" alt=""><br>　　Bloom Filter使用k个相互独立的哈希函数（Hash Function），它们分别将集合中的每个元素映射到{1,…,m}的范围中。对任意一个元素x，第i个哈希函数映射的位置hi(x)就会被置为1（1≤i≤k）。注：如果一个位置多次被置为1，那么只有第一次会起作用，后面几次将没有任何效果。<br><img src="http://image.yangjiannr.cn/Bloom Filter.jpeg" alt="Bloom Filte"><br>在判断y是否属于这个集合时，对y应用k次哈希函数，若所有hi(y)的位置都是1（1≤i≤k），就认为y是集合中的元素，否则就认为y不是集合中的元素。<br><img src="http://image.yangjiannr.cn/14973179645247.jpg" alt=""></p>
 <h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><p>　　它的优点是<strong>空间效率</strong>和<strong>查询时间</strong>都远远超过一般的算法，布隆过滤器存储空间和插入 / 查询时间都是常数O(k)。另外, 散列函数相互之间没有关系，方便由硬件并行实现。布隆过滤器不需要存储元素本身，在某些对保密要求非常严格的场合有优势。</p>
 <h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><p>　　有一定的误判率–在判断一个元素是否属于某个集合时,有可能会把不属于这个集合的元素误判为属于这个集合.因此,它不适合那些”零误判”的应用场合.在能容忍低误判的应用场景下,布隆过滤器通过极少的误判换区了存储空间的极大节省.<br>　　但是布隆过滤器的缺点和优点一样明显。<strong>误算率</strong>是其中之一。随着存入的元素数量增加，误算率随之增加。但是如果元素数量太少，则使用散列表足矣。</p>
-<p>　　另外，一般情况下<strong>不能从布隆过滤器中删除元素</strong>。我们很容易想到把位数组变成整数数组，每插入一个元素相应的计数器加1, 这样删除元素时将计数器减掉就可以了。然而要保证安全地删除元素并非如此简单。首先我们必须保证删除的元素的确在布隆过滤器里面。这一点单凭这个过滤器是无法保证的。另外计数器回绕也会造成问题。<br>　　<br><img src="http://oc3uwt4a5.bkt.clouddn.com/Snip20170628_2.png" alt="Snip20170628_2"></p>
+<p>　　另外，一般情况下<strong>不能从布隆过滤器中删除元素</strong>。我们很容易想到把位数组变成整数数组，每插入一个元素相应的计数器加1, 这样删除元素时将计数器减掉就可以了。然而要保证安全地删除元素并非如此简单。首先我们必须保证删除的元素的确在布隆过滤器里面。这一点单凭这个过滤器是无法保证的。另外计数器回绕也会造成问题。<br>　　<br><img src="http://image.yangjiannr.cn/Snip20170628_2.png" alt="Snip20170628_2"></p>
 <h4 id="一个Bloom-Filter有以下参数："><a href="#一个Bloom-Filter有以下参数：" class="headerlink" title="一个Bloom Filter有以下参数："></a>一个Bloom Filter有以下参数：</h4><table>
 <thead>
 <tr>
@@ -457,9 +457,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/BigData/" rel="tag"># BigData</a>
-          
             <a href="/tags/Bloom/" rel="tag"># Bloom</a>
+          
+            <a href="/tags/BigData/" rel="tag"># BigData</a>
           
         </div>
       
@@ -577,7 +577,7 @@ var jiathis_config={
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="http://oc3uwt4a5.bkt.clouddn.com/20180912avator.jpg"
+                src="http://image.yangjiannr.cn/20180912avator.jpg"
                 alt="Frank yang" />
             
               <p class="site-author-name" itemprop="name">Frank yang</p>

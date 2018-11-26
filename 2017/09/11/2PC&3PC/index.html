@@ -131,13 +131,13 @@
 <meta property="og:site_name" content="紫魔戒的博客">
 <meta property="og:description" content="2PC用于保证跨多个节点操作的原子性，也就是说，跨多个节点的操作要么在所有节点上全部执行成功，要么全部失败。Paxos协议用于确保多个节点对某个投票（例如哪个节点为主节点）达成一致。　　在分布式系统中，每一个机器节点虽然都能够明确地知道自己在进行实物操作过程中的结果是成功或失败，但却无法直接获取到其他分布式节点的操作结果。为了保持实物处理的ACID特性，就需要引入一个称为“协调者（Coordi">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/2pc.jpg">
-<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/3PC1.jpeg">
+<meta property="og:image" content="http://image.yangjiannr.cn/2pc.jpg">
+<meta property="og:image" content="http://image.yangjiannr.cn/3PC1.jpeg">
 <meta property="og:updated_time" content="2017-09-11T06:28:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2PC&amp;3PC">
 <meta name="twitter:description" content="2PC用于保证跨多个节点操作的原子性，也就是说，跨多个节点的操作要么在所有节点上全部执行成功，要么全部失败。Paxos协议用于确保多个节点对某个投票（例如哪个节点为主节点）达成一致。　　在分布式系统中，每一个机器节点虽然都能够明确地知道自己在进行实物操作过程中的结果是成功或失败，但却无法直接获取到其他分布式节点的操作结果。为了保持实物处理的ACID特性，就需要引入一个称为“协调者（Coordi">
-<meta name="twitter:image" content="http://oc3uwt4a5.bkt.clouddn.com/2pc.jpg">
+<meta name="twitter:image" content="http://image.yangjiannr.cn/2pc.jpg">
 
 
 
@@ -305,7 +305,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Frank yang">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://oc3uwt4a5.bkt.clouddn.com/20180912avator.jpg">
+      <meta itemprop="image" content="http://image.yangjiannr.cn/20180912avator.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -437,12 +437,12 @@
 <blockquote>
 <p>　　协调者向所有参与者节点发出Rollback请求<br>　　<br>　　2. 事务回滚<br>　　参与者接收到Rollback请求后，会利用其再阶段一中记录的Undo信息执行事务回滚操作，并在完成回滚之后释放在整个事务执行期间占用的资源。<br>　　<br>　　3. 反馈事务回滚结果<br>　　参与者在完成事务回滚之后，向协调者发送Ack消息<br>　　<br>　　4. 中断事务<br>　　协调者接收到所有参与者反馈的Ack消息后，完成事务中断</p>
 </blockquote>
-<p>简单地讲，二阶段提交讲一个事务的处理过程分成了投票和执行两个阶段，其核心是对每个事务都采用先尝试后提交的处理方式。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/2pc.jpg" alt="2pc"></p>
+<p>简单地讲，二阶段提交讲一个事务的处理过程分成了投票和执行两个阶段，其核心是对每个事务都采用先尝试后提交的处理方式。<br><img src="http://image.yangjiannr.cn/2pc.jpg" alt="2pc"></p>
 <h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><p>二阶段提交协议的优点：原理简单、实现方便<br>二阶段提交协议的缺点：同步阻塞、单点问题、脑裂、太过保守<br><strong>同步阻塞</strong><br>　　执行过程中，所有参与该事务操作的逻辑都处于阻塞状态，也就是说，各个参与者在等待其他参与者响应的过程中，将无法进行其他任何操作。</p>
 <p><strong>单点问题</strong><br>　　协调者的角色在整个二阶段提交协议中起到了非常重要的作用。一旦协调者出现问题，那么整个二阶段提交流程无法运转，更为严重的是，如果协调者是在阶段二中出现问题的话，那么其他参与者将会一直处于锁定事务资源的状态中，而无法继续完成事务操作。</p>
 <p><strong>数据不一致</strong><br>　　在二阶段提交协议的阶段二，即执行事务提交的时候，当协调者向所有的参与者发送Commit请求之后，发生了局部网络异常或者是协调者在尚未发送完Commit请求之前自身发生了崩溃，导师最终只有部分参与者收到了Commit请求，于是，这部分收到了Commit请求的参与者就会进行事务的提交，而其他没有收到Commit请求的参与者则无法进行事务提交，于是整个分布式系统便出现了数据不一致性现象。</p>
 <p><strong>太过保守</strong><br>　　二阶段提交协议没有涉及较为完善的容错机制，任意一个节点的失败都会导致整个事务的失败。<br>　　<br>　　二阶段无法解决的问题：协调者再发出commit消息之后宕机，而唯一接收到这条消息的参与者同时也宕机了。那么即使协调者通过选举协议产生了新的协调者，这条事务的状态也是不确定的，没人知道事务是否被已经提交。</p>
-<h2 id="3PC（Three-Phase-Commit）"><a href="#3PC（Three-Phase-Commit）" class="headerlink" title="3PC（Three-Phase Commit）"></a>3PC（Three-Phase Commit）</h2><p>　　三阶段提交，是2PC的改进版，其将二阶段提交协议的“提交事务请求”过程一分为二，形成了由<strong>CanCommit、PreCommit和DoCommit</strong>三个阶段组成的视乎处理协议。<br>　　<img src="http://oc3uwt4a5.bkt.clouddn.com/3PC1.jpeg" alt="3PC1"></p>
+<h2 id="3PC（Three-Phase-Commit）"><a href="#3PC（Three-Phase-Commit）" class="headerlink" title="3PC（Three-Phase Commit）"></a>3PC（Three-Phase Commit）</h2><p>　　三阶段提交，是2PC的改进版，其将二阶段提交协议的“提交事务请求”过程一分为二，形成了由<strong>CanCommit、PreCommit和DoCommit</strong>三个阶段组成的视乎处理协议。<br>　　<img src="http://image.yangjiannr.cn/3PC1.jpeg" alt="3PC1"></p>
 <h3 id="三个阶段"><a href="#三个阶段" class="headerlink" title="三个阶段"></a>三个阶段</h3><h4 id="阶段一：CanCommit"><a href="#阶段一：CanCommit" class="headerlink" title="阶段一：CanCommit"></a>阶段一：CanCommit</h4><ol>
 <li><p>事务询问</p>
 <blockquote>
@@ -653,7 +653,7 @@ var jiathis_config={
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="http://oc3uwt4a5.bkt.clouddn.com/20180912avator.jpg"
+                src="http://image.yangjiannr.cn/20180912avator.jpg"
                 alt="Frank yang" />
             
               <p class="site-author-name" itemprop="name">Frank yang</p>

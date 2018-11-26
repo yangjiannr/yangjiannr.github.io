@@ -131,17 +131,17 @@
 <meta property="og:site_name" content="紫魔戒的博客">
 <meta property="og:description" content="Hash函数又称哈希函数、散列函数、杂凑函数。它是一种单向密码体制，即从一个从明文到密文的不可逆映射，只有加密过程，没有解密过程。Hash函数H将可变长度的数据块M作为输入，产生固定长度的Hash值h=H(M)。在安全应用中使用的Hash函数称为密码学Hash函数。（单向性）、（抗碰撞性）  弱抗碰撞性：给定一个消息M，要找到另一个消息M’，使得H(M)=H(M’)很难。强抗碰撞性：要找到两个随机">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/SHA256.jpg">
-<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/SHA256a.jpg">
-<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/SHA256b.jpg">
-<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/SHA256a.jpg">
-<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/SHA512.jpg">
-<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/W.jpg">
+<meta property="og:image" content="http://image.yangjiannr.cn/SHA256.jpg">
+<meta property="og:image" content="http://image.yangjiannr.cn/SHA256a.jpg">
+<meta property="og:image" content="http://image.yangjiannr.cn/SHA256b.jpg">
+<meta property="og:image" content="http://image.yangjiannr.cn/SHA256a.jpg">
+<meta property="og:image" content="http://image.yangjiannr.cn/SHA512.jpg">
+<meta property="og:image" content="http://image.yangjiannr.cn/W.jpg">
 <meta property="og:updated_time" content="2017-09-04T03:19:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="密码学hash函数-SHA256-512">
 <meta name="twitter:description" content="Hash函数又称哈希函数、散列函数、杂凑函数。它是一种单向密码体制，即从一个从明文到密文的不可逆映射，只有加密过程，没有解密过程。Hash函数H将可变长度的数据块M作为输入，产生固定长度的Hash值h=H(M)。在安全应用中使用的Hash函数称为密码学Hash函数。（单向性）、（抗碰撞性）  弱抗碰撞性：给定一个消息M，要找到另一个消息M’，使得H(M)=H(M’)很难。强抗碰撞性：要找到两个随机">
-<meta name="twitter:image" content="http://oc3uwt4a5.bkt.clouddn.com/SHA256.jpg">
+<meta name="twitter:image" content="http://image.yangjiannr.cn/SHA256.jpg">
 
 
 
@@ -309,7 +309,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Frank yang">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://oc3uwt4a5.bkt.clouddn.com/20180912avator.jpg">
+      <meta itemprop="image" content="http://image.yangjiannr.cn/20180912avator.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -483,13 +483,13 @@
 </blockquote>
 <p><strong>（3）处理主循环模块</strong></p>
 <blockquote>
-<p><img src="http://oc3uwt4a5.bkt.clouddn.com/SHA256.jpg" alt="SHA256"><br>消息块是以512位分组为单位进行处理的，要进行64步循环操作（如图）。每一轮的输入均为当前处理的消息分组和得到的上一轮输出的256位缓冲区A、B、C、D、E、F、G、H的值。每一步中均采用了不同的消息字和常数。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/SHA256a.jpg" alt="SHA256a"></p>
+<p><img src="http://image.yangjiannr.cn/SHA256.jpg" alt="SHA256"><br>消息块是以512位分组为单位进行处理的，要进行64步循环操作（如图）。每一轮的输入均为当前处理的消息分组和得到的上一轮输出的256位缓冲区A、B、C、D、E、F、G、H的值。每一步中均采用了不同的消息字和常数。<br><img src="http://image.yangjiannr.cn/SHA256a.jpg" alt="SHA256a"></p>
 </blockquote>
 <p><strong>（4）得出最终的Hash值</strong></p>
 <blockquote>
 <p>所有512位的消息块分组都处理完以后，最后一个分组处理后得到的结果即为最终输出的256位的消息摘要。</p>
 </blockquote>
-<p>步函数是SHA-256中最为重要的函数，也是SHA-256中最关键的部件。其运算过程如下图：<br><img src="http://oc3uwt4a5.bkt.clouddn.com/SHA256b.jpg" alt="SHA256b"><br>每一步都会生成两个临时变量，即T1、T2：<br>$$T_1=\Sigma_1(E)+Ch(E,F,G)+H+W_t+K_t$$<br>$$T_2=\Sigma_0(A)+Maj(A,B,C) mod 2^{32}$$<br>根据T1、T2的值，对寄存器A、E进行更新。A、B、C、D、E、F、G的输入值则一次赋值给B、C、D、F、G、H。<br>$A=(T_1+T_2) mod 2^{32}$  $E=(D+T_2) mod 2^{32}$<br>其中$Ch(E,F,G) = (E\wedge F)⊕(\overline{E}\wedge G)$<br>$Maj(A,B,C) = (A\wedge B)\bigoplus (A\wedge C)\bigoplus (B\wedge C)$<br>$\Sigma_0(A) = ROTR^{2}(A)\bigoplus ROTR^{13}(A)\bigoplus ROTR^{22}(A)$<br>$\Sigma_1(E) = ROTR^{6}(E)\bigoplus ROTR^{11}(E)\bigoplus ROTR^{25}(E)$<br>且ROTR^n (E)表示对32位的变量x循环右移n位。<br>K<sub>t</sub>的获取方法是取前64个素数（2，3，5，7……）立方根的小数部分，将其转换为二进制，然后取这64个数的前64位作为K<sub>t</sub>。其作用是提供了64位随机串集合以消除输入数据里的任何规则性。<br>对于每个输入分组导出的消息分组W<sub>t</sub>，前16个消息字W<sub>t</sub>（0&lt;=t&lt;=15）直接按照消息输入分组对应的16个32位字，其他的则按照如下公式来计算得出：<br>$$W_{t} = W_{t-16} + \sigma <em>0(W</em>{t-15}) + W_{t-7} + \sigma <em>1(W</em>{t-2}) , 16\leqslant t\leqslant 63$$<br>其中：$\sigma _0(x) = ROTR^{7}(x) \bigoplus ROTR^{18}(x) \bigoplus SHR^3(x)$<br>$\sigma _1(x) = ROTR^{17}(x) \bigoplus ROTR^{19}(x) \bigoplus SHR^{10}(x)$<br>式中，$SHR^{10}(x)$表示32位的变量x右移n位，其导出方法如图：<br><img src="http://oc3uwt4a5.bkt.clouddn.com/SHA256a.jpg" alt="SHA256a"></p>
+<p>步函数是SHA-256中最为重要的函数，也是SHA-256中最关键的部件。其运算过程如下图：<br><img src="http://image.yangjiannr.cn/SHA256b.jpg" alt="SHA256b"><br>每一步都会生成两个临时变量，即T1、T2：<br>$$T_1=\Sigma_1(E)+Ch(E,F,G)+H+W_t+K_t$$<br>$$T_2=\Sigma_0(A)+Maj(A,B,C) mod 2^{32}$$<br>根据T1、T2的值，对寄存器A、E进行更新。A、B、C、D、E、F、G的输入值则一次赋值给B、C、D、F、G、H。<br>$A=(T_1+T_2) mod 2^{32}$  $E=(D+T_2) mod 2^{32}$<br>其中$Ch(E,F,G) = (E\wedge F)⊕(\overline{E}\wedge G)$<br>$Maj(A,B,C) = (A\wedge B)\bigoplus (A\wedge C)\bigoplus (B\wedge C)$<br>$\Sigma_0(A) = ROTR^{2}(A)\bigoplus ROTR^{13}(A)\bigoplus ROTR^{22}(A)$<br>$\Sigma_1(E) = ROTR^{6}(E)\bigoplus ROTR^{11}(E)\bigoplus ROTR^{25}(E)$<br>且ROTR^n (E)表示对32位的变量x循环右移n位。<br>K<sub>t</sub>的获取方法是取前64个素数（2，3，5，7……）立方根的小数部分，将其转换为二进制，然后取这64个数的前64位作为K<sub>t</sub>。其作用是提供了64位随机串集合以消除输入数据里的任何规则性。<br>对于每个输入分组导出的消息分组W<sub>t</sub>，前16个消息字W<sub>t</sub>（0&lt;=t&lt;=15）直接按照消息输入分组对应的16个32位字，其他的则按照如下公式来计算得出：<br>$$W_{t} = W_{t-16} + \sigma <em>0(W</em>{t-15}) + W_{t-7} + \sigma <em>1(W</em>{t-2}) , 16\leqslant t\leqslant 63$$<br>其中：$\sigma _0(x) = ROTR^{7}(x) \bigoplus ROTR^{18}(x) \bigoplus SHR^3(x)$<br>$\sigma _1(x) = ROTR^{17}(x) \bigoplus ROTR^{19}(x) \bigoplus SHR^{10}(x)$<br>式中，$SHR^{10}(x)$表示32位的变量x右移n位，其导出方法如图：<br><img src="http://image.yangjiannr.cn/SHA256a.jpg" alt="SHA256a"></p>
 <h4 id="SHA-512逻辑"><a href="#SHA-512逻辑" class="headerlink" title="SHA-512逻辑"></a>SHA-512逻辑</h4><p>算法的输入时最大长度小于2^128 位的消息，输出是512位的消息摘要，输入消息1024位的分组为单位进行处理。<strong>步骤1：附加填充位</strong></p>
 <blockquote>
 <p>填充消息使其长度模1024与896同余（即长度≡896(mod 1024)），即使消息已经满足上述长度要求，仍然需要进行填充，因此填充位数在1~1024之间，填充由一个1和后续的0组成。</p>
@@ -498,14 +498,14 @@
 <blockquote>
 <p>在消息后附加一个128位的块，将其视为128位的无符号整数（最高有效字节在前），它包含填充前消息的长度。</p>
 </blockquote>
-<p><img src="http://oc3uwt4a5.bkt.clouddn.com/SHA512.jpg" alt="SHA512 -w500"><br>前两步的结果产生了一个长度为1024整数倍的消息。</p>
+<p><img src="http://image.yangjiannr.cn/SHA512.jpg" alt="SHA512 -w500"><br>前两步的结果产生了一个长度为1024整数倍的消息。</p>
 <p><strong>步骤3：初始化Hash缓冲区</strong></p>
 <blockquote>
 <p>Hash函数的中间结果和最终结果保存于512位的缓冲区中，缓冲区用8个64位的寄存器（a,b,c,d,e,f,g,h）表示，并将这些寄存器初始化为下列64位的整数（十六进制值）：<br>a = 6A09E667F3BCC908    e = 510E527FADE682D1<br>b = BB67AE8584CAA73B    f = 9B05688C2B3E6C1F<br>c = 3C6EF372FE94F82B    g = 1F83D9ABFB41Bd6B<br>d = A54FF53A5F1D36F1    h = 5BE0CD19137E2179<br>这些值以高位在前格式存储，也就是说，字的最高有效字节存于低地址字节位置（最左面）。这些字的获取方式如下：前8个素数取平方根，取小数部分的前64位。</p>
 </blockquote>
 <p><strong>步骤4：以1024位的分组（128个字节）为单位处理消息</strong></p>
 <blockquote>
-<p>算法的核心是具有80轮运算的模块。每一轮都把512位缓存区的值abcdefgh作为输入，并更新缓冲区的值。第一轮时，缓冲区里的值是中间值H<sub>i-1</sub>。每一轮，如第t轮，使用一个64位的值W<sub>t</sub>，该值由当前被处理的1024位消息分组M<sub>i</sub>导出，导出算法是下面将要讨论的消息扩展算法（如下图）。每一轮还将使用附加的常数K<sub>t</sub>，其中0&lt;=t&lt;=79，用来使每轮的运算不同。这些常数提供了64位随机串集合，可以初步消除输入数据里的统计规律。<br>第80轮的输出和第一轮的输入H<sub>i-1</sub>相加产生H<sub>i</sub>。缓冲区的8个字和H<sub>i-1</sub>中对应的字分别进行模2^64的加法运算。<br><img src="http://oc3uwt4a5.bkt.clouddn.com/W.jpg" alt="W"></p>
+<p>算法的核心是具有80轮运算的模块。每一轮都把512位缓存区的值abcdefgh作为输入，并更新缓冲区的值。第一轮时，缓冲区里的值是中间值H<sub>i-1</sub>。每一轮，如第t轮，使用一个64位的值W<sub>t</sub>，该值由当前被处理的1024位消息分组M<sub>i</sub>导出，导出算法是下面将要讨论的消息扩展算法（如下图）。每一轮还将使用附加的常数K<sub>t</sub>，其中0&lt;=t&lt;=79，用来使每轮的运算不同。这些常数提供了64位随机串集合，可以初步消除输入数据里的统计规律。<br>第80轮的输出和第一轮的输入H<sub>i-1</sub>相加产生H<sub>i</sub>。缓冲区的8个字和H<sub>i-1</sub>中对应的字分别进行模2^64的加法运算。<br><img src="http://image.yangjiannr.cn/W.jpg" alt="W"></p>
 </blockquote>
 <p><strong>步骤5：输出</strong></p>
 <blockquote>
@@ -652,7 +652,7 @@ var jiathis_config={
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="http://oc3uwt4a5.bkt.clouddn.com/20180912avator.jpg"
+                src="http://image.yangjiannr.cn/20180912avator.jpg"
                 alt="Frank yang" />
             
               <p class="site-author-name" itemprop="name">Frank yang</p>

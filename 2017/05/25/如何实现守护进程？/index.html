@@ -131,13 +131,13 @@
 <meta property="og:site_name" content="紫魔戒的博客">
 <meta property="og:description" content="守护进程（Daemon）是运行在后台的一种特殊进程。它独立于控制终端并且周期性地执行某种任务或等待处理某些发生的事件。守护进程是一种很有用的进程。  1、守护进程最重要的特性是后台运行。2、守护进程必须与其运行前的环境隔离开来。这些环境包括未关闭的文件描述符，控制终端，会话和进程组，工作目录以及文件创建掩模等。这些环境通常是守护进程从执行它的父进程（特别是shell）中继承下来的。3、守护进程的启">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/会话期、进程组.jpeg">
-<meta property="og:image" content="http://oc3uwt4a5.bkt.clouddn.com/守护进程编写流程.jpeg">
+<meta property="og:image" content="http://image.yangjiannr.cn/会话期、进程组.jpeg">
+<meta property="og:image" content="http://image.yangjiannr.cn/守护进程编写流程.jpeg">
 <meta property="og:updated_time" content="2017-05-25T04:01:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何实现守护进程？">
 <meta name="twitter:description" content="守护进程（Daemon）是运行在后台的一种特殊进程。它独立于控制终端并且周期性地执行某种任务或等待处理某些发生的事件。守护进程是一种很有用的进程。  1、守护进程最重要的特性是后台运行。2、守护进程必须与其运行前的环境隔离开来。这些环境包括未关闭的文件描述符，控制终端，会话和进程组，工作目录以及文件创建掩模等。这些环境通常是守护进程从执行它的父进程（特别是shell）中继承下来的。3、守护进程的启">
-<meta name="twitter:image" content="http://oc3uwt4a5.bkt.clouddn.com/会话期、进程组.jpeg">
+<meta name="twitter:image" content="http://image.yangjiannr.cn/会话期、进程组.jpeg">
 
 
 
@@ -305,7 +305,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Frank yang">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://oc3uwt4a5.bkt.clouddn.com/20180912avator.jpg">
+      <meta itemprop="image" content="http://image.yangjiannr.cn/20180912avator.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -403,14 +403,14 @@
 <p>守护进程之编程规则<br><strong>（1）首先要做的是调用umask将文件模式创建屏蔽字设置为0。</strong><br>　　文件权限掩码：是指屏蔽掉文件权限中的对应位。例如，有个文件权限掩码是050，它就屏蔽了文件组拥有者的可读与可执行权限（对应二进制为，rwx, 101）。由于fork函数创建的子进程继承了父进程的文件权限掩码，这就给子进程使用文件带来了诸多的麻烦。因此，把文件权限掩码设置为0（即，不屏蔽任何权限），可以增强该守护进程的灵活性。设置文件权限掩码的函数是umask。通常的使用方法为umask(0)。</p>
 <p><strong>（2）调用fork，然后使父进程退出（exit）</strong>。<code>if(pid=fork()) exit(0);</code></p>
 <p><strong>（3）调用setsid以创建一个新会话，脱离控制终端和进程组</strong>。setsid函数作用：用于创建一个新的会话，并担任该会话组的组长。</p>
-<center><img src="http://oc3uwt4a5.bkt.clouddn.com/会话期、进程组.jpeg" alt="会话期、进程组"></center>
+<center><img src="http://image.yangjiannr.cn/会话期、进程组.jpeg" alt="会话期、进程组"></center>
 
 <p>　　调用setsid有3个作用：(a) 让进程摆脱原会话的控制；(b) 让进程摆脱原进程组的控制；(c) 让进程摆脱原控制终端的控制；  <code>setsid()</code><br>　　使用setsid函数的目的：由于创建守护进程的第一步调用了fork函数来创建子进程再将父进程退出。由于在调用fork函数时，子进程拷贝了父进程的会话期、进程组、控制终端等，虽然父进程退出了，但会话期、进程组、控制终端等并没有改变，因此，这还不是真正意义上的独立开了。使用setsid函数后，能够使进程完全独立出来，从而摆脱其他进程的控制。</p>
 <p><strong>（4）将当前工作目录更改为根目录。</strong><code>#define NOFILE 256     for(i=0;i&lt;NOFILE;i++) close(i);</code></p>
 <p><strong>（5）关闭不再需要的文件描述符。</strong>这使守护进程不再持有从其父进程继承来的某些文件描述符（父进程可能是shell进程，或某个其他进程）。</p>
 <p><strong>（6）某些守护进程打开/dev/null使其具有文件描述符0、1和2</strong>，这样，任何一个试图读标准输入、写标准输出和标准出错的库例程都不会产生任何效果。因为守护进程并不与终端设备相关联，所以不能在终端设备上显示其输出，也无处从交互式用户那里接受输入。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;sys/types.h&gt;</span><br><span class="line">#include&lt;sys/stat.h&gt;</span><br><span class="line">#include&lt;sys/time.h&gt;</span><br><span class="line">#include&lt;sys/resource.h&gt;</span><br><span class="line">#include&lt;unistd.h&gt;</span><br><span class="line">#include&lt;fcntl.h&gt;</span><br><span class="line">#include&lt;stdlib.h&gt;</span><br><span class="line">#include&lt;syslog.h&gt;</span><br><span class="line">  </span><br><span class="line">void daemonize(const char *cmd)  </span><br><span class="line">&#123;  </span><br><span class="line">    int         i, fd0, fd1, fd2;  </span><br><span class="line">    pid_t           pid;  </span><br><span class="line">    struct rlimit       rl;  </span><br><span class="line">    struct sigaction    sa;  </span><br><span class="line">    </span><br><span class="line">    umask(0);   // Clear file creation mask. </span><br><span class="line"></span><br><span class="line">    if (getrlimit(RLIMIT_NOFILE, &amp;rl) &lt; 0)  &#123;   // Get maximum number of file descriptors. </span><br><span class="line">        err_quit(&quot;%s: can&apos;t get file limit&quot;, cmd);  </span><br><span class="line">    &#125;  </span><br><span class="line">    if ((pid = fork()) &lt; 0)  &#123;  //这一步fork保证进程不是进程组组长进程 </span><br><span class="line">        err_quit(&quot;%s: can&apos;t fork&quot;, cmd);  </span><br><span class="line">    &#125;  </span><br><span class="line">    else if (pid != 0) &#123;    /* parent */  </span><br><span class="line">        exit(0);  </span><br><span class="line">    &#125;  </span><br><span class="line">    setsid();  // 创建一个回话，会话只包含子进程，且子进程是会话首进程 </span><br><span class="line">    /* </span><br><span class="line">    会话首进程的退出会出发SIGHUP信号 </span><br><span class="line">    默认此信号的操作会终止进程 </span><br><span class="line">     */  </span><br><span class="line">    sa.sa_handler = SIG_IGN;  </span><br><span class="line">    sigemptyset(&amp;sa.sa_mask);  </span><br><span class="line">    sa.sa_flags = 0;  </span><br><span class="line">    if (sigaction(SIGHUP, &amp;sa, NULL) &lt; 0)  &#123;  </span><br><span class="line">        err_quit(&quot;%s: can&apos;t ignore SIGHUP&quot;, cmd);  </span><br><span class="line">    &#125;  </span><br><span class="line">    /* </span><br><span class="line">    再次创建子进程，退出父进程，保证守护进程不是会话首进程，这样open的时候就不会被分配终端 </span><br><span class="line">    */  </span><br><span class="line">    if ((pid = fork()) &lt; 0)  &#123;  </span><br><span class="line">        err_quit(&quot;%s: can&apos;t fork&quot;, cmd);  </span><br><span class="line">    &#125;  </span><br><span class="line">    else if (pid != 0) &#123;  /* parent */  </span><br><span class="line">        exit(0);  </span><br><span class="line">    &#125;  </span><br><span class="line">    </span><br><span class="line">    if (chdir(&quot;/&quot;) &lt; 0)   &#123;  // 改变当前工作路径为根目录</span><br><span class="line">        err_quit(&quot;%s: can&apos;t change directory to /&quot;, cmd);  </span><br><span class="line">    &#125;  </span><br><span class="line">    if (rl.rlim_max == RLIM_INFINITY)   &#123;  //关闭所有打开的文件描述符</span><br><span class="line">        rl.rlim_max = 1024;  </span><br><span class="line">    &#125;  </span><br><span class="line">    for (i = 0; i &lt; rl.rlim_max; i++)    &#123;  </span><br><span class="line">        close(i);  </span><br><span class="line">    &#125;  </span><br><span class="line">    /* </span><br><span class="line">     因为前面关闭了所有的文件描述符，此时open返回的必定是最小的0，后面两次dup返回的依次是1、2，</span><br><span class="line">     也就完成了对标准输入、标准输出、标准错误重定向至/dev/null的操作 </span><br><span class="line">     */  </span><br><span class="line">    fd0 = open(&quot;/dev/null&quot;, O_RDWR);  </span><br><span class="line">    fd1 = dup(0);  </span><br><span class="line">    fd2 = dup(0);  </span><br><span class="line"></span><br><span class="line">    /* </span><br><span class="line">     * Initialize the log file. </span><br><span class="line">     */  </span><br><span class="line">    openlog(cmd, LOG_CONS, LOG_DAEMON);  </span><br><span class="line">    if (fd0 != 0 || fd1 != 1 || fd2 != 2)   </span><br><span class="line">    &#123;  </span><br><span class="line">        syslog(LOG_ERR, &quot;unexpected file descriptors %d %d %d&quot;,fd0, fd1, fd2);  </span><br><span class="line">        exit(1);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<center><img src="http://oc3uwt4a5.bkt.clouddn.com/守护进程编写流程.jpeg" alt="守护进程编写流程"></center>
+<center><img src="http://image.yangjiannr.cn/守护进程编写流程.jpeg" alt="守护进程编写流程"></center>
 
 
 <p><a href="http://www.frankyang.cn/2017/05/25/daemon/" target="_blank" rel="noopener">http://www.frankyang.cn/2017/05/25/daemon/</a></p>
@@ -446,7 +446,7 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/10/C++ 4种强制类型转换/" rel="next" title="C++ 4种强制类型转换">
+              <a href="/2017/05/10/C++4种强制类型转换/" rel="next" title="C++ 4种强制类型转换">
                 <i class="fa fa-chevron-left"></i> C++ 4种强制类型转换
               </a>
             
@@ -542,7 +542,7 @@ var jiathis_config={
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image"
-                src="http://oc3uwt4a5.bkt.clouddn.com/20180912avator.jpg"
+                src="http://image.yangjiannr.cn/20180912avator.jpg"
                 alt="Frank yang" />
             
               <p class="site-author-name" itemprop="name">Frank yang</p>
