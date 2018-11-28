@@ -512,7 +512,7 @@
 <p>　　HTTP1.1的请求消息和响应消息都应支持<strong>Host头域</strong>，且请求消息中如果没有Host头域会报告一个错误（400 Bad Request）。此外，服务器应该接受以绝对路径标记的资源请求。<br>　　<br> 　　HTTP 1.1还提供了与<strong>身份认证</strong>、<strong>状态管理</strong>和<strong>Cache缓存</strong>等机制相关的请求头和响应头。
  　　</p>
 <h3 id="3、100-Continue-Status-节约带宽"><a href="#3、100-Continue-Status-节约带宽" class="headerlink" title="3、100(Continue) Status(节约带宽)"></a>3、100(Continue) Status(节约带宽)</h3><p> 　　HTTP/1.1加入了一个新的状态码100（Continue）。客户端事先发送一个只带头域的请求，如果服务器因为权限拒绝了请求，就回送响应码401（Unauthorized）；如果服务器接收此请求就回送响应码100，客户端就可以继续发送带实体的完整请求了。100 (Continue) 状态代码的使用，允许客户端在发request消息body之前先用request header试探一下server，看server要不要接收request body，再决定要不要发request body。</p>
-<p><a href="http://www.frankyang.cn/2017/04/19/http-https/" target="_blank" rel="noopener">http://www.frankyang.cn/2017/04/19/http-https/</a></p>
+<p><a href="http://www.yangjiannr.cn/2017/04/19/http-https/" target="_blank" rel="noopener">http://www.yangjiannr.cn/2017/04/19/http-https/</a></p>
 
       
     </div>

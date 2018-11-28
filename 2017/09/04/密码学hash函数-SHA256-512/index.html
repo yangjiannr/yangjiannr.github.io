@@ -512,7 +512,7 @@
 <p>所有的N个1024位分组都处理完以后，从第N阶段输出的是512位的消息摘要。</p>
 </blockquote>
 <p>总结SHA-512的运算如下：<br>H<sub>0</sub> = IV<br>H<sub>i</sub> = SUM<sub>64</sub>(H<sub>i-1</sub>, abcdefgh<sub>i</sub>)<br>MD = H<sub>N</sub><br>其中，IV为第三步里中定义的abcdefgh缓冲区的初始值；abcdefgh<sub>i</sub>为第i个消息分组处理的最后一轮的输出；N为消息（包括填充和长度域）中的分组数；SUM<sub>64</sub>为对输入对中的每个字进行独立的模2^64加；MD为最后的消息摘要值。</p>
-<p><a href="http://www.frankyang.cn/2017/09/02/mi-ma-xuehash-han-shusha256512/" target="_blank" rel="noopener">http://www.frankyang.cn/2017/09/02/mi-ma-xuehash-han-shusha256512/</a></p>
+<p><a href="http://www.yangjiannr.cn/2017/09/02/mi-ma-xuehash-han-shusha256512/" target="_blank" rel="noopener">http://www.yangjiannr.cn/2017/09/02/mi-ma-xuehash-han-shusha256512/</a></p>
 
       
     </div>

@@ -436,7 +436,7 @@
 <p>　　基于追踪的垃圾回收算法（标记-清扫、节点复制）一个主要问题是在生命周期较长的对象上浪费时间（长生命周期的对象是不需要频繁扫描的）。同时，内存分配存在这么一个事实 “most object die young”。基于这两点，分代垃圾回收算法将对象按生命周期长短存放到堆上的两个（或者更多）区域，这些区域就是分代（generation）。对于<strong>新生代的区域的垃圾回收频率要明显高于老年代区域</strong>。<br>　　分配对象的时候从新生代里面分配，如果后面发现对象的生命周期较长，则将其移到老年代，这个过程叫做 promote。随着不断 promote，最后新生代的大小在整个堆的占用比例不会特别大。收集的时候集中主要精力在新生代就会相对来说效率更高，STW 时间也会更短。<br>　　目前大部分垃圾收集器对于新生代都采取Copying算法，因为新生代中每次垃圾回收都要回收大部分对象，也就是说需要复制的操作次数较少，但是实际中并不是按照1：1的比例来划分新生代的空间的，一般来说是将新生代划分为一块较大的Eden空间和两块较小的Survivor空间，每次使用Eden空间和其中的一块Survivor空间，当进行回收时，将Eden和Survivor中还存活的对象复制到另一块Survivor空间中，然后清理掉Eden和刚才使用过的Survivor空间。<br><img src="http://image.yangjiannr.cn/533622b0-268e-3968-acbb-07b26a1dba2a.jpg" alt="533622b0-268e-3968-acbb-07b26a1dba2a"><br>　　而由于老年代的特点是每次回收都只回收少量对象，一般使用的是Mark-Compact算法。<br>　　注意，在堆区之外还有一个代就是永久代（Permanet Generation），它用来存储class类、常量、方法描述等。对永久代的回收主要回收两部分内容：废弃常量和无用的类。</p>
 <h4 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h4><p>性能更优。</p>
 <h4 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h4><p>实现复杂</p>
-<p><a href="http://www.frankyang.cn/2017/08/30/gc/" target="_blank" rel="noopener">http://www.frankyang.cn/2017/08/30/gc/</a></p>
+<p><a href="http://www.yangjiannr.cn/2017/08/30/gc/" target="_blank" rel="noopener">http://www.yangjiannr.cn/2017/08/30/gc/</a></p>
 
       
     </div>
