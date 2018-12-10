@@ -70,8 +70,8 @@
         <category>BigData</category>
       </categories>
       <tags>
-        <tag>MapReduce</tag>
         <tag>Hadoop</tag>
+        <tag>MapReduce</tag>
         <tag>集群</tag>
       </tags>
   </entry>
@@ -94,8 +94,8 @@
         <category>BigData</category>
       </categories>
       <tags>
-        <tag>hadoop</tag>
         <tag>HDFS</tag>
+        <tag>hadoop</tag>
         <tag>MapReduce</tag>
       </tags>
   </entry>
@@ -134,8 +134,8 @@
         <category>Hadoop</category>
       </categories>
       <tags>
-        <tag>HDFS</tag>
         <tag>Hadoop</tag>
+        <tag>HDFS</tag>
       </tags>
   </entry>
   <entry>
@@ -146,8 +146,8 @@
         <category>BlockChain</category>
       </categories>
       <tags>
-        <tag>Distributed</tag>
         <tag>BlockChain</tag>
+        <tag>Distributed</tag>
         <tag>Consensus</tag>
       </tags>
   </entry>
@@ -183,8 +183,8 @@
         <category>BigData</category>
       </categories>
       <tags>
-        <tag>BigData</tag>
         <tag>Bloom</tag>
+        <tag>BigData</tag>
       </tags>
   </entry>
   <entry>
@@ -219,8 +219,8 @@
         <category>Distributed</category>
       </categories>
       <tags>
-        <tag>Distributed</tag>
         <tag>BlockChain</tag>
+        <tag>Distributed</tag>
       </tags>
   </entry>
   <entry>
@@ -231,8 +231,8 @@
         <category>Distributed</category>
       </categories>
       <tags>
-        <tag>Distributed</tag>
         <tag>BlockChain</tag>
+        <tag>Distributed</tag>
         <tag>Paxos</tag>
       </tags>
   </entry>
@@ -244,8 +244,8 @@
         <category>Distributed</category>
       </categories>
       <tags>
-        <tag>Distributed</tag>
         <tag>BlockChain</tag>
+        <tag>Distributed</tag>
       </tags>
   </entry>
   <entry>
@@ -256,8 +256,8 @@
         <category>BigData</category>
       </categories>
       <tags>
-        <tag>Trie</tag>
         <tag>BigData</tag>
+        <tag>Trie</tag>
       </tags>
   </entry>
   <entry>
@@ -268,8 +268,8 @@
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
         <tag>Process</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -327,8 +327,8 @@
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
         <tag>Process</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -339,8 +339,8 @@
         <category>Linux</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
         <tag>Process</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -366,6 +366,18 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[LeetCode 69. Sqrt(x)]]></title>
+    <url>%2F2017%2F05%2F07%2FLeetCode69_Sqrt(x)%2F</url>
+    <content type="text"><![CDATA[DescriptionImplement int sqrt(int x).Compute and return the square root of x. my program 思路：看似很简单的问题，可以不断的优化算法，最开始容易想到的是定义一个num使其递增，直到num*num &gt; x，可是未考虑num*num越界的问题，后更改判断条件为num &lt;= x/num，可以消除越界问题。但是此算法超出此题要求的时间范围，即Time Limit Exceeded。 1234567891011121314class Solution &#123;public: int mySqrt(int x) &#123; if(0 == x) return 0; int num = 1; while(num &lt;= x/num)&#123; num++; &#125; if(num*num == x) return num; else return num-1; &#125;&#125;; Submission Details1017 / 1017 test cases passed.Status: Time Limit ExceededLast executed input:1579205274 二分法时间复杂度为O(logN)，这样就不会Time Limit Exceeded 1234567891011121314151617class Solution &#123; public: int sqrt(int x) &#123; double begin = 0; double end = x; double result = 1; double mid = 1; while(abs(result-x) &gt; 0.000001)&#123; mid = (begin+end)/2; result = mid*mid; if(result &gt; x) end = mid; else begin = mid; &#125; return (int)mid; &#125; &#125;; Submission Details1017 / 1017 test cases passed.Status: AcceptedRuntime: 6 ms 牛顿迭代法牛顿迭代法（Newton’s method）又称为牛顿-拉夫逊（拉弗森）方法（Newton-Raphson method），它是牛顿在17世纪提出的一种在实数域和复数域上近似求解方程的方法。 123456789class Solution &#123; public: int mySqrt(int x) &#123; long r = x; while (r*r &gt; x) r = (r + x/r) / 2; return r; &#125; &#125;; Submission Details1017 / 1017 test cases passed.Status: AcceptedRuntime: 6 ms]]></content>
+      <categories>
+        <category>exercises</category>
+        <category>LeetCode/LintCode</category>
+      </categories>
+      <tags>
+        <tag>LeetCode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[HTTP与HTTPS异同||HTTP1.0与HTTP1.1差别]]></title>
     <url>%2F2017%2F04%2F19%2FHTTP%E4%B8%8EHTTPS%E5%BC%82%E5%90%8C%3AHTTP1.0%E4%B8%8EHTTP1.1%E5%B7%AE%E5%88%AB%2F</url>
     <content type="text"><![CDATA[HTTP状态码 分类 解释 描述 1XX 信息 服务器收到请求，需要请求者继续执行操作 2XX 成功 操作被成功接收并处理 3XX 重定向 需要进一步的操作以完成请求 4XX 客户端错误 请求包含语法错误或无法完成请求 5XX 服务器错误 服务器在处理请求的过程中发生了错误 常见的状态码 状态代码 状态消息 描述 200 成功 处理请求无误 301 永久移动 内容已移动到位置头中指明的主机上 400 错误请求 服务器不能理解请求 403 禁止 服务器无权访问所请求的文件 404 未发现 服务器不能找到所请求的方法 501 未实现 服务器不支持请求的方法 505 HTTP版本不支持 服务器不支持请求的版本 HTTP与HTTPS一、HTTP和HTTPS的基本概念 HTTP：互联网上应用最为广泛的一种网络协议，是一个客户端和服务器端请求和应答的标准(TCP)，用于从WWW服务器传输超文本到本地浏览器的传输协议。 HTTP协议采用明文传输信息，存在信息窃听、信息篡改和信息劫持的风险，而协议TLS/SSL具有身份验证、信息加密和完整性校验的功能，可以避免此类问题发生。 HTTPS（Hyper Text Transfer over Secure Socket Layer基于安全套接字层的超文本传输协议 ）：是以安全为目标的HTTP通道，简单讲是HTTP的安全版（HTTPS = HTTP + SSL），即HTTP下加入SSL层，HTTPS的安全基础是SSL，因此加密的详细内容就需要SSL。 HTTPS协议作用 1. 建立一个信息安全通道，来保证数据传输的安全； 2. 另一种就是确认网站的真实性。 二、HTTPS和HTTP的区别主要如下： 1、https协议需要到CA申请证书，一般免费证书较少，因而需要一定费用。 2、http是超文本传输协议，信息是明文传输，https则是具有安全性的SSL加密传输协议。 3、http和https使用的是完全不同的连接方式，用的端口也不一样，前者是80，后者是443。 4、http的连接很简单，是无状态的；HTTPS协议是由HTTP+SSL协议构建的可进行加密传输、身份认证的网络协议，比http协议安全。 三、HTTPS加密过程?1.客户端发起HTTPS请求 用户在浏览器里输入一个https网址，然后连接到server的443端口。 2.服务端的配置 采用HTTPS协议的服务器必须要有一套数字证书，可以自己制作，也可以向组织申请。这套证书其实就是一对公钥和私钥。 3.传送证书 这个证书其实就是公钥，只是包含了很多信息，如证书的颁发机构，过期时间等等。 4.客户端解析证书 这部分工作是有客户端的TLS来完成的，首先会验证公钥是否有效，比如颁发机构，过期时间等等，如果发现异常，则会弹出一个警告框，提示证书存在问题。如果证书没有问题，那么就生成一个随即值。然后用证书对该随机值进行加密。 5.传送加密随机值 这部分传送的是用证书加密后的随机值，目的就是让服务端得到这个随机值，以后客户端和服务端的通信就可以通过这个随机值来进行加密解密了。 6.服务段解密信息 服务端用私钥解密后，得到了客户端传过来的随机值(私钥)，然后把内容通过该值进行对称加密。所谓对称加密就是，将信息和私钥通过某种算法混合在一起，这样除非知道私钥，不然无法获取内容，而正好客户端和服务端都知道这个私钥。 7.传输加密后的信息 这部分信息是服务段用私钥加密后的信息，可以在客户端被还原 8.客户端解密信息 客户端用之前生成的私钥解密服务段传过来的信息，于是获取了解密后的内容。整个过程第三方即使监听到了数据，也束手无策。 四、什么时候该使用 HTTPS? 缺点？银行网站、支付网关、购物网站、登录页、电子邮件以及一些企业部门的网站应该使用 HTTPS ####缺点（1）HTTPS协议握手阶段比较费时，会使页面的加载时间延长近50%，增加10%到20%的耗电； （2）HTTPS连接缓存不如HTTP高效，会增加数据开销和功耗，甚至已有的安全措施也会因此而受到影响； （3）SSL证书需要钱，功能越强大的证书费用越高，个人网站、小网站没有必要一般不会用。 HTTP1.0与HTTP1.11、HTTP 1.1支持长连接（Persistent Connection）和请求的流水线（Pipelining）处理 HTTP 1.0规定浏览器与服务器只保持短暂的连接，浏览器的每次请求都需要与服务器建立一个TCP连接，服务器完成请求处理后立即断开TCP连接，服务器不跟踪每个客户也不记录过去的请求。 HTTP 1.1支持持久连接，在一个TCP连接上可以传送多个HTTP请求和响应，减少了建立和关闭连接的消耗和延迟。 HTTP 1.1还允许客户端不用等待上一次请求结果返回，就可以发出下一次请求，但服务器端必须按照接收到客户端请求的先后顺序依次回送响应结果，以保证客户端能够区分出每次请求的响应内容，这样也显著地减少了整个下载过程所需要的时间。 2、HTTP 1.1增加host字段 在HTTP1.0中认为每台服务器都绑定一个唯一的IP地址，因此，请求消息中的URL并没有传递主机名（hostname）。但随着虚拟主机技术的发展，在一台物理服务器上可以存在多个虚拟主机（Multi-homed Web Servers），并且它们共享一个IP地址。 HTTP1.1的请求消息和响应消息都应支持Host头域，且请求消息中如果没有Host头域会报告一个错误（400 Bad Request）。此外，服务器应该接受以绝对路径标记的资源请求。 HTTP 1.1还提供了与身份认证、状态管理和Cache缓存等机制相关的请求头和响应头。 3、100(Continue) Status(节约带宽) HTTP/1.1加入了一个新的状态码100（Continue）。客户端事先发送一个只带头域的请求，如果服务器因为权限拒绝了请求，就回送响应码401（Unauthorized）；如果服务器接收此请求就回送响应码100，客户端就可以继续发送带实体的完整请求了。100 (Continue) 状态代码的使用，允许客户端在发request消息body之前先用request header试探一下server，看server要不要接收request body，再决定要不要发request body。 http://www.yangjiannr.cn/2017/04/19/http-https/]]></content>
@@ -385,8 +397,44 @@
         <category>Network</category>
       </categories>
       <tags>
-        <tag>Network</tag>
         <tag>TCP/IP</tag>
+        <tag>Network</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode 34. Search for a Range]]></title>
+    <url>%2F2017%2F03%2F19%2FLeetCode34_Search_for_a_Range%2F</url>
+    <content type="text"><![CDATA[DescriptionGiven an array of integers sorted in ascending order, find the starting and ending position of a given target value. Your algorithm’s runtime complexity must be in the order of O(log n). If the target is not found in the array, return [-1, -1]. For example,Given [5, 7, 7, 8, 8, 10] and target value 8,return [3, 4]. my program(1)时间复杂度为O（n） 1234567891011121314151617181920212223242526272829class Solution &#123;public: vector&lt;int&gt; searchRange(vector&lt;int&gt;&amp; nums, int target) &#123; int i = 0, j = nums.size() -1; vector&lt;int&gt; res; while (i &lt; nums.size()) &#123; if (nums[i] == target) break; i++; &#125; while ( j&gt;= 0) &#123; if (nums[j] == target) break; j--; &#125; if (i&gt;=nums.size()) &#123; res.push_back(-1); res.push_back(-1); &#125;else &#123; res.push_back(i); res.push_back(j); &#125; return res; &#125;&#125;; (2)时间复杂度为O（logn），利用二分查找 123456789101112131415161718192021222324class Solution &#123;public: vector&lt;int&gt; searchRange(vector&lt;int&gt;&amp; nums, int target) &#123; int begin = 0, end = nums.size(), mid, left, right; while (begin &lt; end) &#123; mid = (begin + end) / 2; if (nums[mid] &gt;= target) end = mid; else begin = mid + 1; &#125; left = begin; begin = 0, end = nums.size(); while (begin &lt; end) &#123; mid = (begin + end) / 2; if (nums[mid] &gt; target) end = mid; else begin = mid + 1; &#125; right = begin; return left == right ? vector&lt;int&gt; &#123;-1,-1&#125; : vector&lt;int&gt; &#123;left,right-1&#125;; &#125;&#125;; 先找左边界。当mid &gt;= target,将end移动到mid，否则（mid &lt; target），begin = mid+1； 再找右边界。 当mid &gt; target,将end移动到mid，否则（mid &lt;= target），begin = mid+1；最后begin和end可能在target的左面一个。 如果没有数组中target的话，那么left和right会指到同一个值上，否则的话就意味着出现了target，此时left指向第一个出现的target，而right是指向最后一个target的下一个值，所以right需要减去1.]]></content>
+      <categories>
+        <category>exercises</category>
+        <category>LeetCode/LintCode</category>
+      </categories>
+      <tags>
+        <tag>LeetCode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[LeetCode 53. Maximum Subarray - 紫魔戒]]></title>
+    <url>%2F2017%2F03%2F01%2FLeetCode53_Maximum_Subarray%2F</url>
+    <content type="text"><![CDATA[my program:1234567891011121314151617class Solution &#123;public: int maxSubArray(vector&lt;int&gt;&amp; nums) &#123; int result = nums[0]; int sum = 0; for (int i = 0; i&lt;nums.size(); ++i) &#123; sum = 0; for (int j = i; j&lt;nums.size();++j) &#123; sum += nums[j]; if (sum &gt; result) result = sum; &#125; &#125; return result; &#125;&#125;; Submission Result: Time Limit Exceeded 这个就是所谓的蛮力法吧…….%&gt;_&lt;%时间复杂度是O(n2),当数据集越大,执行所需的时间就成平方数量级的增长,所以计算所需的时间超出了规定的时间,无法AC. 分治算法首先将其分成两半A[l..m]和A[m+1..r]，其中m=(l+r)/2，并分别求递归求出这两半的最大子串和中间middle部分是两个循环,分别找出左边和右面(包含m点)的最大子串和.最后取left\right\middle中最大值 程序如下: 12345678910111213141516171819202122232425262728class Solution &#123;public: int solve(vector&lt;int&gt;&amp; nums, int begin, int end) &#123; if (begin == end) return nums[begin]; int mid = (begin+end) / 2; int leftMax = solve(nums, begin, mid); int rightMax = solve(nums, mid+1, end); int midLeftMax = nums[mid]; int sumMidLeft = nums[mid]; for (int i = mid-1; i&gt;=begin; --i) &#123; sumMidLeft += nums[i]; midLeftMax = max(midLeftMax, sumMidLeft); &#125; int midRightMax = nums[mid]; int sumMidRight = nums[mid]; for (int j = mid+1; j&lt;=end; ++j) &#123; sumMidRight += nums[j]; midRightMax = max(midRightMax, sumMidRight); &#125; return max(max(leftMax, rightMax),midLeftMax+midRightMax-nums[mid]); &#125; int maxSubArray(vector&lt;int&gt;&amp; nums) &#123; return solve(nums, 0, nums.size()-1); &#125;&#125;; Simplest and fastest O(n) C++ solution: Idea is very simple. Basically, keep adding each integer to the sequence until the sum drops below 0.If sum is negative, then should reset the sequence. 123456789101112class Solution &#123;public: int maxSubArray(int A[], int n) &#123; int ans=A[0],i,j,sum=0; for(i=0;i&lt;n;i++)&#123; sum+=A[i]; ans=max(sum,ans); sum=max(sum,0); &#125; return ans; &#125;&#125;; 此算法的时间复杂度是O(n),当数据非常大的时候,比起时间复杂度是O(n2)的算法好的不是一点.]]></content>
+      <categories>
+        <category>exercises</category>
+        <category>LeetCode/LintCode</category>
+      </categories>
+      <tags>
+        <tag>LeetCode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Eratosthenes算法筛选求质数]]></title>
+    <url>%2F2016%2F09%2F08%2FEratosthenes%E7%AE%97%E6%B3%95%E7%AD%9B%E9%80%89%E6%B1%82%E8%B4%A8%E6%95%B0%2F</url>
+    <content type="text"><![CDATA[12345678910111213141516171819202122232425262728293031#include &lt;stdio.h&gt;#define MAXNUM 1000int main()&#123; int i,j,n=0; int prime[MAXNUM+1]; for (i=0; i&lt;=MAXNUM; ++i) &#123; prime[i]=1; &#125; for (i=2; i*i&lt;=MAXNUM; ++i) &#123; if (prime[i]==1) &#123; for (j=2*i; j&lt;=MAXNUM; ++j) &#123; if (prime[j]==0) continue; if (j%i==0) &#123; prime[j]=0; &#125; &#125; &#125; &#125; for (i=2; i&lt;=MAXNUM; ++i) &#123; if (prime[i]==1) &#123; n++; printf("%4d",i); if (n%10==0) &#123; printf("\n"); &#125; &#125; &#125; printf("\n共有%d个素数。",n); return 0;&#125; 哥德巴赫猜想 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354#include &lt;stdio.h&gt;#include &lt;stdlib.h&gt;void CreatePrime(int n,int prime[])&#123; int i,j; for (i=0; i&lt;=n; ++i) &#123; prime[i]=1; &#125; prime[0]=prime[1]=0; for (i=2; ii&lt;=n; ++i) &#123; if (prime[i]==1) &#123; for (j=2i; j&lt;=n; ++j) &#123; if (prime[j]0) continue; if (j%i0) &#123; prime[j]=0; &#125; &#125; &#125; &#125;&#125;int main()&#123; int n,i,j,flag; int *prime; printf("哥德巴赫猜想验证"); printf("输入一个要验证的最大数n(n&gt;=6):"); scanf("%d",&amp;n); if (n&lt;6) &#123; printf("数据输入错误！\n"); return 0; &#125; if (!(prime=(int )malloc(sizeof(int)n))) &#123; printf("分配内存失败！\n"); return 0; &#125; CreatePrime(n, prime); for (i=6; i&lt;=n; i+=2) &#123; flag=1; for (j=2; j&lt;=i/2; j++) &#123; if (j%20|| ((i-j)%20)) &#123; continue; &#125; if (prime[j]1 &amp;&amp; prime[i-j]1) &#123; printf("%d=%d+%d\n",i,j,i-j); flag=0; break; &#125; &#125; if (flag==1) &#123; printf("找到一个不符合要求的偶数：%d\n",i); &#125; &#125; return 0;&#125;]]></content>
+      <categories>
+        <category>Algorithm</category>
+      </categories>
+      <tags>
+        <tag>Algorithm</tag>
+        <tag>prime</tag>
       </tags>
   </entry>
 </search>
