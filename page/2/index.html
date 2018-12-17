@@ -294,6 +294,168 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/13/学习makefile记录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Frank yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://image.yangjiannr.cn/20180912avator.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="紫魔戒的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/13/学习makefile记录/" itemprop="url">学习makefile记录</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-13T20:46:25+08:00">
+                2018-07-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+
+          
+
+          
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="makefile及make简介"><a href="#makefile及make简介" class="headerlink" title="makefile及make简介"></a>makefile及make简介</h1><h3 id="概念引入"><a href="#概念引入" class="headerlink" title="概念引入"></a>概念引入</h3><p>在介绍makefile和make的具体概念之前，我们通过一个例子来说明Makefile和make到底是是为解决说明问题而存在的。<br>假设有一个如图所示的C工程：<br><img src="http://image.yangjiannr.cn/20180509wm.png" alt="C工程"><br>那么要编译出我们的可执行程序project_demo，必须执行以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># 步骤1：编译主程序模块</span><br><span class="line">$ gcc -o &lt;100个主程序模块的o文件&gt; -c &lt;100个主程序没模块的c文件&gt;</span><br><span class="line"></span><br><span class="line"># 步骤2：编译功能模块a</span><br><span class="line">$ gcc -o &lt;1000个功能模块a的o文件&gt; -c &lt;1000个功能模块a的c文件&gt;</span><br><span class="line">$ ar rcs liba.a &lt;1000个功能模块a的o文件&gt;</span><br><span class="line"></span><br><span class="line"># 步骤3：编译功能模块b</span><br><span class="line">$ gcc -o &lt;1000个功能模块b的o文件&gt; -c &lt;1000个功能模块b的c文件&gt;</span><br><span class="line">$ ar rcs libb.a &lt;1000个功能模块b的o文件&gt;</span><br><span class="line"></span><br><span class="line"># 步骤4：生成可执行文件demo</span><br><span class="line">$gcc -o demo &lt;100个主程序模块的o文件&gt; -L. -la -lb</span><br></pre></td></tr></table></figure>
+<p>make和Makefile的存在正式为了解决上述两个问题的：</p>
+<ol>
+<li>makefile文件帮助我们记录了整个项目工程的所有需要编译的文件列表，这样我们在编译时仅需要输入简单的make命令就能编译出我们期望的结果；</li>
+<li>makefile文件反映了整个项目中各个模块的依赖关系，这样我们改动了某些源文件后，仅需简单的输入make命令，make工具就会根据makefile文件里描述的依赖关系帮助我们分析哪些模块需要重新编译，并执行相应的操作。</li>
+</ol>
+<p>在linux/unix开发环境中，makefile文件则是描述一个特定编译系统所需要的策略，而make工具则是通过解析makefile文件并执行相应的命令来帮助我们构建其编译系统。</p>
+<p>下面我们就带着这两个问题来认识makefile和make工具：</p>
+<ol>
+<li>makefile文件如何记录整个项目工程的所有需要编译的文件列表及如何反应整个项目中各个模块的依赖关系？</li>
+<li>提供了makefile策略描述后，make工具有事如何解析makefile文件来帮助我们构建其编译系统的？</li>
+</ol>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/07/13/学习makefile记录/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/07/eclipse代码补全按键修改成Tab/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1646,163 +1808,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/11/Paxos发展、算法原理/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Frank yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://image.yangjiannr.cn/20180912avator.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="紫魔戒的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/11/Paxos发展、算法原理/" itemprop="url">Paxos发展、算法原理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-11T11:30:00+08:00">
-                2017-09-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Distributed/" itemprop="url" rel="index">
-                    <span itemprop="name">Distributed</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-
-          
-
-          
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="Paxos"><a href="#Paxos" class="headerlink" title="Paxos"></a>Paxos</h1><h2 id="发展史"><a href="#发展史" class="headerlink" title="发展史"></a>发展史</h2><p>　　<a href="http://www.lamport.org/" target="_blank" rel="noopener">Leslie Lamport</a>所提出的Paxos算法是现代分布式系统中的一项重要的基础性技术，得到广泛的应用。</p>
-<p>Paxos的整个发展过程大概可以分为三个阶段：<br>　　第一阶段：萌芽期，大致是1988-1996年。Liskov等人在<a href="https://www.podc.org/" target="_blank" rel="noopener">PODC</a>上发表了<a href="http://ov6v82oa9.bkt.clouddn.com/Viewstamped%20Replication-%20A%20New%20Primary%20Copy%20Method%20to%20Support%20Highly-Available%20Distributed%20Systems.pdf" target="_blank" rel="noopener">Viewstamped Replication: A New Primary Copy Method to Support Highly-Available Distributed Systems</a> ，提出了一个在副本出现宕机情况下仍能正常工作的主从备份算法，该算法与Paxos在本质上是一致的(<a href="http://ov6v82oa9.bkt.clouddn.com/The%20ABCD%E2%80%99s%20of%20Paxos.pdf" target="_blank" rel="noopener">The ABCD’s of Paxos</a>)。</p>
-<p>　　第二阶段：1996-2007年。涌现出一批Paxos的不同版本，这些Paxos的变种从不同侧面完善了基础Paxos算法，提升其性能。Liskov等人在1999年提出了<a href="http://ov6v82oa9.bkt.clouddn.com/Practical%20Byzantine%20Fault%20Tolerance.pdf" target="_blank" rel="noopener">PBFT（实用的拜占庭容错算法）</a>，这实际上也是Paxos的一个变种，被Lampson称为Byzantine Paxos，该算法对基础Paxos进行了改进，使其可以处理拜占庭错误。</p>
-<blockquote>
-<p>　　拜占庭将军问题（Byzantine failures），是由莱斯利·兰伯特提出的点对点通信中的基本问题。含义是在存在消息丢失的不可靠信道上试图通过消息传递的方式达到一致性是不可能的。<br>　　拜占庭位于如今的土耳其的伊斯坦布尔，是东罗马帝国的首都。由于当时拜占庭罗马帝国国土辽阔，为了防御目的，因此每个军队都分隔很远，将军与将军之间只能靠信差传消息。 在战争的时候，拜占庭军队内所有将军和副官必需达成一致的共识，决定是否有赢的机会才去攻打敌人的阵营。但是，在军队内有可能存有叛徒和敌军的间谍，左右将军们的决定又扰乱整体军队的秩序。在进行共识时，结果并不代表大多数人的意见。这时候，在已知有成员谋反的情况下，其余忠诚的将军在不受叛徒的影响下如何达成一致的协议，拜占庭问题就此形成。<br>　　拜占庭假设是对现实世界的模型化，由于硬件错误、网络拥塞或断开以及遭到恶意攻击，计算机和网络可能出现不可预料的行为。拜占庭容错协议必须处理这些失效，并且这些协议还要满足所要解决的问题要求的规范。</p>
-</blockquote>
-<p>Eli Gafni 和 Lamport 在2000年提出了<a href="">Disk Paxos</a>，这可以认为是Paxos基于磁盘的版本，以支持持久化。</p>
-<p>　　第三阶段：本阶段。Paxos开始在工业界得到了广泛应用。从2006年开始，谷歌公司有两篇影响深远的论文发表在OSDI上，一篇是“<a href="http://ov6v82oa9.bkt.clouddn.com/Bigtable-A%20Distributed%20Storage%20System%20for%20Structured%20Data.pdf" target="_blank" rel="noopener">Bigtable:A Distributed Storage System for Structured Data</a>”，另一篇“<a href="http://ov6v82oa9.bkt.clouddn.com/The%20Chubby%20lock%20service%20for%20loosely-coupled%20distributed%20systems.pdf" target="_blank" rel="noopener">The Chubby lock service for loosely-coupled distributed systems</a>”。两篇论文可以说是揭开了大数据管理的序幕，而Paxos则在大数据管理的核心技术（容错）中扮演了极为重要的角色。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/09/11/Paxos发展、算法原理/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1857,7 +1862,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">55</span>
+                  <span class="site-state-item-count">56</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
